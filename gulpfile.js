@@ -31,7 +31,9 @@ gulp.task('assets-js', () => {
 gulp.task('assets-scss', () => {
   return gulp.src(paths.assets.scss)
   .pipe(cache('assets-scss'))
-  .pipe(sass().on('error', sass.logError))
+  .pipe(sass({
+    outputStyle: 'compressed'
+  }).on('error', sass.logError))
   .pipe(gulp.dest('dist/assets'))
 })
 
