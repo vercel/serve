@@ -20,6 +20,25 @@ if (directory) {
   current = path.resolve(process.cwd(), directory)
 }
 
+const isDir = dir => {
+  try {
+    fs.statSync(dir)
+  } catch (err) {
+    return false
+  }
+
+  if (fs.statSync(dir).isDirectory()) {
+    return true
+  }
+
+  return false
+}
+
+if (!isDir(current)) {
+  console.error(red('Specified directory doesn\'t exist!'))
+  process.exit(1)
+}
+
 const prepareView = () => {
   let viewContent = false
   const viewPath = path.normalize(__dirname + '/../../views/index.hbs')
