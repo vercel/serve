@@ -4,6 +4,10 @@ body {
   padding: 30px;
   -webkit-font-smoothing: antialiased;
   font-family: Menlo;
+
+  @media (min-width: 992px) {
+    padding: 45px;
+  }
 }
 
 a {
@@ -17,6 +21,14 @@ h1 {
   margin-top: 0;
   color: #000;
   font-family: Helvetica;
+
+  @media (min-width: 992px) {
+    font-size: 15px;
+  }
+}
+
+main {
+  max-width: 720px;
 }
 
 ul {
@@ -32,6 +44,12 @@ ul {
     @media (min-width: 768px) {
       width: 200px;
     }
+
+    @media (min-width: 992px) {
+      font-size: 13px;
+      box-sizing: border-box;
+      width: 180px;
+    }
   }
 
   a {
@@ -45,6 +63,10 @@ ul {
       font-family: FontAwesome;
       display: inline-block;
       margin-right: 10px;
+      color: #000;
+    }
+
+    &:hover {
       color: #000;
     }
   }
@@ -64,5 +86,9 @@ aside {
     font-size: 12px;
     margin: 0;
     line-height: 1.5em;
+  }
+
+  @media (min-width: 992px) {
+    padding-top: 50px;
   }
 }
