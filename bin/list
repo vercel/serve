@@ -7,6 +7,8 @@ import bin from 'commander'
 import pkg from '../../package.json'
 import path from 'path'
 import { compile } from 'handlebars'
+import { isBinarySync } from 'istextorbinary'
+import { StringDecoder } from 'string_decoder'
 
 bin
   .version(pkg.version)
@@ -123,12 +125,21 @@ const server = micro(async (req, res) => {
   let body = 'Not able to load file!'
 
   try {
-    body = fs.readFileSync(related, 'utf8')
+    body = fs.readFileSync(related)
   } catch (err) {
     throw err
   }
 
-  send(res, 200, body)
+  const isBinary = isBinarySync(path.parse(related).base, body)
+
+  if (isBinary) {
+    res.writeHead(200)
+    res.write(body, 'binary')
+    res.end(null, 'binary')
+  } else {
+    const decoder = new StringDecoder('utf8')
+    send(res, 200, decoder.write(body))
+  }
 })
 
 server.listen(3000, () => {
