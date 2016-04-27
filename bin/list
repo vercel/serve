@@ -152,6 +152,7 @@ const server = micro(async (req, res) => {
       throw err
     }
 
+    res.setHeader('Content-Type', 'text/html')
     return send(res, 200, indexContent)
   }
 
