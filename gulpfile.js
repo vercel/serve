@@ -21,16 +21,15 @@ gulp.task('bin', () => {
   .pipe(gulp.dest('dist/bin'))
 })
 
-gulp.task('assets-js', () => {
+gulp.task('client', () => {
   return gulp.src(paths.assets.js)
-  .pipe(cache('assets-js'))
+  .pipe(cache('client'))
   .pipe(babel())
   .pipe(gulp.dest('dist/assets'))
 })
 
-gulp.task('assets-scss', () => {
+gulp.task('scss', () => {
   return gulp.src(paths.assets.scss)
-  .pipe(cache('assets-scss'))
   .pipe(sass({
     outputStyle: 'compressed'
   }).on('error', sass.logError))
@@ -40,9 +39,9 @@ gulp.task('assets-scss', () => {
 gulp.task('watch', () => {
   gulp.watch(paths.bin, ['bin'])
 
-  gulp.watch(paths.assets.scss, ['assets-scss'])
-  gulp.watch(paths.assets.js, ['assets-js'])
+  gulp.watch(paths.assets.scss, ['scss'])
+  gulp.watch(paths.assets.js, ['client'])
 })
 
-gulp.task('build', ['bin', 'assets-js', 'assets-scss'])
+gulp.task('build', ['bin', 'client', 'scss'])
 gulp.task('default', ['watch', 'build'])
