@@ -69,6 +69,10 @@ ul {
     &:hover {
       color: #000;
     }
+
+    &[class='']:before {
+      content: '\f0c5';
+    }
   }
 
   @media (min-width: 768px) {
