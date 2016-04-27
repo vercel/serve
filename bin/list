@@ -88,6 +88,10 @@ const renderDirectory = dir => {
     details.ext = details.ext.split('.')[1]
     details.relative = path.join(subPath, details.base)
 
+    if (isDir(filePath)) {
+      details.base = details.base + '/'
+    }
+
     if (ignoredFiles.includes(details.base)) {
       delete files[index]
     } else {
