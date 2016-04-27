@@ -2,12 +2,55 @@
 
 import micro from 'micro'
 import { red, green } from 'chalk'
+import fs from 'fs'
+import bin from 'commander'
+import pkg from '../../package.json'
+import path from 'path'
+import { compile } from 'handlebars'
 
-console.log('test')
+bin
+  .version(pkg.version)
+  .option('-p, --port [int]', 'The port on which micro will be running')
+  .parse(process.argv)
+
+const directory = bin.args[bin.args.length - 1]
+let current = process.cwd()
+
+if (directory) {
+  current = path.resolve(process.cwd(), directory)
+}
+
+const prepareView = () => {
+  let viewContent = false
+  const viewPath = path.normalize(__dirname + '/../../views/index.hbs')
+
+  try {
+    viewContent = fs.readFileSync(viewPath, 'utf8')
+  } catch (err) {
+    throw err
+  }
+
+  return compile(viewContent)
+}
 
 const server = micro(async (req, res) => {
+  let files = []
+
+  try {
+    files = fs.readdirSync(current)
+  } catch (err) {
+    throw err
+  }
+
+  for (let file of files) {
+    const filePath = path.resolve(current, file)
+    files[files.indexOf(file)] = path.parse(filePath)
+  }
+
+  const render = prepareView()
+
   res.writeHead(200)
-  res.end('woot')
+  res.end(render({ files }))
 })
 
 server.listen(3000, () => {
