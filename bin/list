@@ -89,7 +89,10 @@ const server = micro(async (req, res) => {
 
   const details = {
     files,
-    assetDir: process.env.ASSET_DIR
+    assetDir: process.env.ASSET_DIR,
+    directory: path.parse(current).base + '/',
+    port: 3000,
+    nodeVersion: process.version.split('v')[1]
   }
 
   send(res, 200, render(details))

@@ -1,15 +1,52 @@
 body {
   background: #fff;
+  margin: 0;
+  padding: 30px;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: #1A00F2;
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 0;
+  color: #000;
 }
 
 ul {
   margin: 0;
-  padding: 0;
+  padding: 20px 0 0 0;
 
   li {
+    list-style: none;
+    padding: 10px 0;
   }
 
   a {
     color: #1A00F2;
+
+    &:before {
+      content: '\f016';
+      font-family: FontAwesome;
+      display: inline-block;
+      margin-right: 10px;
+      color: #000;
+    }
+  }
+}
+
+aside {
+  font-style: italic;
+  color: #4A4A4A;
+  margin-top: 50px;
+
+  p {
+    font-size: 15px;
+    margin: 0;
+    line-height: 1.5em;
   }
 }
