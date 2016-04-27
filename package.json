@@ -6,6 +6,7 @@
     "start": "gulp",
     "prepublish": "gulp build"
   },
+  "files": ["dist"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zeit/micro-list.git"
