@@ -27,6 +27,11 @@ ul {
     list-style: none;
     padding: 10px 0;
     font-size: 14px;
+    display: block;
+
+    @media (min-width: 768px) {
+      width: 200px;
+    }
   }
 
   a {
@@ -39,6 +44,11 @@ ul {
       margin-right: 10px;
       color: #000;
     }
+  }
+
+  @media (min-width: 768px) {
+    display: flex;
+    flex-wrap: wrap;
   }
 }
 
