@@ -138,7 +138,21 @@ const server = micro(async (req, res) => {
   }
 
   if (isDir(related)) {
-    return send(res, 200, renderDirectory(related))
+    const indexPath = path.join(related, '/index.html')
+
+    if (!exists(indexPath)) {
+      return send(res, 200, renderDirectory(related))
+    }
+
+    let indexContent
+
+    try {
+      indexContent = fs.readFileSync(indexPath, 'utf8')
+    } catch (err) {
+      throw err
+    }
+
+    return send(res, 200, indexContent)
   }
 
   let body = 'Not able to load file!'
