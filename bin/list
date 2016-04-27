@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import micro from 'micro'
+import { red, green } from 'chalk'
 
 console.log('test')
 
@@ -9,4 +10,7 @@ const server = micro(async (req, res) => {
   res.end('woot')
 })
 
-server.listen(3000)
+server.listen(3000, () => {
+  const details = server.address()
+  console.log(green(`Running on http://localhost:${details.port}`))
+})
