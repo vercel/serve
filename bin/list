@@ -54,6 +54,10 @@ const prepareView = () => {
   return compile(viewContent)
 }
 
+const ignoredFiles = [
+  '.DS_Store'
+]
+
 const server = micro(async (req, res) => {
   const parsed = path.parse(req.url)
 
@@ -81,8 +85,15 @@ const server = micro(async (req, res) => {
   }
 
   for (let file of files) {
-    const filePath = path.resolve(current, file)
-    files[files.indexOf(file)] = path.parse(filePath)
+    let filePath = path.resolve(current, file)
+    let index = files.indexOf(file)
+    let details = path.parse(filePath)
+
+    if (ignoredFiles.includes(details.base)) {
+      delete files[index]
+    } else {
+      files[files.indexOf(file)] = details
+    }
   }
 
   const render = prepareView()
