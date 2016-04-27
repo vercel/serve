@@ -3,6 +3,7 @@ body {
   margin: 0;
   padding: 30px;
   -webkit-font-smoothing: antialiased;
+  font-family: Menlo;
 }
 
 a {
@@ -15,6 +16,7 @@ h1 {
   font-weight: 500;
   margin-top: 0;
   color: #000;
+  font-family: Helvetica;
 }
 
 ul {
@@ -24,6 +26,7 @@ ul {
   li {
     list-style: none;
     padding: 10px 0;
+    font-size: 14px;
   }
 
   a {
@@ -45,7 +48,7 @@ aside {
   margin-top: 50px;
 
   p {
-    font-size: 15px;
+    font-size: 12px;
     margin: 0;
     line-height: 1.5em;
   }
