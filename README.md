@@ -2,7 +2,7 @@
 
 Ever wanted to share a certain directory on your network by running just a command? Then micro-list is exactly what you're looking for: It provides a neat interface for listing the directory's contents and switching into sub folders.
 
-We're also using in [now-serve](https://github.com/zeit/now-serve) to make the sharing workflow happen properly.
+Powers [now-serve](https://github.com/zeit/now-serve).
 
 ## Usage
 
