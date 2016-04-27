@@ -178,5 +178,8 @@ const server = micro(async (req, res) => {
 
 server.listen(bin.port, () => {
   const details = server.address()
-  console.log(green(`Running on http://localhost:${details.port}`))
+
+  if (!process.env.NOW) {
+    console.log(green(`Running on http://localhost:${details.port}`))
+  }
 })
