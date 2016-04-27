@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import micro from 'micro'
+import { default as micro, send } from 'micro'
 import { red, green } from 'chalk'
 import fs from 'fs'
 import bin from 'commander'
@@ -12,6 +12,8 @@ bin
   .version(pkg.version)
   .option('-p, --port [int]', 'The port on which micro will be running')
   .parse(process.argv)
+
+process.env.ASSET_DIR = '/' + Math.random().toString(36).substr(2, 10)
 
 const directory = bin.args[bin.args.length - 1]
 let current = process.cwd()
@@ -53,6 +55,23 @@ const prepareView = () => {
 }
 
 const server = micro(async (req, res) => {
+  const parsed = path.parse(req.url)
+
+  if (req.url.indexOf(process.env.ASSET_DIR) > -1) {
+    let body = 'Not able to load asset!'
+
+    const relative = path.relative(process.env.ASSET_DIR, req.url),
+          target = path.join(__dirname, '/../assets', relative)
+
+    try {
+      body = fs.readFileSync(target, 'utf8')
+    } catch (err) {
+      throw err
+    }
+
+    return send(res, 200, body)
+  }
+
   let files = []
 
   try {
@@ -68,8 +87,12 @@ const server = micro(async (req, res) => {
 
   const render = prepareView()
 
-  res.writeHead(200)
-  res.end(render({ files }))
+  const details = {
+    files,
+    assetDir: process.env.ASSET_DIR
+  }
+
+  send(res, 200, render(details))
 })
 
 server.listen(3000, () => {
