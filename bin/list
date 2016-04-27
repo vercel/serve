@@ -98,7 +98,7 @@ const renderDirectory = dir => {
   const details = {
     files,
     assetDir: process.env.ASSET_DIR,
-    directory: path.parse(current).base + '/',
+    directory: path.join(path.basename(current), path.relative(current, dir), '/'),
     port: 3000,
     nodeVersion: process.version.split('v')[1]
   }
