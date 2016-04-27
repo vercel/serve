@@ -4,6 +4,8 @@ Ever wanted to share a certain directory on your network by running just a comma
 
 Powers [now-serve](https://github.com/zeit/now-serve).
 
+<img src="http://i.imgur.com/4Y2GGcQ.png">
+
 ## Usage
 
 Install it
