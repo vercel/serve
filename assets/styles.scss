@@ -28,7 +28,7 @@ h1 {
 }
 
 main {
-  max-width: 720px;
+  max-width: 920px;
 }
 
 ul {
@@ -37,18 +37,35 @@ ul {
 
   li {
     list-style: none;
-    padding: 10px 20px 10px 0;
+    padding: 10px 0;
     font-size: 14px;
-    display: block;
+    display: flex;
+    justify-content: space-between;
+
+    i {
+      color: #9B9B9B;
+      font-size: 11px;
+      display: block;
+      font-style: normal;
+    }
 
     @media (min-width: 768px) {
-      width: 200px;
+      width: 230px;
+      padding-right: 20px;
     }
 
     @media (min-width: 992px) {
       font-size: 13px;
       box-sizing: border-box;
-      width: 180px;
+
+      &:hover i {
+        opacity: 1;
+      }
+
+      i {
+        font-size: 10px;
+        opacity: 0;
+      }
     }
   }
 
@@ -70,8 +87,14 @@ ul {
       color: #000;
     }
 
-    &[class='']:before {
-      content: '\f0c5';
+    &[class=''] {
+      & + i {
+        display: none;
+      }
+
+      &:before {
+        content: '\f0c5';
+      }
     }
   }
 

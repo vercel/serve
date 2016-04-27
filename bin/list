@@ -9,6 +9,7 @@ import path from 'path'
 import { compile } from 'handlebars'
 import { isBinarySync } from 'istextorbinary'
 import { StringDecoder } from 'string_decoder'
+import filesize from 'filesize'
 
 bin
   .version(pkg.version)
@@ -90,6 +91,16 @@ const renderDirectory = dir => {
 
     if (isDir(filePath)) {
       details.base = details.base + '/'
+    } else {
+      let fileStats
+
+      try {
+        fileStats = fs.statSync(filePath)
+      } catch (err) {
+        throw err
+      }
+
+      details.size = filesize(fileStats.size, { round: 0 })
     }
 
     if (ignoredFiles.includes(details.base)) {
