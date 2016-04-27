@@ -18,7 +18,7 @@ gulp.task('bin', () => {
   .pipe(cache('bin'))
   .pipe(babel())
   .pipe(chmod(755))
-  .pipe(gulp.dest('dist'))
+  .pipe(gulp.dest('dist/bin'))
 })
 
 gulp.task('assets-js', () => {

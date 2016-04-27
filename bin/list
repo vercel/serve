@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-import fs from 'fs-extra'
+import micro from 'micro'
 
 console.log('test')
