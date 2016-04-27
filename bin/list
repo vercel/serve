@@ -12,7 +12,7 @@ import { StringDecoder } from 'string_decoder'
 
 bin
   .version(pkg.version)
-  .option('-p, --port [int]', 'The port on which micro will be running')
+  .option('-p, --port [int]', 'The port on which micro will be running', 3000, parseInt)
   .parse(process.argv)
 
 process.env.ASSET_DIR = '/' + Math.random().toString(36).substr(2, 10)
@@ -101,7 +101,7 @@ const renderDirectory = dir => {
     files,
     assetDir: process.env.ASSET_DIR,
     directory: path.join(path.basename(current), subPath, '/'),
-    port: 3000,
+    port: bin.port,
     nodeVersion: process.version.split('v')[1]
   }
 
@@ -146,7 +146,7 @@ const server = micro(async (req, res) => {
   }
 })
 
-server.listen(3000, () => {
+server.listen(bin.port, () => {
   const details = server.address()
   console.log(green(`Running on http://localhost:${details.port}`))
 })
