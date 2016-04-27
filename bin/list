@@ -82,7 +82,7 @@ const renderDirectory = dir => {
   }
 
   for (let file of files) {
-    let filePath = path.resolve(current, file)
+    let filePath = path.resolve(dir, file)
     let index = files.indexOf(file)
     let details = path.parse(filePath)
 
