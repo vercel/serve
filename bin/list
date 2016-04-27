@@ -103,7 +103,7 @@ const renderDirectory = dir => {
       details.size = filesize(fileStats.size, { round: 0 })
     }
 
-    if (ignoredFiles.includes(details.base)) {
+    if (ignoredFiles.indexOf(details.base) > -1) {
       delete files[index]
     } else {
       files[files.indexOf(file)] = details
@@ -126,7 +126,7 @@ const renderDirectory = dir => {
 const server = micro(async (req, res) => {
   let related = path.parse(path.join(current, req.url))
 
-  if (related.dir.includes(process.env.ASSET_DIR)) {
+  if (related.dir.indexOf(process.env.ASSET_DIR) > -1) {
     const relative = path.relative(process.env.ASSET_DIR, req.url)
     related = path.parse(path.join(__dirname, '/../assets', relative))
   }
