@@ -10,10 +10,21 @@
   </head>
 
   <body>
+    <main>
+      <h1>Index of <b>{{directory}}</b></h1>
 
-    {{#each files}}
-    {{base}}
-    {{/each}}
+      <ul>
+        {{#each files}}
+          <li>
+            <a href="{{base}}">{{base}}</a>
+          </li>
+        {{/each}}
+      </ul>
+    </main>
+
+    <aside>
+      <p>Node.js {{nodeVersion}} <a href="https://github.com/zeit/micro-list" target="_blank">micro-list</a> running @ localhost:{{port}}</p>
+    </aside>
 
     <script async src="/assets/app.js"></script>
   </body>
