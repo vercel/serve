@@ -6,11 +6,7 @@ const sass = require('gulp-sass')
 
 const paths = {
   bin: 'bin/*',
-  assets: {
-    scss: 'assets/*.scss',
-    js: 'assets/*.js',
-    vectors: 'assets/vectors/*'
-  }
+  styles: 'assets/*.scss'
 }
 
 gulp.task('bin', () => {
@@ -21,15 +17,8 @@ gulp.task('bin', () => {
   .pipe(gulp.dest('dist/bin'))
 })
 
-gulp.task('client', () => {
-  return gulp.src(paths.assets.js)
-  .pipe(cache('client'))
-  .pipe(babel())
-  .pipe(gulp.dest('dist/assets'))
-})
-
 gulp.task('scss', () => {
-  return gulp.src(paths.assets.scss)
+  return gulp.src(paths.styles)
   .pipe(sass({
     outputStyle: 'compressed'
   }).on('error', sass.logError))
@@ -38,10 +27,8 @@ gulp.task('scss', () => {
 
 gulp.task('watch', () => {
   gulp.watch(paths.bin, ['bin'])
-
-  gulp.watch(paths.assets.scss, ['scss'])
-  gulp.watch(paths.assets.js, ['client'])
+  gulp.watch(paths.styles, ['scss'])
 })
 
-gulp.task('build', ['bin', 'client', 'scss'])
+gulp.task('build', ['bin', 'scss'])
 gulp.task('default', ['watch', 'build'])
