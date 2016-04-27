@@ -25,7 +25,7 @@ ul {
 
   li {
     list-style: none;
-    padding: 10px 0;
+    padding: 10px 20px 10px 0;
     font-size: 14px;
     display: block;
 
@@ -36,6 +36,9 @@ ul {
 
   a {
     color: #1A00F2;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
 
     &:before {
       content: '\f016';
