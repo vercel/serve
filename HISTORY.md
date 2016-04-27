@@ -1,4 +1,10 @@
 
+0.2.1 / 2016-04-27
+==================
+
+  * Hide output on now [@leo]
+  * View directory was missing [@leo]
+
 0.2.0 / 2016-04-27
 ==================
 
