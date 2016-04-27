@@ -36,6 +36,16 @@ const isDir = dir => {
   return false
 }
 
+const exists = file => {
+  try {
+    fs.statSync(file)
+  } catch (err) {
+    return false
+  }
+
+  return true
+}
+
 if (!isDir(current)) {
   console.error(red('Specified directory doesn\'t exist!'))
   process.exit(1)
@@ -58,28 +68,11 @@ const ignoredFiles = [
   '.DS_Store'
 ]
 
-const server = micro(async (req, res) => {
-  const parsed = path.parse(req.url)
-
-  if (req.url.indexOf(process.env.ASSET_DIR) > -1) {
-    let body = 'Not able to load asset!'
-
-    const relative = path.relative(process.env.ASSET_DIR, req.url),
-          target = path.join(__dirname, '/../assets', relative)
-
-    try {
-      body = fs.readFileSync(target, 'utf8')
-    } catch (err) {
-      throw err
-    }
-
-    return send(res, 200, body)
-  }
-
+const renderDirectory = dir => {
   let files = []
 
   try {
-    files = fs.readdirSync(current)
+    files = fs.readdirSync(dir)
   } catch (err) {
     throw err
   }
@@ -106,7 +99,36 @@ const server = micro(async (req, res) => {
     nodeVersion: process.version.split('v')[1]
   }
 
-  send(res, 200, render(details))
+  return render(details)
+}
+
+const server = micro(async (req, res) => {
+  let related = path.parse(path.join(current, req.url))
+
+  if (related.dir.includes(process.env.ASSET_DIR)) {
+    const relative = path.relative(process.env.ASSET_DIR, req.url)
+    related = path.parse(path.join(__dirname, '/../assets', relative))
+  }
+
+  related = path.format(related)
+
+  if (!exists(related)) {
+    return send(res, 404, 'Not found')
+  }
+
+  if (isDir(related)) {
+    return send(res, 200, renderDirectory(related))
+  }
+
+  let body = 'Not able to load file!'
+
+  try {
+    body = fs.readFileSync(related, 'utf8')
+  } catch (err) {
+    throw err
+  }
+
+  send(res, 200, body)
 })
 
 server.listen(3000, () => {
