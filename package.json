@@ -56,6 +56,6 @@
     "filesize": "3.3.0",
     "handlebars": "4.0.5",
     "istextorbinary": "1.0.2",
-    "micro": "2.0.0"
+    "micro-core": "2.0.0"
   }
 }
