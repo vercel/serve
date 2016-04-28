@@ -11,7 +11,7 @@ Powers [now-serve](https://github.com/zeit/now-serve).
 Install it
 
 ```bash
-▲ npm install micro-list -g
+▲ npm install -g micro-list
 ```
 
 Run it
