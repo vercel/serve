@@ -11,13 +11,13 @@ Powers [now-serve](https://github.com/zeit/now-serve).
 Install it
 
 ```bash
-npm install micro-list -g
+▲ npm install -g micro-list
 ```
 
 Run it
 
 ```bash
-list [options] <path>
+▲ list [options] <path>
 ```
 
 You can find a list of all options [below](#options).
@@ -38,3 +38,9 @@ You can find a list of all options [below](#options).
 4. Transpile the source code and watch for changes: `gulp`
 
 Yey! Now can use the `list` command everywhere.
+
+## Credits
+
+- Copyright © 2016 Zeit, Inc and project authors.
+- Licensed under MIT.
+- ▲
