@@ -127,6 +127,13 @@ const renderDirectory = dir => {
     }
   }
 
+  if (dir.indexOf(current + '/') > -1) {
+    files.unshift({
+      base: '..',
+      relative: '..'
+    })
+  }
+
   const render = prepareView()
 
   const details = {
