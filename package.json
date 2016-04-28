@@ -1,6 +1,6 @@
 {
   "name": "micro-list",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Render a list of files and directories",
   "scripts": {
     "start": "gulp",

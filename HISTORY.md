@@ -1,4 +1,11 @@
 
+0.3.0 / 2016-04-28
+==================
+
+  * minimist [@rauchg]
+  * smaller `babel-runtime` footprint [@rauchg]
+  * use `micro-core` for faster download [@rauchg]
+
 0.2.1 / 2016-04-27
 ==================
 
