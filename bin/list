@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var regeneratorRuntime = require('babel-regenerator-runtime');
+var regeneratorRuntime = require('babel-regenerator-runtime')
 
 import micro, { send } from 'micro-core'
 import { red, green } from 'chalk'
@@ -11,9 +11,9 @@ import { compile } from 'handlebars'
 import { isBinarySync } from 'istextorbinary'
 import { StringDecoder } from 'string_decoder'
 import filesize from 'filesize'
-import { version } from '../../package';
+import { version } from '../../package'
 
-const argv = minimist(process.argv.slice(2));
+const argv = minimist(process.argv.slice(2))
 
 if (argv.help || argv.h) {
   console.log(`
@@ -22,21 +22,21 @@ list [options]
   -p | --port [number]     port to listen on
   -v | --version           show version
   -h | --help              show help
-`);
-  process.exit(0);
+`)
+  process.exit(0)
 }
 
 if (argv.v || argv.version) {
-  console.log(version);
-  process.exit(0);
+  console.log(version)
+  process.exit(0)
 }
 
-const port = argv.port || argv.p;
-const directory = argv._.pop();
+const port = argv.port || argv.p
+const directory = argv._.pop()
 
 process.env.ASSET_DIR = '/' + Math.random().toString(36).substr(2, 10)
 
-let current = process.cwd();
+let current = process.cwd()
 
 if (directory) {
   current = path.resolve(process.cwd(), directory)
