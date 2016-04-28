@@ -49,11 +49,11 @@
   },
   "dependencies": {
     "chalk": "1.1.3",
-    "commander": "2.9.0",
     "filesize": "3.3.0",
     "handlebars": "4.0.5",
     "istextorbinary": "1.0.2",
     "micro-core": "0.1.0",
-    "babel-regenerator-runtime": "6.5.0"
+    "babel-regenerator-runtime": "6.5.0",
+    "minimist": "1.2.0"
   }
 }

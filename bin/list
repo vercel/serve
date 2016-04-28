@@ -4,23 +4,39 @@ var regeneratorRuntime = require('babel-regenerator-runtime');
 import micro, { send } from 'micro-core'
 import { red, green } from 'chalk'
 import fs from 'fs'
-import bin from 'commander'
+import minimist from 'minimist'
 import pkg from '../../package.json'
 import path from 'path'
 import { compile } from 'handlebars'
 import { isBinarySync } from 'istextorbinary'
 import { StringDecoder } from 'string_decoder'
 import filesize from 'filesize'
+import { version } from '../../package';
 
-bin
-  .version(pkg.version)
-  .option('-p, --port [int]', 'The port on which micro will be running', 3000, parseInt)
-  .parse(process.argv)
+const argv = minimist(process.argv.slice(2));
+
+if (argv.help || argv.h) {
+  console.log(`
+list [options]
+
+  -p | --port [number]     port to listen on
+  -v | --version           show version
+  -h | --help              show help
+`);
+  process.exit(0);
+}
+
+if (argv.v || argv.version) {
+  console.log(version);
+  process.exit(0);
+}
+
+const port = argv.port || argv.p;
+const directory = argv._.pop();
 
 process.env.ASSET_DIR = '/' + Math.random().toString(36).substr(2, 10)
 
-const directory = bin.args[bin.args.length - 1]
-let current = process.cwd()
+let current = process.cwd();
 
 if (directory) {
   current = path.resolve(process.cwd(), directory)
@@ -114,10 +130,10 @@ const renderDirectory = dir => {
   const render = prepareView()
 
   const details = {
+    port,
     files,
     assetDir: process.env.ASSET_DIR,
     directory: path.join(path.basename(current), subPath, '/'),
-    port: bin.port,
     nodeVersion: process.version.split('v')[1]
   }
 
@@ -177,7 +193,7 @@ const server = micro(async (req, res) => {
   }
 })
 
-server.listen(bin.port, () => {
+server.listen(port, () => {
   const details = server.address()
 
   if (!process.env.NOW) {
