@@ -12,7 +12,13 @@
 
   <body>
     <main>
-      <h1>Index of <b>{{directory}}</b></h1>
+      <h1>
+        <i>Index of&nbsp;</i>
+
+        {{#each paths}}
+          <a href="{{url}}">{{name}}</a>
+        {{/each}}
+      </h1>
 
       <ul>
         {{#each files}}

@@ -21,6 +21,25 @@ h1 {
   margin-top: 0;
   color: #000;
   font-family: -apple-system, Helvetica;
+  display: flex;
+
+  i {
+    font-style: normal;
+  }
+
+  a {
+    color: inherit;
+    font-weight: bold;
+    border-bottom: 1px dashed transparent;
+
+    &:after {
+      content: '/';
+    }
+
+    &:hover {
+      color: #7d7d7d;
+    }
+  }
 
   @media (min-width: 992px) {
     font-size: 15px;

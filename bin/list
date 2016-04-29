@@ -134,14 +134,37 @@ const renderDirectory = dir => {
     })
   }
 
-  const render = prepareView()
+  const render = prepareView(),
+        directory = path.join(path.basename(current), subPath, '/'),
+        pathParts = directory.split('/')
+
+  let paths = []
+  pathParts.pop()
+
+  for (let part in pathParts) {
+    let before = 0,
+        parents = []
+
+    while (before <= part) {
+      parents.push(pathParts[before])
+      before++
+    }
+
+    parents.shift()
+
+    paths.push({
+      name: pathParts[part],
+      url: '/' + parents.join('/')
+    })
+  }
 
   const details = {
     port,
     files,
     assetDir: process.env.ASSET_DIR,
-    directory: path.join(path.basename(current), subPath, '/'),
-    nodeVersion: process.version.split('v')[1]
+    directory,
+    nodeVersion: process.version.split('v')[1],
+    paths
   }
 
   return render(details)
