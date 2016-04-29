@@ -33,7 +33,7 @@ You can find a list of all options [below](#options).
 ## Contribute
 
 1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
-2. Uninstall now-serve if it's already installed: `npm uninstall micro-list -g`
+2. Uninstall now-serve if it's already installed: `npm uninstall -g micro-list`
 3. Link it to the global module directory: `npm link`
 4. Transpile the source code and watch for changes: `gulp`
 
