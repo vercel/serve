@@ -1,4 +1,11 @@
 
+0.4.1 / 2016-05-02
+==================
+
+  * Set default port [@leo]
+  * Link path parts [@leo]
+  * Put flag before name [@leo]
+
 0.4.0 / 2016-04-28
 ==================
 
