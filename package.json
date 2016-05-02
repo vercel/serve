@@ -29,7 +29,8 @@
   "keywords": [
     "now",
     "serve",
-    "micro"
+    "micro",
+    "http-server"
   ],
   "author": "leo",
   "license": "MIT",
