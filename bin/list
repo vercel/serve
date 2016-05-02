@@ -31,7 +31,7 @@ if (argv.v || argv.version) {
   process.exit(0)
 }
 
-const port = argv.port || argv.p
+let port = argv.port || argv.p || 3000
 const directory = argv._.pop()
 
 process.env.ASSET_DIR = '/' + Math.random().toString(36).substr(2, 10)
