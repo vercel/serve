@@ -15,7 +15,7 @@ import filesize from 'filesize'
 import { version } from '../../package'
 
 args
-  .option('port', 'Port to listen on', 3000)
+  .option('port', 'Port to listen on', parseInt, 3000)
   .parse(process.argv)
 
 args.args._.shift()
