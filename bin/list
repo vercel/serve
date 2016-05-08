@@ -15,7 +15,7 @@ import filesize from 'filesize'
 import { version } from '../../package'
 
 args
-  .option('port', 'Port to listen on', parseInt, 4000)
+  .option('port', 'Port to listen on', parseInt, 3000)
   .parse(process.argv)
 
 args.raw._.shift()
@@ -212,6 +212,11 @@ const server = micro(async (req, res) => {
 
 server.listen(args.port, () => {
   const details = server.address()
+
+  process.on('SIGINT', () => {
+    server.close()
+    process.exit(0)
+  })
 
   if (!process.env.NOW) {
     console.log(green(`Running on http://localhost:${details.port}`))
