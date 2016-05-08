@@ -18,8 +18,8 @@ args
   .option('port', 'Port to listen on', parseInt, 3000)
   .parse(process.argv)
 
-args.args._.shift()
-const directory = args.args._.pop()
+args.raw._.shift()
+const directory = args.raw._.pop()
 
 process.env.ASSET_DIR = '/' + Math.random().toString(36).substr(2, 10)
 
