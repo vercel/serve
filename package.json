@@ -10,10 +10,7 @@
     "dist",
     "views"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/zeit/micro-list.git"
-  },
+  "repository": "zeit/micro-list",
   "babel": {
     "presets": [
       "es2015"
