@@ -14,12 +14,10 @@ import { StringDecoder } from 'string_decoder'
 import filesize from 'filesize'
 import { version } from '../../package'
 
-args
-  .option('port', 'Port to listen on', parseInt, 3000)
-  .parse(process.argv)
+args.option('port', 'Port to listen on', 3000)
 
-args.raw._.shift()
-const directory = args.raw._.pop()
+const flags = args.parse(process.argv)
+const directory = args.sub[0]
 
 process.env.ASSET_DIR = '/' + Math.random().toString(36).substr(2, 10)
 
@@ -146,7 +144,7 @@ const renderDirectory = dir => {
   }
 
   const details = {
-    port: args.port,
+    port: flags.port,
     files,
     assetDir: process.env.ASSET_DIR,
     directory,
@@ -210,7 +208,7 @@ const server = micro(async (req, res) => {
   }
 })
 
-server.listen(args.port, () => {
+server.listen(flags.port, () => {
   const details = server.address()
 
   process.on('SIGINT', () => {
