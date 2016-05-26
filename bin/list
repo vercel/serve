@@ -188,23 +188,46 @@ const server = micro(async (req, res) => {
     return send(res, 200, indexContent)
   }
 
-  let body = 'Not able to load file!'
+  let body = 'Not able to load file!',
+      stats = false
 
   try {
     body = fs.readFileSync(related)
+    stats = fs.statSync(related)
   } catch (err) {
     throw err
   }
 
   const isBinary = isBinarySync(path.parse(related).base, body)
 
+  let requestDate = req.headers['if-modified-since'],
+      statusCode = 200
+
+  if (requestDate) {
+    requestDate = new Date(requestDate)
+
+    if (requestDate.getTime() == stats.mtime.getTime()) {
+      statusCode = 304
+    }
+  }
+
+  const defaultHeaders = {
+    'Cache-Control': 'max-age=86400',
+    'Pragma': 'public',
+    'Last-Modified': stats.mtime.toUTCString(),
+    'Expires': new Date(Date.now() + 86400000).toUTCString()
+  }
+
+  for (let header in defaultHeaders) {
+    res.setHeader(header, defaultHeaders[header])
+  }
+
   if (isBinary) {
-    res.writeHead(200)
-    res.write(body, 'binary')
-    res.end(null, 'binary')
+    res.statusCode = statusCode
+    res.end(body, 'binary')
   } else {
     const decoder = new StringDecoder('utf8')
-    send(res, 200, decoder.write(body))
+    send(res, statusCode, decoder.write(body))
   }
 })
 
