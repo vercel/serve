@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var regeneratorRuntime = require('babel-regenerator-runtime')
+let regeneratorRuntime = require('babel-regenerator-runtime')
 
 import micro, { send } from 'micro-core'
 import { red, green } from 'chalk'
