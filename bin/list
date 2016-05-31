@@ -199,7 +199,8 @@ const server = micro(async (req, res) => {
     throw err
   }
 
-  const isBinary = isBinarySync(path.parse(related).base, body)
+  const isBinary = isBinarySync(path.parse(related).base, body),
+        getETag = s => '"' + s.dev + '-' + s.ino + '-' + s.mtime.getTime() + '"'
 
   let requestDate = req.headers['if-modified-since'],
       statusCode = 200
@@ -216,7 +217,8 @@ const server = micro(async (req, res) => {
     'Cache-Control': 'max-age=86400',
     'Pragma': 'public',
     'Last-Modified': stats.mtime.toUTCString(),
-    'Expires': new Date(Date.now() + 86400000).toUTCString()
+    'Expires': new Date(Date.now() + 86400000).toUTCString(),
+    'ETag': getETag(stats)
   }
 
   for (let header in defaultHeaders) {
