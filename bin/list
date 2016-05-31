@@ -13,6 +13,7 @@ import { isBinarySync } from 'istextorbinary'
 import { StringDecoder } from 'string_decoder'
 import filesize from 'filesize'
 import { version } from '../../package'
+import mime from 'mime'
 
 args.option('port', 'Port to listen on', 3000)
 
@@ -171,6 +172,7 @@ const server = micro(async (req, res) => {
 
   if (isDir(related)) {
     const indexPath = path.join(related, '/index.html')
+    res.setHeader('Content-Type', mime.lookup(indexPath) + '; charset=utf-8')
 
     if (!exists(indexPath)) {
       return send(res, 200, renderDirectory(related))
@@ -184,7 +186,6 @@ const server = micro(async (req, res) => {
       throw err
     }
 
-    res.setHeader('Content-Type', 'text/html')
     return send(res, 200, indexContent)
   }
 
@@ -227,6 +228,7 @@ const server = micro(async (req, res) => {
     res.end(body, 'binary')
   } else {
     const decoder = new StringDecoder('utf8')
+    res.setHeader('Content-Type', mime.lookup(related) + '; charset=utf-8')
     send(res, statusCode, decoder.write(body))
   }
 })
