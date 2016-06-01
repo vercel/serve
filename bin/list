@@ -215,10 +215,8 @@ const server = micro(async (req, res) => {
   }
 
   const defaultHeaders = {
-    'Cache-Control': 'max-age=86400',
+    'Cache-Control': 'public, max-age=86400',
     'Pragma': 'public',
-    'Last-Modified': stats.mtime.toUTCString(),
-    'Expires': new Date(Date.now() + 86400000).toUTCString(),
     'ETag': getETag(stats)
   }
 
