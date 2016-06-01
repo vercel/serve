@@ -71,7 +71,8 @@ const prepareView = () => {
 }
 
 const ignoredFiles = [
-  '.DS_Store'
+  '.DS_Store',
+  '.git/'
 ]
 
 const renderDirectory = dir => {
