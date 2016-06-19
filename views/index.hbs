@@ -16,14 +16,14 @@
         <i>Index of&nbsp;</i>
 
         {{#each paths}}
-          <a href="{{url}}">{{name}}</a>
+          <a href="/{{url}}">{{name}}</a>
         {{/each}}
       </h1>
 
       <ul>
         {{#each files}}
           <li>
-            <a href="{{relative}}" class="{{ext}}">{{base}}</a>
+            <a href="/{{relative}}" class="{{ext}}">{{base}}</a>
             <i>{{size}}</i>
           </li>
         {{/each}}
