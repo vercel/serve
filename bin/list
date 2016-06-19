@@ -165,7 +165,7 @@ const server = micro(async (req, res) => {
     related = path.parse(path.join(__dirname, '/../assets', relative))
   }
 
-  related = path.format(related)
+  related = unescape(path.format(related))
 
   if (!exists(related)) {
     return send(res, 404, 'Not found')
