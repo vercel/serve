@@ -181,7 +181,7 @@ const server = micro(async (req, res) => {
     let indexContent
 
     try {
-      indexContent = await toPromise(fs.readFile)(indexPath)
+      indexContent = await toPromise(fs.readFile)(indexPath, 'utf8')
     } catch (err) {
       throw err
     }
