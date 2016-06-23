@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-let regeneratorRuntime = require('babel-regenerator-runtime')
-
 import micro, { send } from 'micro-core'
 import { red, green } from 'chalk'
 import fs from 'fs'
@@ -9,11 +7,12 @@ import args from 'args'
 import pkg from '../../package.json'
 import path from 'path'
 import { compile } from 'handlebars'
-import { isBinarySync } from 'istextorbinary'
+import { isBinary } from 'istextorbinary'
 import { StringDecoder } from 'string_decoder'
 import filesize from 'filesize'
 import { version } from '../../package'
 import mime from 'mime'
+import toPromise from 'denodeify'
 
 args.option('port', 'Port to listen on', 3000)
 
@@ -182,7 +181,7 @@ const server = micro(async (req, res) => {
     let indexContent
 
     try {
-      indexContent = fs.readFileSync(indexPath, 'utf8')
+      indexContent = await toPromise(fs.readFile)(indexPath)
     } catch (err) {
       throw err
     }
@@ -191,17 +190,18 @@ const server = micro(async (req, res) => {
   }
 
   let body = 'Not able to load file!',
-      stats = false
+      stats,
+      binaryStat
 
   try {
-    body = fs.readFileSync(related)
-    stats = fs.statSync(related)
+    body = await toPromise(fs.readFile)(related)
+    stats = await toPromise(fs.stat)(related)
+    binaryStat = await toPromise(isBinary)(path.parse(related).base, body)
   } catch (err) {
     throw err
   }
 
-  const isBinary = isBinarySync(path.parse(related).base, body),
-        getETag = s => '"' + s.dev + '-' + s.ino + '-' + s.mtime.getTime() + '"'
+  const getETag = s => '"' + s.dev + '-' + s.ino + '-' + s.mtime.getTime() + '"'
 
   let requestDate = req.headers['if-modified-since'],
       statusCode = 200
@@ -224,7 +224,7 @@ const server = micro(async (req, res) => {
     res.setHeader(header, defaultHeaders[header])
   }
 
-  if (isBinary) {
+  if (binaryStat) {
     res.statusCode = statusCode
     res.end(body, 'binary')
   } else {
