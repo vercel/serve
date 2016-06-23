@@ -1,4 +1,10 @@
 
+0.5.0 / 2016-06-23
+==================
+
+  * performance improvements [@leo]
+  * mime type fixes [@leo]
+
 0.4.1 / 2016-05-02
 ==================
 
