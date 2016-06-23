@@ -27,7 +27,7 @@ You can find a list of all options [below](#options).
 | Usage                  | Description |
 | ---------------------- | ----------- |
 | -h, --help             | Output all available options |
-| -V, --version          | The version tag of the micro-list instance on your device |
+| -v, --version          | The version tag of the micro-list instance on your device |
 | -p, --port [port]      | A custom port on which the app will be running |
 
 ## Contribute
