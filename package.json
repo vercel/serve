@@ -17,8 +17,7 @@
       "es2015-node"
     ],
     "plugins": [
-      "transform-async-to-generator",
-      "syntax-async-functions"
+      "transform-async-to-generator"
     ]
   },
   "bin": {
@@ -42,7 +41,6 @@
   "homepage": "https://github.com/zeit/micro-list#readme",
   "devDependencies": {
     "babel-eslint": "6.1.0",
-    "babel-plugin-syntax-async-functions": "6.8.0",
     "babel-plugin-transform-async-to-generator": "6.8.0",
     "babel-preset-es2015-node": "4.0.2",
     "eslint": "3.0.0",
