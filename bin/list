@@ -14,7 +14,9 @@ import { version } from '../../package'
 import mime from 'mime'
 import toPromise from 'denodeify'
 
-args.option('port', 'Port to listen on', 3000)
+args
+  .option('port', 'Port to listen on', 3000)
+  .option('cache', 'How long static files should be cached in the browser (seconds)', 3600)
 
 const flags = args.parse(process.argv)
 const directory = args.sub[0]
@@ -215,7 +217,7 @@ const server = micro(async (req, res) => {
   }
 
   const defaultHeaders = {
-    'Cache-Control': 'public, max-age=86400',
+    'Cache-Control': 'public, max-age=' + flags.cache,
     'Pragma': 'public',
     'ETag': getETag(stats)
   }

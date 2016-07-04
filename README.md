@@ -29,6 +29,7 @@ You can find a list of all options [below](#options).
 | -h, --help             | Output all available options |
 | -v, --version          | The version tag of the micro-list instance on your device |
 | -p, --port [port]      | A custom port on which the app will be running |
+| -c, --cache [seconds]  | How long static files should be cached in the browser |
 
 ## Contribute
 
