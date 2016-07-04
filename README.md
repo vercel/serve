@@ -24,12 +24,12 @@ You can find a list of all options [below](#options).
 
 ### Options
 
-| Usage                  | Description |
-| ---------------------- | ----------- |
-| -h, --help             | Output all available options |
-| -v, --version          | The version tag of the micro-list instance on your device |
-| -p, --port [port]      | A custom port on which the app will be running |
-| -c, --cache [seconds]  | How long static files should be cached in the browser |
+| Usage                  | Description | Default&nbsp;value |
+| ---------------------- | ----------- | ------------------ |
+| -h, --help             | Output all available options | - |
+| -v, --version          | The version tag of the micro-list instance on your device | - |
+| -p, --port [port]      | A custom port on which the app will be running | 3000 |
+| -c, --cache [seconds]  | How long static files should be cached in the browser | 3600 |
 
 ## Contribute
 
