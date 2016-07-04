@@ -24,7 +24,7 @@ You can find a list of all options [below](#options).
 
 ### Options
 
-| Usage                  | Description | Default&nbsp;value |
+| Usage                  | Description | Default value |
 | ---------------------- | ----------- | ------------------ |
 | -h, --help             | Output all available options | - |
 | -v, --version          | The version tag of the micro-list instance on your device | - |
