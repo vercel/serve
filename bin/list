@@ -13,6 +13,7 @@ import filesize from 'filesize'
 import { version } from '../../package'
 import mime from 'mime'
 import toPromise from 'denodeify'
+import { parse } from 'url'
 
 args
   .option('port', 'Port to listen on', 3000)
@@ -159,10 +160,11 @@ const renderDirectory = dir => {
 }
 
 const server = micro(async (req, res) => {
-  let related = path.parse(path.join(current, req.url))
+  const { pathname } = parse(req.url)
+  let related = path.parse(path.join(current, pathname))
 
   if (related.dir.indexOf(process.env.ASSET_DIR) > -1) {
-    const relative = path.relative(process.env.ASSET_DIR, req.url)
+    const relative = path.relative(process.env.ASSET_DIR, pathname)
     related = path.parse(path.join(__dirname, '/../assets', relative))
   }
 
