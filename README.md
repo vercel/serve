@@ -1,5 +1,7 @@
 # micro-list
 
+![](https://zeit-slackin.now.sh/badge.svg)
+
 Ever wanted to share a certain directory on your network by running just a command? Then this module is exactly what you're looking for: It provides a neat interface for listing the directory's contents and switching into sub folders.
 
 In addition, it's also awesome when it comes to serving static sites. If a directory contains an `index.html`, micro-list will automatically render it instead of serving the file's content as plaintext.
