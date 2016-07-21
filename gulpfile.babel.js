@@ -9,21 +9,19 @@ const paths = {
   styles: 'assets/*.scss'
 }
 
-gulp.task('bin', () => {
-  return gulp.src(paths.bin)
+const sassConfig = {
+  outputStyle: 'compressed'
+}
+
+gulp.task('bin', () => gulp.src(paths.bin)
   .pipe(cache('bin'))
   .pipe(babel())
   .pipe(chmod(755))
-  .pipe(gulp.dest('dist/bin'))
-})
+  .pipe(gulp.dest('dist/bin')))
 
-gulp.task('scss', () => {
-  return gulp.src(paths.styles)
-  .pipe(sass({
-    outputStyle: 'compressed'
-  }).on('error', sass.logError))
-  .pipe(gulp.dest('dist/assets'))
-})
+gulp.task('scss', () => gulp.src(paths.styles)
+  .pipe(sass(sassConfig).on('error', sass.logError))
+  .pipe(gulp.dest('dist/assets')))
 
 gulp.task('watch', () => {
   gulp.watch(paths.bin, ['bin'])
