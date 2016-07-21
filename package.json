@@ -5,7 +5,7 @@
   "scripts": {
     "start": "gulp",
     "prepublish": "gulp build",
-    "test": "eslint bin/**"
+    "test": "eslint bin/** *.js"
   },
   "files": [
     "dist",
