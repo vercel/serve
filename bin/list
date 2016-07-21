@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 
+// Packages
 import micro, { send } from 'micro-core'
 import { red, green } from 'chalk'
-import fs from 'fs'
 import args from 'args'
-import path from 'path'
 import { compile } from 'handlebars'
 import { isBinary } from 'istextorbinary'
 import { StringDecoder } from 'string_decoder'
@@ -12,6 +11,10 @@ import filesize from 'filesize'
 import mime from 'mime'
 import toPromise from 'denodeify'
 import { parse } from 'url'
+
+// Native
+import fs from 'fs'
+import path from 'path'
 
 args
   .option('port', 'Port to listen on', 3000)
