@@ -1,6 +1,6 @@
 # micro-list
 
-![](https://zeit-slackin.now.sh/badge.svg)
+[![Slack Channel](https://zeit-slackin.now.sh/badge.svg)](https://zeit.chat/)
 
 Ever wanted to share a certain directory on your network by running just a command? Then this module is exactly what you're looking for: It provides a neat interface for listing the directory's contents and switching into sub folders.
 
