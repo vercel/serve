@@ -13,7 +13,7 @@ Powers [now-serve](https://github.com/zeit/now-serve).
 
 ## Usage
 
-Install it
+Install it (needs at least node v6)
 
 ```bash
 ▲ npm install -g micro-list
