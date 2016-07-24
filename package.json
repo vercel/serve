@@ -12,12 +12,6 @@
     "views"
   ],
   "repository": "zeit/micro-list",
-  "babel": {
-    "plugins": [
-      "transform-es2015-modules-commonjs",
-      "transform-async-to-generator"
-    ]
-  },
   "bin": {
     "list": "dist/bin/list"
   },
@@ -28,6 +22,15 @@
     "rules": {
       "babel/no-await-in-loop": 0
     }
+  },
+  "babel": {
+    "plugins": [
+      "transform-es2015-modules-commonjs",
+      "transform-async-to-generator"
+    ]
+  },
+  "greenkeeper": {
+    "emails": false
   },
   "keywords": [
     "now",
@@ -61,11 +64,5 @@
     "istextorbinary": "2.1.0",
     "micro-core": "0.4.0",
     "mime": "1.3.4"
-  },
-  "greenkeeper": {
-    "emails": false,
-    "ignore": [
-      "babel-preset-es2015-node"
-    ]
   }
 }
