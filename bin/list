@@ -31,33 +31,30 @@ if (directory) {
   current = path.resolve(process.cwd(), directory)
 }
 
-const isDir = dir => {
+const isDir = async dir => {
+  let stats
+
   try {
-    fs.statSync(dir)
+    stats = await toPromise(fs.stat)(dir)
   } catch (err) {
     return false
   }
 
-  if (fs.statSync(dir).isDirectory()) {
+  if (stats.isDirectory()) {
     return true
   }
 
   return false
 }
 
-const exists = file => {
+const exists = async file => {
   try {
-    fs.statSync(file)
+    await toPromise(fs.stat)(file)
   } catch (err) {
     return false
   }
 
   return true
-}
-
-if (!isDir(current)) {
-  console.error(red('Specified directory doesn\'t exist!'))
-  process.exit(1)
 }
 
 const prepareView = () => {
@@ -78,12 +75,12 @@ const ignoredFiles = [
   '.git/'
 ]
 
-const renderDirectory = dir => {
+const renderDirectory = async dir => {
   let files = []
   const subPath = path.relative(current, dir)
 
   try {
-    files = fs.readdirSync(dir)
+    files = await toPromise(fs.readdir)(dir)
   } catch (err) {
     throw err
   }
@@ -96,13 +93,13 @@ const renderDirectory = dir => {
     details.ext = details.ext.split('.')[1]
     details.relative = path.join(subPath, details.base)
 
-    if (isDir(filePath)) {
+    if (await isDir(filePath)) {
       details.base = details.base + '/'
     } else {
       let fileStats
 
       try {
-        fileStats = fs.statSync(filePath)
+        fileStats = await toPromise(fs.stat)(filePath)
       } catch (err) {
         throw err
       }
@@ -171,15 +168,15 @@ const server = micro(async (req, res) => {
 
   related = decodeURIComponent(path.format(related))
 
-  if (!exists(related)) {
+  if (!await exists(related)) {
     return send(res, 404, 'Not found')
   }
 
-  if (isDir(related)) {
+  if (await isDir(related)) {
     const indexPath = path.join(related, '/index.html')
     res.setHeader('Content-Type', mime.lookup(indexPath) + '; charset=utf-8')
 
-    if (!exists(indexPath)) {
+    if (!await exists(indexPath)) {
       return send(res, 200, renderDirectory(related))
     }
 
@@ -245,13 +242,18 @@ const server = micro(async (req, res) => {
   }
 })
 
-server.listen(flags.port, () => {
+server.listen(flags.port, async () => {
   const details = server.address()
 
   process.on('SIGINT', () => {
     server.close()
     process.exit(0)
   })
+
+  if (!await isDir(current)) {
+    console.error(red('Specified directory doesn\'t exist!'))
+    process.exit(1)
+  }
 
   if (!process.env.NOW) {
     console.log(green(`Running on http://localhost:${details.port}`))
