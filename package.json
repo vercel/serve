@@ -13,10 +13,8 @@
   ],
   "repository": "zeit/micro-list",
   "babel": {
-    "presets": [
-      "es2015-node"
-    ],
     "plugins": [
+      "transform-es2015-modules-commonjs",
       "transform-async-to-generator"
     ]
   },
@@ -45,7 +43,7 @@
   "homepage": "https://github.com/zeit/micro-list#readme",
   "devDependencies": {
     "babel-plugin-transform-async-to-generator": "6.8.0",
-    "babel-preset-es2015-node": "4.0.2",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.11.5",
     "babel-register": "^6.9.0",
     "gulp": "3.9.1",
     "gulp-babel": "6.1.2",
