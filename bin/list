@@ -19,6 +19,7 @@ import toPromise from 'denodeify'
 args
   .option('port', 'Port to listen on', 3000)
   .option('cache', 'How long static files should be cached in the browser (seconds)', 3600)
+  .option('single', 'Serve single page apps with only one index.html')
 
 const flags = args.parse(process.argv)
 const directory = args.sub[0]
@@ -78,6 +79,10 @@ const ignoredFiles = [
 const renderDirectory = async dir => {
   let files = []
   const subPath = path.relative(current, dir)
+
+  if (!await exists(dir)) {
+    return false
+  }
 
   try {
     files = await toPromise(fs.readdir)(dir)
@@ -172,16 +177,32 @@ const server = micro(async (req, res) => {
 
   related = decodeURIComponent(path.format(related))
 
-  if (!await exists(related)) {
+  if (!await exists(related) && flags.single === undefined) {
     return send(res, 404, 'Not found')
   }
 
-  if (await isDir(related)) {
-    const indexPath = path.join(related, '/index.html')
+  // Check if file or directory path
+  if (path.parse(related).ext === '') {
+    let indexPath = path.join(related, '/index.html')
+
+    if (!await isDir(related) && flags.single === undefined) {
+      return send(res, 404, 'Not found')
+    }
+
     res.setHeader('Content-Type', mime.lookup(indexPath) + '; charset=utf-8')
 
     if (!await exists(indexPath)) {
-      return send(res, 200, renderDirectory(related))
+      const renderedDir = await renderDirectory(related)
+
+      if (renderedDir) {
+        return send(res, 200, renderedDir)
+      }
+
+      if (!flags.single) {
+        return send(res, 404, 'Not found')
+      }
+
+      indexPath = path.join(current, '/index.html')
     }
 
     let indexContent

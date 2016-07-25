@@ -35,6 +35,7 @@ You can find a list of all options [below](#options).
 | -v, --version          | The version tag of the micro-list instance on your device | - |
 | -p, --port [port]      | A custom port on which the app will be running | 3000 |
 | -c, --cache [seconds]  | How long static files should be cached in the browser | 3600 |
+| -s, --single           | Serve single page apps with only one index.html in the root directory | - |
 
 ## Contribute
 
