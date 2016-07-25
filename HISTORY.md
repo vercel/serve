@@ -1,4 +1,11 @@
 
+0.7.0 / 2016-07-25
+==================
+
+  * drop support for node <6 [@leo]
+  * performance improvements [@leo]
+  * add `-s` flag for SPAs [@leo]
+
 0.6.1 / 2016-07-15
 ==================
 
