@@ -192,16 +192,21 @@ const server = micro(async (req, res) => {
     res.setHeader('Content-Type', mime.lookup(indexPath) + '; charset=utf-8')
 
     if (!await exists(indexPath)) {
+      // Try to render the current directory's content
       const renderedDir = await renderDirectory(related)
 
+      // If it works, send the directory listing to the user
       if (renderedDir) {
         return send(res, 200, renderedDir)
       }
 
+      // And if it doesn't, see if it's a single page application
+      // If that's not true either, send an error
       if (!flags.single) {
         return send(res, 404, 'Not found')
       }
 
+      // But IF IT IS true, load the SPA's root index file
       indexPath = path.join(current, '/index.html')
     }
 
