@@ -47,7 +47,6 @@
   "devDependencies": {
     "babel-plugin-transform-async-to-generator": "6.8.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.11.5",
-    "babel-register": "^6.9.0",
     "gulp": "3.9.1",
     "gulp-babel": "6.1.2",
     "gulp-cached": "1.1.0",
