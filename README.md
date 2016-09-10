@@ -46,9 +46,3 @@ You can find a list of all options [below](#options).
 4. Transpile the source code and watch for changes: `npm start`
 
 Yey! Now can use the `list` command everywhere.
-
-## Credits
-
-- Copyright © 2016 Zeit, Inc and project authors.
-- Licensed under MIT.
-- ▲
