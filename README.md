@@ -17,13 +17,13 @@ Powers [now-serve](https://github.com/zeit/now-serve).
 Install it (needs at least node v6)
 
 ```bash
-▲ npm install -g micro-list
+$ npm install -g micro-list
 ```
 
 Run it
 
 ```bash
-▲ list [options] <path>
+$ list [options] <path>
 ```
 
 You can find a list of all options [below](#options).
