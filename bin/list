@@ -15,11 +15,13 @@ import {isBinary} from 'istextorbinary'
 import filesize from 'filesize'
 import mime from 'mime'
 import toPromise from 'denodeify'
+import compress from 'micro-compress'
 
 args
   .option('port', 'Port to listen on', 3000)
   .option('cache', 'How long static files should be cached in the browser (seconds)', 3600)
   .option('single', 'Serve single page apps with only one index.html')
+  .option('unzipped', 'Disable GZIP compression')
 
 const flags = args.parse(process.argv)
 const directory = args.sub[0]
@@ -166,7 +168,7 @@ const renderDirectory = async dir => {
   return render(details)
 }
 
-const server = micro(async (req, res) => {
+const handler = async (req, res) => {
   const {pathname} = parse(req.url)
   let related = path.parse(path.join(current, pathname))
 
@@ -274,7 +276,9 @@ const server = micro(async (req, res) => {
     res.setHeader('Content-Type', contentType + '; charset=utf-8')
     send(res, statusCode, decoder.write(body))
   }
-})
+}
+
+const server = flags.unzipped ? micro(handler) : micro(compress(handler))
 
 server.listen(flags.port, async () => {
   const details = server.address()
