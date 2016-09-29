@@ -10,7 +10,7 @@ In addition, it's also awesome when it comes to serving static sites. If a direc
 
 Powers [now-serve](https://github.com/zeit/now-serve).
 
-<img src="http://i.imgur.com/gYrAYyU.png">
+<img src="http://i.imgur.com/Fru8ufo.png">
 
 ## Usage
 
