@@ -1,5 +1,5 @@
 {
-  "name": "micro-list",
+  "name": "list",
   "version": "0.8.0",
   "description": "Single-command HTTP directory listing and file serving",
   "scripts": {
@@ -11,7 +11,7 @@
     "dist",
     "views"
   ],
-  "repository": "zeit/micro-list",
+  "repository": "zeit/list",
   "bin": {
     "list": "dist/bin/list"
   },
@@ -41,9 +41,9 @@
   "author": "leo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zeit/micro-list/issues"
+    "url": "https://github.com/zeit/list/issues"
   },
-  "homepage": "https://github.com/zeit/micro-list#readme",
+  "homepage": "https://github.com/zeit/list#readme",
   "devDependencies": {
     "babel-plugin-transform-async-to-generator": "6.16.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.11.5",
