@@ -152,7 +152,7 @@ const renderDirectory = async dir => {
 
     paths.push({
       name: pathParts[part],
-      url: '/' + parents.join('/')
+      url: parents.join('/')
     })
   }
 
