@@ -114,12 +114,12 @@ const renderDirectory = async dir => {
   const pathParts = directory.split('/')
 
   if (dir.indexOf(current + '/') > -1) {
-    const directoryPath = pathParts
+    const directoryPath = [...pathParts]
     directoryPath.shift()
 
     files.unshift({
       base: '..',
-      relative: path.join(...pathParts, '..')
+      relative: path.join(...directoryPath, '..')
     })
   }
 
