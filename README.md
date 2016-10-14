@@ -39,6 +39,13 @@ You can find a list of all options [below](#options).
 | -s, --single           | Serve single page apps with only one `index.html` in the root directory | - |
 | -u, --unzipped         | Disable gzip compression | false |
 
+## Examples
+
+Here's a list of selected sites that are running on `list`:
+
+- [Hyper](https://hyper.is) ([repo](https://github.com/zeit/hyper-website))
+- [Leo Lamprecht](https://leo.im) ([repo](https://github.com/leo/site))
+
 ## Contribute
 
 1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
