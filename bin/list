@@ -110,16 +110,20 @@ const renderDirectory = async dir => {
     }
   }
 
+  const directory = path.join(path.basename(current), subPath, '/')
+  const pathParts = directory.split('/')
+
   if (dir.indexOf(current + '/') > -1) {
+    const directoryPath = pathParts
+    directoryPath.shift()
+
     files.unshift({
       base: '..',
-      relative: '..'
+      relative: path.join(...pathParts, '..')
     })
   }
 
   const render = prepareView()
-  const directory = path.join(path.basename(current), subPath, '/')
-  const pathParts = directory.split('/')
 
   const paths = []
   pathParts.pop()
