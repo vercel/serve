@@ -238,8 +238,8 @@ const handler = async (req, res) => {
 
   const defaultHeaders = {
     'Cache-Control': 'public, max-age=' + flags.cache,
-    'Pragma': 'public',
-    'ETag': getETag(stats)
+    Pragma: 'public',
+    ETag: getETag(stats)
   }
 
   for (const header in defaultHeaders) {
