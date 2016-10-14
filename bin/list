@@ -50,16 +50,6 @@ const isDir = async dir => {
   return false
 }
 
-const exists = async file => {
-  try {
-    await toPromise(fs.stat)(file)
-  } catch (err) {
-    return false
-  }
-
-  return true
-}
-
 const prepareView = () => {
   let viewContent = false
   const viewPath = path.normalize(path.join(__dirname, '/../../views/index.hbs'))
@@ -82,7 +72,7 @@ const renderDirectory = async dir => {
   let files = []
   const subPath = path.relative(current, dir)
 
-  if (!await exists(dir)) {
+  if (!fs.existsSync(dir)) {
     return false
   }
 
@@ -179,7 +169,7 @@ const handler = async (req, res) => {
 
   related = decodeURIComponent(path.format(related))
 
-  if (!await exists(related) && flags.single === undefined) {
+  if (!fs.existsSync(related) && flags.single === undefined) {
     return send(res, 404, 'Not found')
   }
 
@@ -193,7 +183,7 @@ const handler = async (req, res) => {
 
     res.setHeader('Content-Type', mime.lookup(indexPath) + '; charset=utf-8')
 
-    if (!await exists(indexPath)) {
+    if (!fs.existsSync(indexPath)) {
       // Try to render the current directory's content
       const renderedDir = await renderDirectory(related)
 
