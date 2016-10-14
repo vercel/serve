@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 // Native
-import fs from 'fs'
 import path from 'path'
 
 // Packages
@@ -11,11 +10,11 @@ import micro, {send} from 'micro'
 import {red, green} from 'chalk'
 import args from 'args'
 import {compile} from 'handlebars'
-import {isBinary} from 'istextorbinary'
+import {isBinarySync as isBinary} from 'istextorbinary'
 import filesize from 'filesize'
 import mime from 'mime'
-import toPromise from 'denodeify'
 import compress from 'micro-compress'
+import fs from 'fs-promise'
 
 args
   .option('port', 'Port to listen on', process.env.PORT || 3000)
@@ -38,7 +37,7 @@ const isDir = async dir => {
   let stats
 
   try {
-    stats = await toPromise(fs.stat)(dir)
+    stats = await fs.stat(dir)
   } catch (err) {
     return false
   }
@@ -77,7 +76,7 @@ const renderDirectory = async dir => {
   }
 
   try {
-    files = await toPromise(fs.readdir)(dir)
+    files = await fs.readdir(dir)
   } catch (err) {
     throw err
   }
@@ -96,7 +95,7 @@ const renderDirectory = async dir => {
       let fileStats
 
       try {
-        fileStats = await toPromise(fs.stat)(filePath)
+        fileStats = await fs.stat(filePath)
       } catch (err) {
         throw err
       }
@@ -205,7 +204,7 @@ const handler = async (req, res) => {
     let indexContent
 
     try {
-      indexContent = await toPromise(fs.readFile)(indexPath, 'utf8')
+      indexContent = await fs.readFile(indexPath, 'utf8')
     } catch (err) {
       throw err
     }
@@ -215,16 +214,15 @@ const handler = async (req, res) => {
 
   let body = 'Not able to load file!'
   let stats
-  let binaryStat
 
   try {
-    body = await toPromise(fs.readFile)(related)
-    stats = await toPromise(fs.stat)(related)
-    binaryStat = await toPromise(isBinary)(path.parse(related).base, body)
+    body = await fs.readFile(related)
+    stats = await fs.stat(related)
   } catch (err) {
     throw err
   }
 
+  const binaryStat = isBinary(path.parse(related).base, body)
   const getETag = s => '"' + s.dev + '-' + s.ino + '-' + s.mtime.getTime() + '"'
 
   let requestDate = req.headers['if-modified-since']
