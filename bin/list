@@ -2,9 +2,9 @@
 
 // Native
 import path from 'path'
+import {parse} from 'url'
 
 // Packages
-import {parse} from 'url'
 import {StringDecoder} from 'string_decoder'
 import micro, {send} from 'micro'
 import {red, green} from 'chalk'
