@@ -12,7 +12,7 @@ import args from 'args'
 import {compile} from 'handlebars'
 import {isBinarySync as isBinary} from 'istextorbinary'
 import filesize from 'filesize'
-import mime from 'mime'
+import mime from 'mime-types'
 import compress from 'micro-compress'
 import fs from 'fs-promise'
 
@@ -184,7 +184,7 @@ const handler = async (req, res) => {
       return send(res, 404, 'Not found')
     }
 
-    res.setHeader('Content-Type', mime.lookup(indexPath) + '; charset=utf-8')
+    res.setHeader('Content-Type', mime.contentType(path.extname(indexPath)))
 
     if (!fs.existsSync(indexPath)) {
       // Try to render the current directory's content
@@ -259,13 +259,9 @@ const handler = async (req, res) => {
     res.end(body, 'binary')
   } else {
     const decoder = new StringDecoder('utf8')
-    let contentType = mime.lookup(related)
+    const contentType = mime.contentType(path.extname(related)) || mime.contentType('text')
 
-    if (!path.parse(related).ext) {
-      contentType = 'text/plain'
-    }
-
-    res.setHeader('Content-Type', contentType + '; charset=utf-8')
+    res.setHeader('Content-Type', contentType)
     send(res, statusCode, decoder.write(body))
   }
 }
