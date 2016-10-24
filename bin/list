@@ -172,14 +172,12 @@ const handler = async (req, res) => {
 
   related = decodeURIComponent(path.format(related))
 
-  let notFoundResponse
+  let notFoundResponse = 'Not Found'
 
   try {
     const custom404Path = path.join(current, '/404.html')
     notFoundResponse = fs.readFileSync(custom404Path, 'utf-8')
-  } catch (err) {
-    notFoundResponse = 'Not Found'
-  }
+  } catch (err) {}
 
   if (!fs.existsSync(related) && flags.single === undefined) {
     return send(res, 404, notFoundResponse)
