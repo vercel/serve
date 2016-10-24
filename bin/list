@@ -176,7 +176,7 @@ const handler = async (req, res) => {
 
   try {
     const custom404Path = path.join(current, '/404.html')
-    notFoundResponse = fs.readFileSync(custom404Path, 'utf-8')
+    notFoundResponse = await fs.readFile(custom404Path, 'utf-8')
   } catch (err) {}
 
   if (!fs.existsSync(related) && flags.single === undefined) {
