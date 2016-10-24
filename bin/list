@@ -172,8 +172,15 @@ const handler = async (req, res) => {
 
   related = decodeURIComponent(path.format(related))
 
+  let notFoundResponse = 'Not Found'
+
+  try {
+    const custom404Path = path.join(current, '/404.html')
+    notFoundResponse = await fs.readFile(custom404Path, 'utf-8')
+  } catch (err) {}
+
   if (!fs.existsSync(related) && flags.single === undefined) {
-    return send(res, 404, 'Not found')
+    return send(res, 404, notFoundResponse)
   }
 
   // Check if file or directory path
@@ -181,7 +188,7 @@ const handler = async (req, res) => {
     let indexPath = path.join(related, '/index.html')
 
     if (!await isDir(related) && flags.single === undefined) {
-      return send(res, 404, 'Not found')
+      return send(res, 404, notFoundResponse)
     }
 
     res.setHeader('Content-Type', mime.contentType(path.extname(indexPath)))
@@ -198,7 +205,7 @@ const handler = async (req, res) => {
       // And if it doesn't, see if it's a single page application
       // If that's not true either, send an error
       if (!flags.single) {
-        return send(res, 404, 'Not found')
+        return send(res, 404, notFoundResponse)
       }
 
       // But IF IT IS true, load the SPA's root index file
