@@ -8,8 +8,6 @@ Ever wanted to share a certain directory on your network by running just a comma
 
 In addition, it's also awesome when it comes to serving static sites. If a directory contains an `index.html`, list will automatically render it instead of serving the file's content as plaintext.
 
-Powers [now-serve](https://github.com/zeit/now-serve).
-
 <img src="http://i.imgur.com/Fru8ufo.png">
 
 ## Usage
