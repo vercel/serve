@@ -161,6 +161,34 @@ const renderDirectory = async dir => {
   return render(details)
 }
 
+
+
+// To enhance, one can take inspiration from https://github.com/jfhbrook/node-ecstatic/blob/fe17a5623c18319f82101b6549e9e2e526e03d1f/lib/ecstatic.js#L284
+const isNotModified = (req, etag, fileStats) => {
+  try {
+    // Etag comparison
+    const requestEtag = req.headers['if-none-match'];
+    if (requestEtag && (requestEtag === etag)) {
+      return true;
+    }
+    // Last-modified comparison
+    // TODO: Original code, left untouched, but for me it's not working at all
+    // The algo seems wrong to be and we don't even set a Last-modified header in response
+    let requestDate = req.headers['if-modified-since']
+    if (requestDate) {
+      requestDate = new Date(requestDate)
+      if (requestDate.getTime() === fileStats.mtime.getTime()) {
+        return true;
+      }
+    }
+  } 
+  catch (e) {
+    return false; // failsafe in case of failure
+  }
+  return false;
+}
+
+
 const handler = async (req, res) => {
   const {pathname} = parse(req.url)
   let related = path.parse(path.join(current, pathname))
@@ -234,42 +262,33 @@ const handler = async (req, res) => {
   }
 
   const binaryStat = isBinary(path.parse(related).base, body)
-  const getETag = s => '"' + s.dev + '-' + s.ino + '-' + s.mtime.getTime() + '"'
-
-  let requestDate = req.headers['if-modified-since']
-  let statusCode = 200
-
-  if (requestDate) {
-    requestDate = new Date(requestDate)
-
-    if (requestDate.getTime() === stats.mtime.getTime()) {
-      statusCode = 304
-    }
-  }
+  const etag = '"' + stats.dev + '-' + stats.ino + '-' + stats.mtime.getTime() + '"'
 
   const defaultHeaders = {
     'Cache-Control': 'public, max-age=' + flags.cache,
     Pragma: 'public',
-    ETag: getETag(stats)
+    ETag: etag
   }
-
   for (const header in defaultHeaders) {
     if (!{}.hasOwnProperty.call(defaultHeaders, header)) {
       continue
     }
-
     res.setHeader(header, defaultHeaders[header])
   }
 
+  if (isNotModified(req,etag,stats)) {
+    return send(res, 304)
+  }
+
   if (binaryStat) {
-    res.statusCode = statusCode
+    res.statusCode = 200
     res.end(body, 'binary')
   } else {
     const decoder = new StringDecoder('utf8')
     const contentType = mime.contentType(path.extname(related)) || mime.contentType('text')
 
     res.setHeader('Content-Type', contentType)
-    send(res, statusCode, decoder.write(body))
+    send(res, 200, decoder.write(body))
   }
 }
 
