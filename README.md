@@ -21,7 +21,7 @@ $ npm install -g list
 Run it
 
 ```bash
-$ list [options] <path>
+$ list <path> [options]
 ```
 
 You can find a list of all options [below](#options).
