@@ -25,6 +25,7 @@ args
   .option('unzipped', 'Disable GZIP compression')
   .option('ignore', 'Files and directories to ignore', '')
   .option('auth', 'Serve behind basic auth')
+  .option(['o','cors'], 'Setup * CORS headers to allow requests from any origin',false)
 
 const flags = args.parse(process.argv)
 const directory = args.sub[0]
@@ -288,6 +289,13 @@ const handler = async (req, res) => {
     'Cache-Control': 'public, max-age=' + flags.cache,
     Pragma: 'public',
     ETag: getETag(stats)
+  }
+
+  // Using same --cors behavior as in http-server:
+  // https://github.com/indexzero/http-server/blob/fed98f2dbb87f1ea7a793e48a1975c20c9e970fa/lib/http-server.js#L68
+  if (flags.cors) {
+    defaultHeaders['Access-Control-Allow-Origin'] = '*'
+    defaultHeaders['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Range'
   }
 
   for (const header in defaultHeaders) {
