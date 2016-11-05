@@ -185,12 +185,8 @@ const handler = async (req, res) => {
   }
 
   // Check if file or directory path
-  if (path.parse(related).ext === '') {
+  if (await isDir(related)) {
     let indexPath = path.join(related, '/index.html')
-
-    if (!await isDir(related) && flags.single === undefined) {
-      return send(res, 404, notFoundResponse)
-    }
 
     res.setHeader('Content-Type', mime.contentType(path.extname(indexPath)))
 
