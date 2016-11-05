@@ -86,12 +86,13 @@ const renderDirectory = async dir => {
     const index = files.indexOf(file)
     const details = path.parse(filePath)
 
-    details.ext = details.ext.split('.')[1]
     details.relative = path.join(subPath, details.base)
 
     if (await isDir(filePath)) {
       details.base += '/'
     } else {
+      details.ext = details.ext.split('.')[1] || 'txt'
+
       let fileStats
 
       try {
