@@ -52,7 +52,7 @@
     "gulp-cached": "1.1.0",
     "gulp-chmod": "2.0.0",
     "gulp-sass": "2.3.2",
-    "xo": "0.17.0"
+    "xo": "0.17.1"
   },
   "dependencies": {
     "args": "2.1.0",
