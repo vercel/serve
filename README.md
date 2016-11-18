@@ -53,4 +53,4 @@ Here's a list of selected sites that are running on `list`:
 3. Link it to the global module directory: `npm link`
 4. Transpile the source code and watch for changes: `npm start`
 
-Yey! Now can use the `list` command everywhere.
+Yey! Now can use the `list` command everywhere. [Here](https://github.com/zeit/list/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+for+beginners%22)'s a list of issues that are great for beginners.
