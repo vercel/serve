@@ -15,13 +15,17 @@ import filesize from 'filesize'
 import mime from 'mime-types'
 import compress from 'micro-compress'
 import fs from 'fs-promise'
+import auth from 'basic-auth'
 
 args
   .option('port', 'Port to listen on', process.env.PORT || 3000)
   .option('cache', 'How long static files should be cached in the browser (seconds)', 3600)
   .option('single', 'Serve single page apps with only one index.html')
   .option('unzipped', 'Disable GZIP compression')
-  .option('ignore', 'Files and directories to ignore')
+  .option('ignore', 'Files and directories to ignore', '')
+  .option('auth', 'Serve behind basic auth')
+  .option('username', 'Username for basic auth', 'example')
+  .option('key', 'Password for basic auth', '1234')
 
 const flags = args.parse(process.argv)
 const directory = args.sub[0]
@@ -68,7 +72,7 @@ let ignoredFiles = [
   '.git/'
 ]
 
-if (flags.ignore.length) {
+if (flags.ignore && flags.ignore.length) {
   ignoredFiles = ignoredFiles.concat(flags.ignore.split(','))
 }
 
@@ -168,6 +172,17 @@ const renderDirectory = async dir => {
 }
 
 const handler = async (req, res) => {
+  
+  if (flags.auth) {
+    const credentials = auth(req)
+
+    if (!credentials || credentials.name !== flags.username || credentials.pass !== flags.key) {
+      res.statusCode = 401
+      res.setHeader('WWW-Authenticate', 'Basic realm="User Visible Realm"')
+      return send(res, 401, 'Access Denied')
+    }
+  }
+ 
   const {pathname} = parse(req.url)
   let related = path.parse(path.join(current, pathname))
 

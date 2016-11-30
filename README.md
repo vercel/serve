@@ -37,6 +37,9 @@ You can find a list of all options [below](#options).
 | -s, --single           | Serve single page apps with only one `index.html` in the root directory | - |
 | -u, --unzipped         | Disable gzip compression | false |
 | -i, --ignore           | Files and directories to ignore | - |
+| -a, --auth             | Enable HTTP Basic Authentication | false |
+| -u, --username         | Username for HTTP Basic Authentication | example |
+| -k, --key              | Password for HTTP Basic Authentication | 1234 |
 
 ## Examples
 
