@@ -8,8 +8,6 @@ Ever wanted to share a certain directory on your network by running just a comma
 
 In addition, it's also awesome when it comes to serving static sites. If a directory contains an `index.html`, list will automatically render it instead of serving the file's content as plaintext.
 
-Powers [now-serve](https://github.com/zeit/now-serve).
-
 <img src="http://i.imgur.com/Fru8ufo.png">
 
 ## Usage
@@ -23,7 +21,7 @@ $ npm install -g list
 Run it
 
 ```bash
-$ list [options] <path>
+$ list <path> [options]
 ```
 
 You can find a list of all options [below](#options).
@@ -38,6 +36,15 @@ You can find a list of all options [below](#options).
 | -c, --cache [seconds]  | How long static files should be cached in the browser | 3600 |
 | -s, --single           | Serve single page apps with only one `index.html` in the root directory | - |
 | -u, --unzipped         | Disable gzip compression | false |
+| -i, --ignore           | Files and directories to ignore | - |
+
+## Examples
+
+Here's a list of selected sites that are running on `list`:
+
+- [Hyper](https://hyper.is) ([repo](https://github.com/zeit/hyper-website))
+- [Leo Lamprecht](https://leo.im) ([repo](https://github.com/leo/site))
+- [Ricky Rauch](https://rickyrauch.me)
 
 ## Contribute
 
@@ -46,4 +53,4 @@ You can find a list of all options [below](#options).
 3. Link it to the global module directory: `npm link`
 4. Transpile the source code and watch for changes: `npm start`
 
-Yey! Now can use the `list` command everywhere.
+Yey! Now can use the `list` command everywhere. [Here](https://github.com/zeit/list/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+for+beginners%22)'s a list of issues that are great for beginners.

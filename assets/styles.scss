@@ -66,6 +66,8 @@ ul {
       font-size: 11px;
       display: block;
       font-style: normal;
+      white-space: nowrap;
+      padding-left: 15px;
     }
 
     @media (min-width: 768px) {
@@ -87,6 +89,7 @@ ul {
         opacity: 0;
         margin-left: 10px;
         margin-top: 3px;
+        padding-left: 0;
       }
     }
   }
@@ -96,6 +99,7 @@ ul {
     white-space: nowrap;
     overflow: hidden;
     display: block;
+    text-overflow: ellipsis;
 
     &:before {
       content: '\f016';

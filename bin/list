@@ -1,21 +1,20 @@
 #!/usr/bin/env node
 
 // Native
-import fs from 'fs'
 import path from 'path'
+import {parse} from 'url'
 
 // Packages
-import {parse} from 'url'
 import {StringDecoder} from 'string_decoder'
 import micro, {send} from 'micro'
 import {red, green} from 'chalk'
 import args from 'args'
 import {compile} from 'handlebars'
-import {isBinary} from 'istextorbinary'
+import {isBinarySync as isBinary} from 'istextorbinary'
 import filesize from 'filesize'
-import mime from 'mime'
-import toPromise from 'denodeify'
+import mime from 'mime-types'
 import compress from 'micro-compress'
+import fs from 'fs-promise'
 import stream from 'send'
 
 args
@@ -23,6 +22,7 @@ args
   .option('cache', 'How long static files should be cached in the browser (seconds)', 3600)
   .option('single', 'Serve single page apps with only one index.html')
   .option('unzipped', 'Disable GZIP compression')
+  .option('ignore', 'Files and directories to ignore')
 
 const flags = args.parse(process.argv)
 const directory = args.sub[0]
@@ -39,7 +39,7 @@ const isDir = async dir => {
   let stats
 
   try {
-    stats = await toPromise(fs.stat)(dir)
+    stats = await fs.stat(dir)
   } catch (err) {
     return false
   }
@@ -49,16 +49,6 @@ const isDir = async dir => {
   }
 
   return false
-}
-
-const exists = async file => {
-  try {
-    await toPromise(fs.stat)(file)
-  } catch (err) {
-    return false
-  }
-
-  return true
 }
 
 const prepareView = () => {
@@ -74,21 +64,25 @@ const prepareView = () => {
   return compile(viewContent)
 }
 
-const ignoredFiles = [
+let ignoredFiles = [
   '.DS_Store',
   '.git/'
 ]
+
+if (flags.ignore.length) {
+  ignoredFiles = ignoredFiles.concat(flags.ignore.split(','))
+}
 
 const renderDirectory = async dir => {
   let files = []
   const subPath = path.relative(current, dir)
 
-  if (!await exists(dir)) {
+  if (!fs.existsSync(dir)) {
     return false
   }
 
   try {
-    files = await toPromise(fs.readdir)(dir)
+    files = await fs.readdir(dir)
   } catch (err) {
     throw err
   }
@@ -98,16 +92,17 @@ const renderDirectory = async dir => {
     const index = files.indexOf(file)
     const details = path.parse(filePath)
 
-    details.ext = details.ext.split('.')[1]
     details.relative = path.join(subPath, details.base)
 
     if (await isDir(filePath)) {
       details.base += '/'
     } else {
+      details.ext = details.ext.split('.')[1] || 'txt'
+
       let fileStats
 
       try {
-        fileStats = await toPromise(fs.stat)(filePath)
+        fileStats = await fs.stat(filePath)
       } catch (err) {
         throw err
       }
@@ -122,16 +117,20 @@ const renderDirectory = async dir => {
     }
   }
 
+  const directory = path.join(path.basename(current), subPath, '/')
+  const pathParts = directory.split('/')
+
   if (dir.indexOf(current + '/') > -1) {
+    const directoryPath = [...pathParts]
+    directoryPath.shift()
+
     files.unshift({
       base: '..',
-      relative: '..'
+      relative: path.join(...directoryPath, '..')
     })
   }
 
   const render = prepareView()
-  const directory = path.join(path.basename(current), subPath, '/')
-  const pathParts = directory.split('/')
 
   const paths = []
   pathParts.pop()
@@ -153,7 +152,7 @@ const renderDirectory = async dir => {
 
     paths.push({
       name: pathParts[part],
-      url: '/' + parents.join('/')
+      url: parents.join('/')
     })
   }
 
@@ -180,21 +179,24 @@ const handler = async (req, res) => {
 
   related = decodeURIComponent(path.format(related))
 
-  if (!await exists(related) && flags.single === undefined) {
-    return send(res, 404, 'Not found')
+  let notFoundResponse = 'Not Found'
+
+  try {
+    const custom404Path = path.join(current, '/404.html')
+    notFoundResponse = await fs.readFile(custom404Path, 'utf-8')
+  } catch (err) {}
+
+  if (!fs.existsSync(related) && flags.single === undefined) {
+    return send(res, 404, notFoundResponse)
   }
 
   // Check if file or directory path
-  if (path.parse(related).ext === '') {
+  if (await isDir(related)) {
     let indexPath = path.join(related, '/index.html')
 
-    if (!await isDir(related) && flags.single === undefined) {
-      return send(res, 404, 'Not found')
-    }
+    res.setHeader('Content-Type', mime.contentType(path.extname(indexPath)))
 
-    res.setHeader('Content-Type', mime.lookup(indexPath) + '; charset=utf-8')
-
-    if (!await exists(indexPath)) {
+    if (!fs.existsSync(indexPath)) {
       // Try to render the current directory's content
       const renderedDir = await renderDirectory(related)
 
@@ -206,7 +208,7 @@ const handler = async (req, res) => {
       // And if it doesn't, see if it's a single page application
       // If that's not true either, send an error
       if (!flags.single) {
-        return send(res, 404, 'Not found')
+        return send(res, 404, notFoundResponse)
       }
 
       // But IF IT IS true, load the SPA's root index file
@@ -216,7 +218,7 @@ const handler = async (req, res) => {
     let indexContent
 
     try {
-      indexContent = await toPromise(fs.readFile)(indexPath, 'utf8')
+      indexContent = await fs.readFile(indexPath, 'utf8')
     } catch (err) {
       throw err
     }
@@ -226,12 +228,10 @@ const handler = async (req, res) => {
 
   let body = 'Not able to load file!'
   let stats
-  let binaryStat
 
   try {
-    body = await toPromise(fs.readFile)(related)
-    stats = await toPromise(fs.stat)(related)
-    binaryStat = await toPromise(isBinary)(path.parse(related).base, body)
+    body = await fs.readFile(related)
+    stats = await fs.stat(related)
   } catch (err) {
     if (err instanceof RangeError) {
       return stream(req, related).pipe(res)
@@ -240,6 +240,7 @@ const handler = async (req, res) => {
     }
   }
 
+  const binaryStat = isBinary(path.parse(related).base, body)
   const getETag = s => '"' + s.dev + '-' + s.ino + '-' + s.mtime.getTime() + '"'
 
   let requestDate = req.headers['if-modified-since']
@@ -255,8 +256,8 @@ const handler = async (req, res) => {
 
   const defaultHeaders = {
     'Cache-Control': 'public, max-age=' + flags.cache,
-    'Pragma': 'public',
-    'ETag': getETag(stats)
+    Pragma: 'public',
+    ETag: getETag(stats)
   }
 
   for (const header in defaultHeaders) {
@@ -272,13 +273,9 @@ const handler = async (req, res) => {
     res.end(body, 'binary')
   } else {
     const decoder = new StringDecoder('utf8')
-    let contentType = mime.lookup(related)
+    const contentType = mime.contentType(path.extname(related)) || mime.contentType('text')
 
-    if (!path.parse(related).ext) {
-      contentType = 'text/plain'
-    }
-
-    res.setHeader('Content-Type', contentType + '; charset=utf-8')
+    res.setHeader('Content-Type', contentType)
     send(res, statusCode, decoder.write(body))
   }
 }
