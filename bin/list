@@ -16,6 +16,7 @@ import filesize from 'filesize'
 import mime from 'mime'
 import toPromise from 'denodeify'
 import compress from 'micro-compress'
+import stream from 'send'
 
 args
   .option('port', 'Port to listen on', process.env.PORT || 3000)
@@ -232,7 +233,11 @@ const handler = async (req, res) => {
     stats = await toPromise(fs.stat)(related)
     binaryStat = await toPromise(isBinary)(path.parse(related).base, body)
   } catch (err) {
-    throw err
+    if (err instanceof RangeError) {
+      return stream(req, related).pipe(res)
+    } else {
+      throw err
+    }
   }
 
   const getETag = s => '"' + s.dev + '-' + s.ino + '-' + s.mtime.getTime() + '"'
