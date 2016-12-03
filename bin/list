@@ -174,6 +174,11 @@ const handler = async (req, res) => {
   if (flags.auth) {
     const credentials = auth(req)
 
+    if (!process.env.LIST_USER || !process.env.LIST_PASSWORD) {
+      console.error(red('You are running List with basic auth but did not set the LIST_USER and LIST_PASSWORD environment variables.'))
+      process.exit(1)
+    }
+
     if (!credentials || credentials.name !== process.env.LIST_USER || credentials.pass !== process.env.LIST_PASSWORD) {
       res.statusCode = 401
       res.setHeader('WWW-Authenticate', 'Basic realm="User Visible Realm"')
