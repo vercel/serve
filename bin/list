@@ -24,8 +24,6 @@ args
   .option('unzipped', 'Disable GZIP compression')
   .option('ignore', 'Files and directories to ignore', '')
   .option('auth', 'Serve behind basic auth')
-  .option('username', 'Username for basic auth', 'example')
-  .option('key', 'Password for basic auth', '1234')
 
 const flags = args.parse(process.argv)
 const directory = args.sub[0]
@@ -176,7 +174,7 @@ const handler = async (req, res) => {
   if (flags.auth) {
     const credentials = auth(req)
 
-    if (!credentials || credentials.name !== flags.username || credentials.pass !== flags.key) {
+    if (!credentials || credentials.name !== process.env.LIST_USER || credentials.pass !== process.env.LIST_PASSWORD) {
       res.statusCode = 401
       res.setHeader('WWW-Authenticate', 'Basic realm="User Visible Realm"')
       return send(res, 401, 'Access Denied')

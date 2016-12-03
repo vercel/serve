@@ -38,8 +38,10 @@ You can find a list of all options [below](#options).
 | -u, --unzipped         | Disable gzip compression | false |
 | -i, --ignore           | Files and directories to ignore | - |
 | -a, --auth             | Enable HTTP Basic Authentication | false |
-| -u, --username         | Username for HTTP Basic Authentication | example |
-| -k, --key              | Password for HTTP Basic Authentication | 1234 |
+
+### Basic Auth 
+
+If you enable basic auth with `--auth` `list` will look for a username and password in the `LIST_USER` and `LIST_PASSWORD` environment variables.
 
 ## Examples
 
