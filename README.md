@@ -37,6 +37,11 @@ You can find a list of all options [below](#options).
 | -s, --single           | Serve single page apps with only one `index.html` in the root directory | - |
 | -u, --unzipped         | Disable gzip compression | false |
 | -i, --ignore           | Files and directories to ignore | - |
+| -a, --auth             | Enable HTTP Basic Authentication | false |
+
+### Basic Auth 
+
+If you enable basic auth with `--auth` `list` will look for a username and password in the `LIST_USER` and `LIST_PASSWORD` environment variables.
 
 ## Examples
 
