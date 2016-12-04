@@ -15,6 +15,7 @@ import filesize from 'filesize'
 import mime from 'mime-types'
 import compress from 'micro-compress'
 import fs from 'fs-promise'
+import auth from 'basic-auth'
 import stream from 'send'
 
 args
@@ -22,7 +23,8 @@ args
   .option('cache', 'How long static files should be cached in the browser (seconds)', 3600)
   .option('single', 'Serve single page apps with only one index.html')
   .option('unzipped', 'Disable GZIP compression')
-  .option('ignore', 'Files and directories to ignore')
+  .option('ignore', 'Files and directories to ignore', '')
+  .option('auth', 'Serve behind basic auth')
 
 const flags = args.parse(process.argv)
 const directory = args.sub[0]
@@ -69,7 +71,7 @@ let ignoredFiles = [
   '.git/'
 ]
 
-if (flags.ignore.length) {
+if (flags.ignore && flags.ignore.length) {
   ignoredFiles = ignoredFiles.concat(flags.ignore.split(','))
 }
 
@@ -169,6 +171,22 @@ const renderDirectory = async dir => {
 }
 
 const handler = async (req, res) => {
+  
+  if (flags.auth) {
+    const credentials = auth(req)
+
+    if (!process.env.LIST_USER || !process.env.LIST_PASSWORD) {
+      console.error(red('You are running List with basic auth but did not set the LIST_USER and LIST_PASSWORD environment variables.'))
+      process.exit(1)
+    }
+
+    if (!credentials || credentials.name !== process.env.LIST_USER || credentials.pass !== process.env.LIST_PASSWORD) {
+      res.statusCode = 401
+      res.setHeader('WWW-Authenticate', 'Basic realm="User Visible Realm"')
+      return send(res, 401, 'Access Denied')
+    }
+  }
+ 
   const {pathname} = parse(req.url)
   let related = path.parse(path.join(current, pathname))
 
