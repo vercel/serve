@@ -48,7 +48,6 @@ If you set the `--auth` flag, `list` will look for a username and password in th
 Here's a list of selected sites that are running on `list`:
 
 - [Hyper](https://hyper.is) ([repo](https://github.com/zeit/hyper-website))
-- [Leo Lamprecht](https://leo.im) ([repo](https://github.com/leo/site))
 - [Ricky Rauch](https://rickyrauch.me)
 
 ## Contribute
