@@ -2,6 +2,7 @@ import gulp from 'gulp'
 import babel from 'gulp-babel'
 import cache from 'gulp-cached'
 import sass from 'gulp-sass'
+import chmod from 'gulp-chmod'
 
 const paths = {
   bin: 'bin/*',
@@ -15,6 +16,7 @@ const sassConfig = {
 gulp.task('bin', () => gulp.src(paths.bin)
   .pipe(cache('bin'))
   .pipe(babel())
+  .pipe(chmod(0o755))
   .pipe(gulp.dest('dist/bin')))
 
 gulp.task('scss', () => gulp.src(paths.styles)
