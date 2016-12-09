@@ -16,6 +16,7 @@ import mime from 'mime-types'
 import compress from 'micro-compress'
 import fs from 'fs-promise'
 import auth from 'basic-auth'
+import stream from 'send'
 
 args
   .option('port', 'Port to listen on', process.env.PORT || 3000)
@@ -262,7 +263,11 @@ const handler = async (req, res) => {
     body = await fs.readFile(related)
     stats = await fs.stat(related)
   } catch (err) {
-    throw err
+    if (err instanceof RangeError) {
+      return stream(req, related).pipe(res)
+    } else {
+      throw err
+    }
   }
 
   const binaryStat = isBinary(path.parse(related).base, body)

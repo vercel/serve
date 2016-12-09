@@ -64,6 +64,7 @@
     "istextorbinary": "2.1.0",
     "micro": "6.1.0",
     "micro-compress": "1.0.0",
-    "mime-types": "^2.1.12"
+    "mime-types": "^2.1.12",
+    "send": "^0.14.1"
   }
 }
