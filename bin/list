@@ -170,7 +170,6 @@ const renderDirectory = async dir => {
 }
 
 const handler = async (req, res) => {
-
   if (flags.auth) {
     const credentials = auth(req)
 
@@ -250,7 +249,7 @@ const handler = async (req, res) => {
     try {
       indexContent = await fs.readFile(indexPath, 'utf8')
     } catch (err) {
-      throw err
+      return send(res, 404, notFoundResponse)
     }
 
     return send(res, 200, indexContent)
