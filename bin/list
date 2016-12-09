@@ -170,7 +170,7 @@ const renderDirectory = async dir => {
 }
 
 const handler = async (req, res) => {
-  
+
   if (flags.auth) {
     const credentials = auth(req)
 
@@ -185,7 +185,7 @@ const handler = async (req, res) => {
       return send(res, 401, 'Access Denied')
     }
   }
- 
+
   const {pathname} = parse(req.url)
   let related = path.parse(path.join(current, pathname))
 
@@ -208,7 +208,7 @@ const handler = async (req, res) => {
   }
 
   // Check if file or directory path
-  if (path.parse(related).ext === '') {
+  if (await isDir(related)) {
     let indexPath = path.join(related, '/index.html')
 
     res.setHeader('Content-Type', mime.contentType(path.extname(indexPath)))
@@ -232,6 +232,19 @@ const handler = async (req, res) => {
       indexPath = path.join(current, '/index.html')
     }
 
+    let indexContent
+
+    try {
+      indexContent = await fs.readFile(indexPath, 'utf8')
+    } catch (err) {
+      throw err
+    }
+
+    return send(res, 200, indexContent)
+  }
+
+  if (!fs.existsSync(related) && flags.single) {
+    const indexPath = path.join(current, '/index.html')
     let indexContent
 
     try {
