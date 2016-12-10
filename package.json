@@ -51,7 +51,7 @@
     "gulp-babel": "6.1.2",
     "gulp-cached": "1.1.0",
     "gulp-chmod": "2.0.0",
-    "gulp-sass": "2.3.2",
+    "gulp-sass": "3.0.0",
     "xo": "0.17.1"
   },
   "dependencies": {
