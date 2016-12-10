@@ -1,5 +1,5 @@
 {
-  "name": "list",
+  "name": "serve",
   "version": "0.9.1",
   "description": "Single-command HTTP directory listing and file serving",
   "scripts": {
@@ -11,9 +11,9 @@
     "dist",
     "views"
   ],
-  "repository": "zeit/list",
+  "repository": "zeit/serve",
   "bin": {
-    "list": "dist/bin/list"
+    "serve": "dist/bin/serve"
   },
   "xo": {
     "esnext": true,
@@ -41,9 +41,9 @@
   "author": "leo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zeit/list/issues"
+    "url": "https://github.com/zeit/serve/issues"
   },
-  "homepage": "https://github.com/zeit/list#readme",
+  "homepage": "https://github.com/zeit/serve#readme",
   "devDependencies": {
     "babel-plugin-transform-async-to-generator": "6.16.0",
     "babel-plugin-transform-es2015-modules-commonjs": "6.18.0",
