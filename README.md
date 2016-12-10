@@ -58,3 +58,7 @@ Here's a list of selected sites that are running on `serve`:
 4. Transpile the source code and watch for changes: `npm start`
 
 Yey! Now can use the `serve` command everywhere. [Here](https://github.com/zeit/serve/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+for+beginners%22)'s a list of issues that are great for beginners.
+
+## History
+
+This project used to be called "list". But thanks to [TJ Holowaychuk](https://github.com/tj) handing us the new name, it's now called "serve" (which is much more definite).
