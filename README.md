@@ -43,13 +43,6 @@ You can find a list of all options [below](#options).
 
 If you set the `--auth` flag, `serve` will look for a username and password in the `SERVE_USER` and `SERVE_PASSWORD` environment variables.
 
-## Examples
-
-Here's a list of selected sites that are running on `serve`:
-
-- [Hyper](https://hyper.is) ([repo](https://github.com/zeit/hyper-website))
-- [Ricky Rauch](https://rickyrauch.me)
-
 ## Contribute
 
 1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
