@@ -215,29 +215,22 @@ const handler = async (req, res) => {
     
     res.setHeader('Content-Type', mime.contentType(path.extname(indexPath)))
     
-    // Check if 'index.html' exists
-    if (fs.existsSync(indexPath)) {
-      indexPath = path.join(current, '/index.html')
-      
-    // Check if 'index.htm' exists
-    } else if (fs.existsSync(indexPathOld)) {
-      indexPath = path.join(current, '/index.htm')
-      
-    // Otherwise render directory
-    } else {
+    if (!fs.existsSync(indexPath) && !fs.existsSync(indexPathOld)) {
       // Try to render the current directory's content
-      const renderedDir = await renderDirectory(related)
-
+      const renderedDir = await renderDirectory(related)  
       // If it works, send the directory listing to the user
       if (renderedDir) {
         return send(res, 200, renderedDir)
-      }
-
+      }  
       // And if it doesn't, see if it's a single page application
       // If that's not true either, send an error
       if (!flags.single) {
         return send(res, 404, notFoundResponse)
-      }
+      }  
+      // But IF IT IS true, load the SPA's root index file
+      indexPath = path.join(current, '/index.html')
+    } else if (fs.existsSync(indexPathOld)) {
+      indexPath = indexPathOld
     }
 
     let indexContent
