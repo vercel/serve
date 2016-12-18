@@ -36,7 +36,7 @@ You can find a list of all options [below](#options).
 | -c, --cache [seconds]  | How long static files should be cached in the browser | 3600 |
 | -s, --single           | Serve single page apps with only one `index.html` in the root directory | - |
 | -u, --unzipped         | Disable gzip compression | false |
-| -i, --ignore           | Files and directories to ignore | - |
+| -i, --ignore           | Files and directories to hide from the directory listing | - |
 | -a, --auth             | Enable HTTP authentication | false |
 
 ### Authentication
