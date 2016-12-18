@@ -50,7 +50,7 @@ If you set the `--auth` flag, `serve` will look for a username and password in t
 3. Link it to the global module directory: `npm link`
 4. Transpile the source code and watch for changes: `npm start`
 
-Yey! Now can use the `serve` command everywhere. [Here](https://github.com/zeit/serve/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+for+beginners%22)'s a list of issues that are great for beginners.
+After that, you can use the `serve` command everywhere. [Here](https://github.com/zeit/serve/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+for+beginners%22)'s a list of issues that are great for beginners.
 
 ## History
 
