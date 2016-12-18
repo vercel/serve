@@ -52,6 +52,6 @@ If you set the `--auth` flag, `serve` will look for a username and password in t
 
 After that, you can use the `serve` command everywhere. [Here](https://github.com/zeit/serve/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+for+beginners%22)'s a list of issues that are great for beginners.
 
-## History
+## Credits
 
 This project used to be called "list". But thanks to [TJ Holowaychuk](https://github.com/tj) handing us the new name, it's now called "serve" (which is much more definite).
