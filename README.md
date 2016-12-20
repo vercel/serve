@@ -48,7 +48,7 @@ If you set the `--auth` flag, `serve` will look for a username and password in t
 1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
 2. Uninstall `serve` if it's already installed: `npm uninstall -g serve`
 3. Link it to the global module directory: `npm link`
-4. Transpile the source code and watch for changes: `npm start`
+4. Transpile the source code and watch for changes: `npm run dev`
 
 After that, you can use the `serve` command everywhere. [Here](https://github.com/zeit/serve/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+for+beginners%22)'s a list of issues that are great for beginners.
 

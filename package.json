@@ -3,8 +3,9 @@
   "version": "2.0.0",
   "description": "Single-command HTTP directory listing and file serving",
   "scripts": {
-    "start": "gulp",
-    "prepublish": "gulp build",
+    "dev": "gulp",
+    "build": "gulp build",
+    "prepublish": "npm run build",
     "test": "xo"
   },
   "files": [
