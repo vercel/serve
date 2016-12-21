@@ -1,6 +1,6 @@
 {
   "name": "serve",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Single-command HTTP directory listing and file serving",
   "scripts": {
     "dev": "gulp",
