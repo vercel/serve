@@ -55,3 +55,7 @@ After that, you can use the `serve` command everywhere. [Here](https://github.co
 ## Credits
 
 This project used to be called "list". But thanks to [TJ Holowaychuk](https://github.com/tj) handing us the new name, it's now called "serve" (which is much more definite).
+
+## Author
+
+Leo Lamprecht ([@notquiteleo](https://twitter.com/notquiteleo)) - [▲ZEIT](https://zeit.co)
