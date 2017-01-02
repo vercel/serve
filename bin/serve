@@ -25,7 +25,7 @@ args
   .option('unzipped', 'Disable GZIP compression')
   .option('ignore', 'Files and directories to ignore', '')
   .option('auth', 'Serve behind basic auth')
-  .option(['o','cors'], 'Setup * CORS headers to allow requests from any origin',false)
+  .option(['o', 'cors'], 'Setup * CORS headers to allow requests from any origin', false)
 
 const flags = args.parse(process.argv)
 const directory = args.sub[0]
@@ -72,7 +72,7 @@ let ignoredFiles = [
   '.git/'
 ]
 
-if (flags.ignore && flags.ignore.length) {
+if (flags.ignore && flags.ignore.length > 0) {
   ignoredFiles = ignoredFiles.concat(flags.ignore.split(','))
 }
 
