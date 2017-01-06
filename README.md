@@ -12,16 +12,16 @@ In addition, it's also awesome when it comes to serving static sites. If a direc
 
 ## Usage
 
-Install it (needs at least node v6)
+Install it (needs at least node v6):
 
 ```bash
-$ npm install -g serve
+npm install -g serve
 ```
 
-Run it
+And run this command in your terminal:
 
 ```bash
-$ serve <path> [options]
+serve <path> [options]
 ```
 
 You can find a list of all options [below](#options).
