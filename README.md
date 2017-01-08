@@ -24,20 +24,13 @@ And run this command in your terminal:
 serve <path> [options]
 ```
 
-You can find a list of all options [below](#options).
-
 ### Options
 
-| Usage                  | Description | Default value |
-| ---------------------- | ----------- | ------------------ |
-| -h, --help             | Output all available options | - |
-| -v, --version          | The version tag of the `serve` instance on your device | - |
-| -p, --port [port]      | A custom port on which the app will be running | 3000 |
-| -c, --cache [seconds]  | How long static files should be cached in the browser | 3600 |
-| -s, --single           | Serve single page apps with only one `index.html` in the root directory | - |
-| -u, --unzipped         | Disable gzip compression | false |
-| -i, --ignore           | Files and directories to hide from the directory listing | - |
-| -a, --auth             | Enable HTTP authentication (read more [here](#authentication)) | false |
+Run this command to see a list of all available options:
+
+```bash
+serve help
+``
 
 ### Authentication
 
