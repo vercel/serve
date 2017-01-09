@@ -34,7 +34,7 @@ serve help
 
 ### Authentication
 
-If you set the `--auth` flag, `serve` will look for a username and password in the `SERVE_USER` and `SERVE_PASSWORD` environment variables.
+If you set the `--auth` flag, the package will look for a username and password in the `SERVE_USER` and `SERVE_PASSWORD` environment variables.
 
 ## Contribute
 
