@@ -36,7 +36,7 @@ serve help
 
 If you set the `--auth` flag, the package will look for a username and password in the `SERVE_USER` and `SERVE_PASSWORD` environment variables.
 
-## Contribute
+## Contributing
 
 1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
 2. Uninstall `serve` if it's already installed: `npm uninstall -g serve`
