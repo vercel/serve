@@ -26,6 +26,7 @@ args
   .option('ignore', 'Files and directories to ignore', '')
   .option('auth', 'Serve behind basic auth')
   .option(['o', 'cors'], 'Setup * CORS headers to allow requests from any origin', false)
+  .option('clean', 'Serve HTML without file extensions')
 
 const flags = args.parse(process.argv)
 const directory = args.sub[0]
@@ -204,7 +205,34 @@ const handler = async (req, res) => {
     notFoundResponse = await fs.readFile(custom404Path, 'utf-8')
   } catch (err) {}
 
-  if (!fs.existsSync(related) && flags.single === undefined) {
+  let pathExists = fs.existsSync(related)
+
+  if (flags.clean) {
+    // Redirect from /path/index.html to /path
+    if (pathname.indexOf('index.html') > -1) {
+      res.setHeader('Location', path.dirname(pathname))
+      return send(res, 303)
+    }
+
+    // Redirect from /path.html to /path/
+    if (pathname.indexOf('.html') > -1) {
+      res.setHeader('Location', pathname.replace(path.extname(pathname), ''))
+      return send(res, 303)
+    }
+
+    // Look for /path.html
+    let cleanUrl = path.format({
+      name: related,
+      ext: '.html',
+    })
+
+    if (fs.existsSync(cleanUrl)) {
+      pathExists = true
+      related = cleanUrl
+    }
+  }
+
+  if (!pathExists && !flags.single) {
     return send(res, 404, notFoundResponse)
   }
 
