@@ -3,9 +3,6 @@
   "version": "2.1.2",
   "description": "Single-command HTTP directory listing and file serving",
   "scripts": {
-    "dev": "gulp",
-    "build": "gulp build",
-    "prepublish": "npm run build",
     "test": "xo"
   },
   "files": [
@@ -23,12 +20,6 @@
     "rules": {
       "babel/no-await-in-loop": 0
     }
-  },
-  "babel": {
-    "plugins": [
-      "transform-es2015-modules-commonjs",
-      "transform-async-to-generator"
-    ]
   },
   "greenkeeper": {
     "emails": false
