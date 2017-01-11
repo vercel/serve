@@ -6,7 +6,8 @@
     "test": "xo"
   },
   "files": [
-    "dist",
+    "bin",
+    "assets",
     "views"
   ],
   "repository": "zeit/serve",
