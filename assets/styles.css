@@ -6,6 +6,22 @@ body {
   font-family: Menlo;
 }
 
+main {
+  max-width: 920px;
+}
+
+aside {
+  font-style: italic;
+  color: #4A4A4A;
+  margin-top: 50px;
+}
+
+aside p {
+  font-size: 12px;
+  margin: 0;
+  line-height: 1.5em;
+}
+
 a {
   color: #1A00F2;
   text-decoration: none;
@@ -36,10 +52,6 @@ h1 a:hover {
 
 h1 i {
   font-style: normal;
-}
-
-main {
-  max-width: 920px;
 }
 
 ul {
@@ -91,18 +103,6 @@ ul a[class=''] + i {
 ul a[class='']:before {
   content: '\f114';
   font-size: 14px;
-}
-
-aside {
-  font-style: italic;
-  color: #4A4A4A;
-  margin-top: 50px;
-}
-
-aside p {
-  font-size: 12px;
-  margin: 0;
-  line-height: 1.5em;
 }
 
 @media (min-width: 768px) {
