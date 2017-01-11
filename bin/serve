@@ -1,22 +1,24 @@
-#!/usr/bin/env node
+#!/bin/bash
+// >&/dev/null; exec node --harmony-async-await $0 $@
+// vi:syntax=javascript
 
 // Native
-import path from 'path'
-import {parse} from 'url'
+const path = require('path')
+const {parse} = require('url')
 
 // Packages
-import {StringDecoder} from 'string_decoder'
-import micro, {send} from 'micro'
-import {red, green} from 'chalk'
-import args from 'args'
-import {compile} from 'handlebars'
-import {isBinarySync as isBinary} from 'istextorbinary'
-import filesize from 'filesize'
-import mime from 'mime-types'
-import compress from 'micro-compress'
-import fs from 'fs-promise'
-import auth from 'basic-auth'
-import stream from 'send'
+const {StringDecoder} = require('string_decoder')
+const micro = require('micro')
+const {red, green} = require('chalk')
+const args = require('args')
+const {compile} = require('handlebars')
+const {isBinarySync} = require('istextorbinary')
+const filesize = require('filesize')
+const mime = require('mime-types')
+const compress = require('micro-compress')
+const fs = require('fs-promise')
+const auth = require('basic-auth')
+const stream = require('send')
 
 args
   .option('port', 'Port to listen on', process.env.PORT || 3000)
@@ -183,7 +185,7 @@ const handler = async (req, res) => {
     if (!credentials || credentials.name !== process.env.SERVE_USER || credentials.pass !== process.env.SERVE_PASSWORD) {
       res.statusCode = 401
       res.setHeader('WWW-Authenticate', 'Basic realm="User Visible Realm"')
-      return send(res, 401, 'Access Denied')
+      return micro.send(res, 401, 'Access Denied')
     }
   }
 
@@ -205,7 +207,7 @@ const handler = async (req, res) => {
   } catch (err) {}
 
   if (!fs.existsSync(related) && flags.single === undefined) {
-    return send(res, 404, notFoundResponse)
+    return micro.send(res, 404, notFoundResponse)
   }
 
   // Check if file or directory path
@@ -220,13 +222,13 @@ const handler = async (req, res) => {
 
       // If it works, send the directory listing to the user
       if (renderedDir) {
-        return send(res, 200, renderedDir)
+        return micro.send(res, 200, renderedDir)
       }
 
       // And if it doesn't, see if it's a single page application
       // If that's not true either, send an error
       if (!flags.single) {
-        return send(res, 404, notFoundResponse)
+        return micro.send(res, 404, notFoundResponse)
       }
 
       // But IF IT IS true, load the SPA's root index file
@@ -241,7 +243,7 @@ const handler = async (req, res) => {
       throw err
     }
 
-    return send(res, 200, indexContent)
+    return micro.send(res, 200, indexContent)
   }
 
   if (!fs.existsSync(related) && flags.single) {
@@ -251,10 +253,10 @@ const handler = async (req, res) => {
     try {
       indexContent = await fs.readFile(indexPath, 'utf8')
     } catch (err) {
-      return send(res, 404, notFoundResponse)
+      return micro.send(res, 404, notFoundResponse)
     }
 
-    return send(res, 200, indexContent)
+    return micro.send(res, 200, indexContent)
   }
 
   let body = 'Not able to load file!'
@@ -271,7 +273,7 @@ const handler = async (req, res) => {
     throw err
   }
 
-  const binaryStat = isBinary(path.parse(related).base, body)
+  const binaryStat = isBinarySync(path.parse(related).base, body)
   const getETag = s => '"' + s.dev + '-' + s.ino + '-' + s.mtime.getTime() + '"'
 
   let requestDate = req.headers['if-modified-since']
@@ -314,7 +316,7 @@ const handler = async (req, res) => {
     const contentType = mime.contentType(path.extname(related)) || mime.contentType('text')
 
     res.setHeader('Content-Type', contentType)
-    send(res, statusCode, decoder.write(body))
+    micro.send(res, statusCode, decoder.write(body))
   }
 }
 

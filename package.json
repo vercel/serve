@@ -14,7 +14,7 @@
   ],
   "repository": "zeit/serve",
   "bin": {
-    "serve": "dist/bin/serve"
+    "serve": "bin/serve"
   },
   "xo": {
     "esnext": true,
