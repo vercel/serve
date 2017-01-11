@@ -21,7 +21,7 @@ const auth = require('basic-auth')
 const stream = require('send')
 
 args
-  .option('port', 'Port to listen on', process.env.PORT || 3000)
+  .option('port', 'Port to listen on', process.env.PORT || null)
   .option('cache', 'How long static files should be cached in the browser (seconds)', 3600)
   .option('single', 'Serve single page apps with only one index.html')
   .option('unzipped', 'Disable GZIP compression')
@@ -336,6 +336,6 @@ server.listen(flags.port, async () => {
   }
 
   if (!process.env.NOW) {
-    console.log(`> Running on http://localhost:${details.port}`)
+    console.log(`Running on http://localhost:${details.port}`)
   }
 })
