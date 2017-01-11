@@ -9,7 +9,7 @@ const {parse} = require('url')
 // Packages
 const {StringDecoder} = require('string_decoder')
 const micro = require('micro')
-const {red, green} = require('chalk')
+const {red} = require('chalk')
 const args = require('args')
 const {compile} = require('handlebars')
 const {isBinarySync} = require('istextorbinary')
@@ -336,6 +336,6 @@ server.listen(flags.port, async () => {
   }
 
   if (!process.env.NOW) {
-    console.log(green(`Running on http://localhost:${details.port}`))
+    console.log(`> Running on http://localhost:${details.port}`)
   }
 })
