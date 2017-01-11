@@ -46,13 +46,6 @@
   },
   "homepage": "https://github.com/zeit/serve#readme",
   "devDependencies": {
-    "babel-plugin-transform-async-to-generator": "^6.16.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-cached": "^1.1.0",
-    "gulp-chmod": "^2.0.0",
-    "gulp-sass": "^3.1.0",
     "xo": "^0.17.1"
   },
   "dependencies": {
