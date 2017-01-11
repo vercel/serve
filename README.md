@@ -12,7 +12,7 @@ In addition, it's also awesome when it comes to serving static sites. If a direc
 
 ## Usage
 
-Install it (needs at least node v6):
+Install it (needs at least Node v7 - [why?](https://github.com/zeit/serve/blob/2db187a725ef754320eec3de95498af7b5fca76d/bin/serve#L2)):
 
 ```bash
 npm install -g serve
