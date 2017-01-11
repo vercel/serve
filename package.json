@@ -46,26 +46,26 @@
   },
   "homepage": "https://github.com/zeit/serve#readme",
   "devDependencies": {
-    "babel-plugin-transform-async-to-generator": "6.16.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "6.18.0",
-    "gulp": "3.9.1",
-    "gulp-babel": "6.1.2",
-    "gulp-cached": "1.1.0",
-    "gulp-chmod": "2.0.0",
-    "gulp-sass": "3.1.0",
-    "xo": "0.17.1"
+    "babel-plugin-transform-async-to-generator": "^6.16.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-cached": "^1.1.0",
+    "gulp-chmod": "^2.0.0",
+    "gulp-sass": "^3.1.0",
+    "xo": "^0.17.1"
   },
   "dependencies": {
-    "args": "2.2.1",
-    "basic-auth": "1.1.0",
-    "chalk": "1.1.3",
-    "filesize": "3.3.0",
-    "fs-promise": "1.0.0",
-    "handlebars": "4.0.6",
-    "istextorbinary": "2.1.0",
-    "micro": "6.1.0",
-    "micro-compress": "1.0.0",
+    "args": "^2.2.1",
+    "basic-auth": "^1.1.0",
+    "chalk": "^1.1.3",
+    "filesize": "^3.3.0",
+    "fs-promise": "^1.0.0",
+    "handlebars": "^4.0.6",
+    "istextorbinary": "^2.1.0",
+    "micro": "^6.1.0",
+    "micro-compress": "^1.0.0",
     "mime-types": "^2.1.12",
-    "send": "0.14.1"
+    "send": "^0.14.1"
   }
 }
