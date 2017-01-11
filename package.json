@@ -19,7 +19,9 @@
     "space": true,
     "semicolon": false,
     "rules": {
-      "babel/no-await-in-loop": 0
+      "babel/no-await-in-loop": 0,
+      "import/no-unresolved": 0,
+      "complexity": 0
     }
   },
   "greenkeeper": {
