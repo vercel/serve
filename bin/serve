@@ -20,6 +20,7 @@ const fs = require('fs-promise')
 const auth = require('basic-auth')
 const stream = require('send')
 const updateNotifier = require('update-notifier')
+const {copy} = require('copy-paste')
 
 // Ours
 const pkg = require('../package')
@@ -330,10 +331,20 @@ const handler = async (req, res) => {
   }
 }
 
+const copyToClipboard = async text => {
+  try {
+    await copy(text)
+    return true
+  } catch (err) {
+    return false
+  }
+}
+
 const server = flags.unzipped ? micro(handler) : micro(compress(handler))
 
 server.listen(flags.port, async () => {
   const details = server.address()
+  const url = `http://localhost:${details.port}`
 
   process.on('SIGINT', () => {
     server.close()
@@ -346,6 +357,13 @@ server.listen(flags.port, async () => {
   }
 
   if (!process.env.NOW) {
-    console.log(`Running on http://localhost:${details.port}`)
+    let message = `Running on ${url}`
+    const copied = await copyToClipboard(url)
+
+    if (copied) {
+      message = `${message} [copied to clipboard]`
+    }
+
+    console.log(message)
   }
 })
