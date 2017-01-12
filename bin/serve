@@ -19,6 +19,10 @@ const compress = require('micro-compress')
 const fs = require('fs-promise')
 const auth = require('basic-auth')
 const stream = require('send')
+const updateNotifier = require('update-notifier')
+
+// Ours
+const pkg = require('../package')
 
 args
   .option('port', 'Port to listen on', process.env.PORT)
@@ -31,6 +35,12 @@ args
 
 const flags = args.parse(process.argv)
 const directory = args.sub[0]
+
+// Let user know if there's an update
+// This isn't important when deployed to Now
+if (!process.env.NOW) {
+  updateNotifier({pkg}).notify()
+}
 
 process.env.ASSET_DIR = '/' + Math.random().toString(36).substr(2, 10)
 
