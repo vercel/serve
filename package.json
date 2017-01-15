@@ -1,7 +1,7 @@
 {
   "name": "serve",
   "version": "2.4.0",
-  "description": "Single-command HTTP directory listing and file serving",
+  "description": "Static file serving and directory listing",
   "scripts": {
     "test": "xo"
   },
