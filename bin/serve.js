@@ -7,6 +7,7 @@ const updateNotifier = require('update-notifier')
 // Ours
 const pkg = require('../package')
 
+// Support for keywords "async" and "await"
 asyncToGen({
   excludes: null
 })
@@ -17,4 +18,5 @@ if (!process.env.NOW) {
   updateNotifier({pkg}).notify()
 }
 
+// Load package core with async/await support
 require('../lib')
