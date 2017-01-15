@@ -16,7 +16,7 @@ asyncToGen({
 
 // Throw an error if node version is too low
 if (nodeVersion.major < 6) {
-  console.error(`${red('Error!')} Now requires at least version 6 of Node. Please upgrade!`)
+  console.error(`${red('Error!')} Serve requires at least version 6 of Node. Please upgrade!`)
   process.exit(1)
 }
 
