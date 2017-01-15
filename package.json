@@ -15,6 +15,9 @@
   "bin": {
     "serve": "./bin/serve.js"
   },
+  "engines": {
+    "node": ">=6.9.0"
+  },
   "xo": {
     "esnext": true,
     "space": true,
