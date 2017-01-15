@@ -12,7 +12,7 @@
   ],
   "repository": "zeit/serve",
   "bin": {
-    "serve": "bin/serve"
+    "serve": "bin/serve.js"
   },
   "xo": {
     "esnext": true,

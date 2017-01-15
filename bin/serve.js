@@ -1,6 +1,4 @@
-#!/bin/bash
-// >&/dev/null; exec node --harmony-async-await $0 $@
-// vi:syntax=javascript
+#!/usr/bin/env node
 
 // Native
 const path = require('path')
