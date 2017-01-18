@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 30px;
   -webkit-font-smoothing: antialiased;
-  font-family: Menlo;
+  font-family: Menlo, Consolas, monospace;
 }
 
 main {
