@@ -3,6 +3,7 @@
   "version": "2.4.3",
   "description": "Static file serving and directory listing",
   "scripts": {
+    "precommit": "npm run test",
     "test": "xo"
   },
   "files": [
@@ -47,6 +48,7 @@
   },
   "homepage": "https://github.com/zeit/serve#readme",
   "devDependencies": {
+    "husky": "^0.13.1",
     "xo": "^0.17.1"
   },
   "dependencies": {
