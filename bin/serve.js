@@ -14,7 +14,8 @@ const pathSep = process.platform === 'win32' ? '\\\\' : '/'
 
 asyncToGen({
   includes: new RegExp(`.*serve?${pathSep}(lib|bin).*`),
-  excludes: null
+  excludes: null,
+  sourceMaps: false
 })
 
 // Throw an error if node version is too low
