@@ -69,6 +69,7 @@
     "node-version": "^1.0.0",
     "path-type": "^2.0.0",
     "send": "^0.14.2",
+    "tcp-port-used": "^0.1.2",
     "update-notifier": "^1.0.3"
   }
 }
