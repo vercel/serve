@@ -13,8 +13,8 @@ const pkg = require('../package')
 const pathSep = process.platform === 'win32' ? '\\\\' : '/'
 
 asyncToGen({
-  include: new RegExp(`.*serve?${pathSep}(lib|bin).*`),
-  exclude: null
+  includes: new RegExp(`.*serve?${pathSep}(lib|bin).*`),
+  excludes: null
 })
 
 // Throw an error if node version is too low
