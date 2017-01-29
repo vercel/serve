@@ -32,9 +32,6 @@
       "max-params": 0
     }
   },
-  "greenkeeper": {
-    "emails": false
-  },
   "keywords": [
     "now",
     "serve",
