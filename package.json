@@ -59,7 +59,6 @@
     "get-port": "^2.1.0",
     "handlebars": "^4.0.6",
     "ip": "^1.1.4",
-    "istextorbinary": "^2.1.0",
     "micro": "^6.2.1",
     "micro-compress": "^1.0.0",
     "mime-types": "^2.1.12",
