@@ -54,9 +54,9 @@
     "basic-auth": "^1.1.0",
     "chalk": "^1.1.3",
     "copy-paste": "^1.3.0",
+    "detect-port": "^1.1.0",
     "filesize": "^3.5.4",
     "fs-promise": "^1.0.0",
-    "get-port": "^2.1.0",
     "handlebars": "^4.0.6",
     "ip": "^1.1.4",
     "micro": "^6.2.1",
@@ -65,7 +65,6 @@
     "node-version": "^1.0.0",
     "path-type": "^2.0.0",
     "send": "^0.14.2",
-    "tcp-port-used": "^0.1.2",
     "update-notifier": "^1.0.3"
   }
 }
