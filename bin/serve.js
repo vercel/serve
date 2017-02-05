@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+// Native
+const path = require('path')
+
 // Packages
 const asyncToGen = require('async-to-gen/register')
 const updateNotifier = require('update-notifier')
@@ -13,9 +16,10 @@ const pkg = require('../package')
 // Support for keywords "async" and "await"
 if (!isAsyncSupported()) {
   const pathSep = process.platform === 'win32' ? '\\\\' : '/'
+  const directoryName = path.parse(path.join(__dirname, '..')).base
 
   asyncToGen({
-    includes: new RegExp(`.*serve?${pathSep}(lib|bin).*`),
+    includes: new RegExp(`.*${directoryName}?${pathSep}(lib|bin).*`),
     excludes: null,
     sourceMaps: false
   })
