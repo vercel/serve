@@ -1,8 +1,5 @@
 #!/usr/bin/env node
 
-// Native
-const path = require('path')
-
 // Packages
 const asyncToGen = require('async-to-gen/register')
 const updateNotifier = require('update-notifier')
@@ -15,10 +12,8 @@ const pkg = require('../package')
 
 // Support for keywords "async" and "await"
 if (!isAsyncSupported()) {
-  const modulesDir = path.join(__dirname, '..', 'node_modules')
-
   asyncToGen({
-    exclude: `**/${modulesDir}/**`,
+    exclude: null,
     sourceMaps: false
   })
 }
