@@ -15,12 +15,10 @@ const pkg = require('../package')
 
 // Support for keywords "async" and "await"
 if (!isAsyncSupported()) {
-  const pathSep = process.platform === 'win32' ? '\\\\' : '/'
-  const directoryName = path.parse(path.join(__dirname, '..')).base
+  const modulesDir = path.join(__dirname, '..', 'node_modules')
 
   asyncToGen({
-    includes: new RegExp(`.*${directoryName}?${pathSep}(lib|bin).*`),
-    excludes: null,
+    excludes: new RegExp(`.*${modulesDir}.*`),
     sourceMaps: false
   })
 }
