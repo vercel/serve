@@ -18,7 +18,7 @@ if (!isAsyncSupported()) {
   const modulesDir = path.join(__dirname, '..', 'node_modules')
 
   asyncToGen({
-    excludes: new RegExp(`.*${modulesDir}.*`),
+    exclude: `**/${modulesDir}/**`,
     sourceMaps: false
   })
 }
