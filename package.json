@@ -1,6 +1,6 @@
 {
   "name": "serve",
-  "version": "3.2.9",
+  "version": "3.2.10",
   "description": "Static file serving and directory listing",
   "scripts": {
     "precommit": "npm run test",
