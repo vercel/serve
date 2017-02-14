@@ -32,7 +32,7 @@ if (!process.env.NOW && pkg.dist) {
 
 args
   .option('port', 'Port to listen on', process.env.PORT || 3000)
-  .option('cache', 'How long static files should be cached in the browser (seconds)', 3600)
+  .option('cache', 'Time in milliseconds for caching files in the browser', 3600)
   .option('single', 'Serve single page apps with only one index.html')
   .option('unzipped', 'Disable GZIP compression')
   .option('ignore', 'Files and directories to ignore', '')
