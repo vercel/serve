@@ -13,6 +13,7 @@
     "views"
   ],
   "repository": "zeit/serve",
+  "main": "./lib/api.js",
   "bin": {
     "serve": "./bin/serve.js"
   },
