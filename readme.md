@@ -36,6 +36,12 @@ serve help
 
 If you set the `--auth` flag, the package will look for a username and password in the `SERVE_USER` and `SERVE_PASSWORD` environment variables.
 
+Or you can quickly set the enviroment variables with this command in your terminal:
+
+```bash
+SERVE_USER=123 SERVE_PASSWORD=123 serve --auth
+```
+
 ## Contributing
 
 1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
