@@ -36,6 +36,62 @@ serve help
 
 If you set the `--auth` flag, the package will look for a username and password in the `SERVE_USER` and `SERVE_PASSWORD` environment variables.
 
+## API
+
+Install it (needs at least Node LTS):
+
+```bash
+npm install serve
+```
+
+You can now use it in your code:
+
+```js
+const serve = require('serve')
+
+const options = {
+  port: 1337,
+  cache: 0
+}
+
+const server = serve(options)
+
+// ...
+
+server.stop()
+
+```
+
+### Options
+
+#### `port: number`
+
+Port to listen on
+
+#### `cache: number`
+
+Time in milliseconds for caching files in the browser
+
+#### `single: boolean`
+
+Serve single page apps with only one `index.html`
+
+#### `unzipped: boolean`
+
+Disable GZIP compression
+
+#### `ignore: string[]`
+
+Files and directories to ignore
+
+#### `auth: boolean`
+
+Serve behind basic auth
+
+#### `cors: boolean`
+
+Setup * CORS headers to allow requests from any origin
+
 ## Contributing
 
 1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
