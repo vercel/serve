@@ -62,6 +62,7 @@
     "micro-compress": "1.0.0",
     "mime-types": "2.1.14",
     "node-version": "1.0.0",
+    "opn": "4.0.2",
     "path-type": "2.0.0",
     "send": "0.14.2",
     "update-notifier": "2.1.0"
