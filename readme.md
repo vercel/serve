@@ -38,59 +38,26 @@ If you set the `--auth` flag, the package will look for a username and password 
 
 ## API
 
-Install it (needs at least Node LTS):
-
-```bash
-npm install serve
-```
-
-You can now use it in your code:
+You can also use the package inside your application. Just load it:
 
 ```js
 const serve = require('serve')
-
-const options = {
-  port: 1337,
-  cache: 0
-}
-
-const server = serve(options)
-
-// ...
-
-server.stop()
-
 ```
 
-### Options
+And call it with flags (run [this command](#options) for the full list):
 
-#### `port: number`
+```js
+const server = serve({
+  port: 1337,
+  ignore: ['node_modules']
+})
+```
 
-Port to listen on
+Later in the code, you can stop the server using this method:
 
-#### `cache: number`
-
-Time in milliseconds for caching files in the browser
-
-#### `single: boolean`
-
-Serve single page apps with only one `index.html`
-
-#### `unzipped: boolean`
-
-Disable GZIP compression
-
-#### `ignore: string[]`
-
-Files and directories to ignore
-
-#### `auth: boolean`
-
-Serve behind basic auth
-
-#### `cors: boolean`
-
-Setup * CORS headers to allow requests from any origin
+```js
+server.stop()
+```
 
 ## Contributing
 
