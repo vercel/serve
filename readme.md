@@ -36,6 +36,12 @@ serve help
 
 If you set the `--auth` flag, the package will look for a username and password in the `SERVE_USER` and `SERVE_PASSWORD` environment variables.
 
+As an example, this is how such a command could look like:
+
+```bash
+SERVE_USER=leo SERVE_PASSWORD=1234 serve --auth
+```
+
 ## API
 
 You can also use the package inside your application. Just load it:
