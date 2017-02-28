@@ -37,7 +37,7 @@ args
   .option('unzipped', 'Disable GZIP compression')
   .option('ignore', 'Files and directories to ignore', '')
   .option('auth', 'Serve behind basic auth')
-  .option(['o', 'cors'], 'Setup * CORS headers to allow requests from any origin', false)
+  .option('cors', 'Setup * CORS headers to allow requests from any origin', false)
   .option('silent', `Don't log anything to the console`)
 
 const flags = args.parse(process.argv)
