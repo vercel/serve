@@ -25,8 +25,8 @@ if (nodeVersion.major < 6) {
 }
 
 // Let user know if there's an update
-// This isn't important when deployed to Now
-if (!process.env.NOW && pkg.dist) {
+// This isn't important when deployed to production
+if (process.env.NODE_ENV !== 'production' && pkg.dist) {
   updateNotifier({pkg}).notify()
 }
 
