@@ -38,9 +38,15 @@ args
   .option('ignore', 'Files and directories to ignore', '')
   .option('auth', 'Serve behind basic auth')
   .option(['o', 'cors'], 'Setup * CORS headers to allow requests from any origin', false)
+  .option('silent', `Don't log anything to the console`)
 
 const flags = args.parse(process.argv)
 const directory = args.sub[0]
+
+// Don't log anything to the console if silent mode is enabled
+if (flags.silent) {
+  console.log = () => {}
+}
 
 process.env.ASSET_DIR = '/' + Math.random().toString(36).substr(2, 10)
 
