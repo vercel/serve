@@ -53,7 +53,7 @@ const serve = require('serve')
 And call it with flags (run [this command](#options) for the full list):
 
 ```js
-const server = serve({
+const server = serve(__dirname, {
   port: 1337,
   ignore: ['node_modules']
 })
