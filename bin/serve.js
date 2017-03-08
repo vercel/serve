@@ -35,7 +35,7 @@ args
   .option('cache', 'Time in milliseconds for caching files in the browser', 3600)
   .option('single', 'Serve single page apps with only one index.html')
   .option('unzipped', 'Disable GZIP compression')
-  .option('ignore', 'Files and directories to ignore', '')
+  .option('ignore', 'Files and directories to ignore')
   .option('auth', 'Serve behind basic auth')
   .option('cors', 'Setup * CORS headers to allow requests from any origin', false)
   .option('silent', `Don't log anything to the console`)
