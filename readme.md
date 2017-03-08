@@ -21,7 +21,7 @@ npm install -g serve
 And run this command in your terminal:
 
 ```bash
-serve <path> [options]
+serve [options] <path>
 ```
 
 ### Options
