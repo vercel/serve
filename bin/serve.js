@@ -42,7 +42,13 @@ args
 
 const flags = args.parse(process.argv, {
   minimist: {
-    boolean: ['s', 'single']
+    boolean: [
+      'a', 'auth',
+      'C', 'cors',
+      'S', 'silent',
+      's', 'single',
+      'u', 'unzipped'
+    ]
   }
 })
 
