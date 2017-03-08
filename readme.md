@@ -8,7 +8,7 @@ Ever wanted to share a certain directory on your network by running just a comma
 
 In addition, it's also awesome when it comes to serving static sites. If a directory contains an `index.html`, `serve` will automatically render it instead of serving the file's content as plaintext.
 
-![screenshot](https://raw.githubusercontent.com/zeit/art/6f354dcc744ed03b022ea699c3ffa64d29714d78/serve/example.png)
+![screenshot](https://raw.githubusercontent.com/zeit/art/4bafffc43b38f3b796eb2f9071292d13d129a7d8/serve/example.png)
 
 ## Usage
 
