@@ -40,7 +40,12 @@ args
   .option('cors', 'Setup * CORS headers to allow requests from any origin', false)
   .option('silent', `Don't log anything to the console`)
 
-const flags = args.parse(process.argv)
+const flags = args.parse(process.argv, {
+  minimist: {
+    boolean: ['s', 'single']
+  }
+})
+
 const directory = args.sub[0]
 
 // Don't log anything to the console if silent mode is enabled
