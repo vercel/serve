@@ -50,11 +50,11 @@ const flags = args.parse(process.argv, {
       u: 'unzipped'
     },
     boolean: [
-      'a', 'auth',
-      'C', 'cors',
-      'S', 'silent',
-      's', 'single',
-      'u', 'unzipped'
+      'auth',
+      'cors',
+      'silent',
+      'single',
+      'unzipped'
     ]
   }
 })
