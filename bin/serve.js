@@ -42,6 +42,13 @@ args
 
 const flags = args.parse(process.argv, {
   minimist: {
+    alias: {
+      a: 'auth',
+      C: 'cors',
+      S: 'silent',
+      s: 'single',
+      u: 'unzipped'
+    },
     boolean: [
       'a', 'auth',
       'C', 'cors',
