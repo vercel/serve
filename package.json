@@ -44,7 +44,7 @@
   },
   "homepage": "https://github.com/zeit/serve#readme",
   "devDependencies": {
-    "husky": "0.13.2",
+    "husky": "0.13.3-0",
     "xo": "0.17.1"
   },
   "dependencies": {
