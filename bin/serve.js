@@ -58,7 +58,8 @@ const flags = args.parse(process.argv, {
       C: 'cors',
       S: 'silent',
       s: 'single',
-      u: 'unzipped'
+      u: 'unzipped',
+      n: 'no-clipboard'
     },
     boolean: ['auth', 'cors', 'silent', 'single', 'unzipped', 'no-clipboard']
   }
