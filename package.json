@@ -62,7 +62,7 @@
     "ip": "1.1.5",
     "micro": "7.2.1",
     "micro-compress": "1.0.0",
-    "mime-types": "2.1.14",
+    "mime-types": "2.1.15",
     "node-version": "1.0.0",
     "path-type": "2.0.0",
     "send": "0.15.1",
