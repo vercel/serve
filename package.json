@@ -3,7 +3,7 @@
   "version": "5.0.4",
   "description": "Static file serving and directory listing",
   "scripts": {
-    "precommit": "npm run test",
+    "precommit": "lint-staged",
     "test": "xo"
   },
   "files": [
@@ -21,15 +21,16 @@
     "node": ">=6.9.0"
   },
   "xo": {
-    "esnext": true,
-    "space": true,
-    "semicolon": false,
-    "rules": {
-      "complexity": 0,
-      "unicorn/no-process-exit": 0,
-      "max-params": 0,
-      "camelcase": 0
-    }
+    "extends": [
+      "prettier"
+    ]
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run test",
+      "prettier --single-quote --write",
+      "git add"
+    ]
   },
   "keywords": [
     "now",
@@ -44,7 +45,10 @@
   },
   "homepage": "https://github.com/zeit/serve#readme",
   "devDependencies": {
+    "eslint-config-prettier": "1.5.0",
     "husky": "0.13.3",
+    "lint-staged": "3.4.0",
+    "prettier": "0.22.0",
     "xo": "0.18.0"
   },
   "dependencies": {
