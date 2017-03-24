@@ -39,6 +39,7 @@ args
   .option('auth', 'Serve behind basic auth')
   .option('cors', 'Setup * CORS headers to allow requests from any origin', false)
   .option('silent', `Don't log anything to the console`)
+  .option('noclipboard', `Don't copy address to clipboard`, false)
 
 const flags = args.parse(process.argv, {
   minimist: {
@@ -54,7 +55,8 @@ const flags = args.parse(process.argv, {
       'cors',
       'silent',
       'single',
-      'unzipped'
+      'unzipped',
+      'noclipboard'
     ]
   }
 })
@@ -103,6 +105,6 @@ detect(port).then(open => {
   }
 
   server.listen(port, coroutine(function * () {
-    yield listening(server, current, inUse)
+    yield listening(server, current, inUse, flags.noclipboard !== true)
   }))
 })
