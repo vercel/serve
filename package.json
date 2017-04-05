@@ -43,7 +43,7 @@
   },
   "homepage": "https://github.com/zeit/serve#readme",
   "devDependencies": {
-    "eslint-config-prettier": "1.5.0",
+    "eslint-config-prettier": "1.6.0",
     "husky": "0.13.3",
     "lint-staged": "3.4.0",
     "prettier": "0.22.0",
