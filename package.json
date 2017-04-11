@@ -50,7 +50,7 @@
     "xo": "0.19.0"
   },
   "dependencies": {
-    "args": "2.4.1",
+    "args": "2.4.2",
     "basic-auth": "1.1.0",
     "bluebird": "3.5.0",
     "boxen": "1.0.0",
