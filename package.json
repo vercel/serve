@@ -62,7 +62,7 @@
     "fs-promise": "2.0.2",
     "handlebars": "4.0.6",
     "ip": "1.1.5",
-    "micro": "7.3.0",
+    "micro": "7.3.1",
     "micro-compress": "1.0.0",
     "mime-types": "2.1.15",
     "node-version": "1.0.0",
