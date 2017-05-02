@@ -60,7 +60,7 @@
     "detect-port": "1.1.1",
     "filesize": "3.5.9",
     "fs-promise": "2.0.2",
-    "handlebars": "4.0.7",
+    "handlebars": "4.0.8",
     "ip": "1.1.5",
     "micro": "7.3.2",
     "micro-compress": "1.0.0",
