@@ -50,7 +50,7 @@ args
   )
   .option('silent', `Don't log anything to the console`)
   .option('no-clipboard', `Don't copy address to clipboard`, false)
-  .option('local', `Open local address in browser`, true)
+  .option('local', `Open local address in browser`, false)
 const flags = args.parse(process.argv, {
   minimist: {
     alias: {
@@ -113,7 +113,7 @@ detect(port).then(open => {
   server.listen(
     port,
     coroutine(function*() {
-      yield listening(server, current, inUse, flags.noClipboard !== true, flags.local === true)
+      yield listening(server, current, inUse, flags.noClipboard !== true, flags.local !== true)
     })
   )
 })
