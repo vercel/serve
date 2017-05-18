@@ -73,10 +73,6 @@ if (flags.silent) {
   console.log = () => {}
 }
 
-if (flags.local) {
-
-}
-
 process.env.ASSET_DIR = '/' + Math.random().toString(36).substr(2, 10)
 
 let current = process.cwd()
