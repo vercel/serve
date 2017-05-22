@@ -39,6 +39,8 @@ args
     'Time in milliseconds for caching files in the browser',
     3600
   )
+  .option(['H', 'hash'], 'Long-cache URLs with embedded hashes', false)
+  .option('regexp', 'Long-cache hash RegExp', '\\.[0-9a-f]{8}\\.')
   .option('single', 'Serve single page apps with only one index.html')
   .option('unzipped', 'Disable GZIP compression')
   .option('ignore', 'Files and directories to ignore')
@@ -56,12 +58,22 @@ const flags = args.parse(process.argv, {
     alias: {
       a: 'auth',
       C: 'cors',
+      H: 'hash',
+      r: 'regexp',
       S: 'silent',
       s: 'single',
       u: 'unzipped',
       n: 'no-clipboard'
     },
-    boolean: ['auth', 'cors', 'silent', 'single', 'unzipped', 'no-clipboard']
+    boolean: [
+      'auth',
+      'cors',
+      'hash',
+      'silent',
+      'single',
+      'unzipped',
+      'no-clipboard'
+    ]
   }
 })
 
@@ -84,6 +96,10 @@ let ignoredFiles = ['.DS_Store', '.git/']
 
 if (flags.ignore && flags.ignore.length > 0) {
   ignoredFiles = ignoredFiles.concat(flags.ignore.split(','))
+}
+
+if (flags.hash) {
+  flags.regexp = new RegExp(flags.regexp)
 }
 
 const handler = coroutine(function*(req, res) {
