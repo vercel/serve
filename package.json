@@ -60,7 +60,7 @@
     "detect-port": "1.1.2",
     "filesize": "3.5.10",
     "fs-extra": "3.0.1",
-    "handlebars": "4.0.8",
+    "handlebars": "4.0.9",
     "ip": "1.1.5",
     "micro": "7.3.3",
     "micro-compress": "1.0.0",
