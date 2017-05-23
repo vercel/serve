@@ -109,7 +109,7 @@ detect(port).then(open => {
   server.listen(
     port,
     coroutine(function*() {
-      yield listening(server, current, inUse, flags.noClipboard !== true, flags.open === true)
+      yield listening(server, current, inUse, flags.noClipboard !== true, flags.open)
     })
   )
 })
