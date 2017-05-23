@@ -50,7 +50,7 @@ args
   )
   .option('silent', `Don't log anything to the console`)
   .option('no-clipboard', `Don't copy address to clipboard`, false)
-  .option('open', `Open local address in browser`, false)
+  .option('open', 'Open local address in browser', false)
 const flags = args.parse(process.argv, {
   minimist: {
     alias: {
