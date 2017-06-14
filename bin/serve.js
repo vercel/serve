@@ -40,6 +40,7 @@ args
     3600
   )
   .option('single', 'Serve single page apps with only one index.html')
+  .option('json', 'Use JSON to list directories')
   .option('unzipped', 'Disable GZIP compression')
   .option('ignore', 'Files and directories to ignore')
   .option('auth', 'Serve behind basic auth')
@@ -58,11 +59,21 @@ const flags = args.parse(process.argv, {
       C: 'cors',
       S: 'silent',
       s: 'single',
+      j: 'json',
       u: 'unzipped',
       n: 'no-clipboard',
       o: 'open'
     },
-    boolean: ['auth', 'cors', 'silent', 'single', 'unzipped', 'no-clipboard', 'open']
+    boolean: [
+      'auth',
+      'cors',
+      'silent',
+      'single',
+      'json',
+      'unzipped',
+      'no-clipboard',
+      'open'
+    ]
   }
 })
 
@@ -109,7 +120,13 @@ detect(port).then(open => {
   server.listen(
     port,
     coroutine(function*() {
-      yield listening(server, current, inUse, flags.noClipboard !== true, flags.open)
+      yield listening(
+        server,
+        current,
+        inUse,
+        flags.noClipboard !== true,
+        flags.open
+      )
     })
   )
 })
