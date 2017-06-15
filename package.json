@@ -45,8 +45,8 @@
   "devDependencies": {
     "eslint-config-prettier": "2.1.1",
     "husky": "0.13.4",
-    "lint-staged": "3.6.0",
-    "prettier": "1.4.1",
+    "lint-staged": "3.6.1",
+    "prettier": "1.4.4",
     "xo": "0.18.2"
   },
   "dependencies": {
@@ -66,7 +66,7 @@
     "micro-compress": "1.0.0",
     "mime-types": "2.1.15",
     "node-version": "1.0.0",
-    "opn": "5.0.0",
+    "opn": "5.1.0",
     "path-type": "2.0.0",
     "send": "0.15.3",
     "update-notifier": "2.2.0"
