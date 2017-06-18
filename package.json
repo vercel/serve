@@ -45,7 +45,7 @@
   "devDependencies": {
     "eslint-config-prettier": "2.1.1",
     "husky": "0.13.4",
-    "lint-staged": "3.6.1",
+    "lint-staged": "4.0.0",
     "prettier": "1.4.4",
     "xo": "0.18.2"
   },
