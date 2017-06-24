@@ -90,10 +90,5 @@ detect(port).then(open => {
     flags.open
   ]
 
-  server.listen(
-    port,
-    coroutine(function*() {
-      yield listening(...listenArgs)
-    })
-  )
+  server.listen(port, listening.bind(this, ...listenArgs))
 })
