@@ -34,12 +34,11 @@ if (process.env.NODE_ENV !== 'production' && pkg.dist) {
 
 args
   .option('port', 'Port to listen on', process.env.PORT || 5000)
+  .option('cache', 'Time in milliseconds for caching files in the browser')
   .option(
-    'cache',
-    'Time in milliseconds for caching files in the browser',
-    3600
+    'single',
+    'Serve single page apps with only one index.html. Sets cache for 1 day.'
   )
-  .option('single', 'Serve single page apps with only one index.html')
   .option('unzipped', 'Disable GZIP compression')
   .option('ignore', 'Files and directories to ignore')
   .option('auth', 'Serve behind basic auth')
@@ -62,7 +61,15 @@ const flags = args.parse(process.argv, {
       n: 'no-clipboard',
       o: 'open'
     },
-    boolean: ['auth', 'cors', 'silent', 'single', 'unzipped', 'no-clipboard', 'open']
+    boolean: [
+      'auth',
+      'cors',
+      'silent',
+      'single',
+      'unzipped',
+      'no-clipboard',
+      'open'
+    ]
   }
 })
 
@@ -109,7 +116,13 @@ detect(port).then(open => {
   server.listen(
     port,
     coroutine(function*() {
-      yield listening(server, current, inUse, flags.noClipboard !== true, flags.open)
+      yield listening(
+        server,
+        current,
+        inUse,
+        flags.noClipboard !== true,
+        flags.open
+      )
     })
   )
 })
