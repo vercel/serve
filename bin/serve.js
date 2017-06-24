@@ -21,7 +21,9 @@ const serverHandler = require('../lib/server')
 // Throw an error if node version is too low
 if (nodeVersion.major < 6) {
   console.error(
-    `${red('Error!')} Serve requires at least version 6 of Node. Please upgrade!`
+    `${red(
+      'Error!'
+    )} Serve requires at least version 6 of Node. Please upgrade!`
   )
   process.exit(1)
 }
@@ -49,8 +51,9 @@ args
     false
   )
   .option('silent', `Don't log anything to the console`)
-  .option('no-clipboard', `Don't copy address to clipboard`, false)
+  .option(['n', 'clipless'], `Don't copy address to clipboard`, false)
   .option('open', 'Open local address in browser', false)
+
 const flags = args.parse(process.argv, {
   minimist: {
     alias: {
@@ -59,10 +62,18 @@ const flags = args.parse(process.argv, {
       S: 'silent',
       s: 'single',
       u: 'unzipped',
-      n: 'no-clipboard',
+      n: 'clipless',
       o: 'open'
     },
-    boolean: ['auth', 'cors', 'silent', 'single', 'unzipped', 'no-clipboard', 'open']
+    boolean: [
+      'auth',
+      'cors',
+      'silent',
+      'single',
+      'unzipped',
+      'clipless',
+      'open'
+    ]
   }
 })
 
@@ -109,7 +120,13 @@ detect(port).then(open => {
   server.listen(
     port,
     coroutine(function*() {
-      yield listening(server, current, inUse, flags.noClipboard !== true, flags.open)
+      yield listening(
+        server,
+        current,
+        inUse,
+        flags.noClipboard !== true,
+        flags.open
+      )
     })
   )
 })
