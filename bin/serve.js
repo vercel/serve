@@ -82,16 +82,18 @@ detect(port).then(open => {
     }
   }
 
+  const listenArgs = [
+    server,
+    current,
+    inUse,
+    flags.clipless !== true,
+    flags.open
+  ]
+
   server.listen(
     port,
     coroutine(function*() {
-      yield listening(
-        server,
-        current,
-        inUse,
-        flags.noClipboard !== true,
-        flags.open
-      )
+      yield listening(...listenArgs)
     })
   )
 })
