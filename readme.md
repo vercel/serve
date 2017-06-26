@@ -4,9 +4,9 @@
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 [![Slack Channel](http://zeit-slackin.now.sh/badge.svg)](https://zeit.chat/)
 
-Ever wanted to share a certain directory on your network by running just a command? Then this module is exactly what you're looking for: It provides a neat interface for listing the directory's contents and switching into sub folders.
+Ever wanted to share a project on your network by running just a command? Then this module is exactly what you're looking for: It provides a neat interface for listing the directory's contents and switching into sub folders.
 
-In addition, it's also awesome when it comes to serving static sites. If a directory contains an `index.html`, `serve` will automatically render it instead of serving directory contents, and will serve any `.html` file as a rendered page instead of file's content as plaintext.
+In addition, it's also awesome when it comes to serving static sites!
 
 ![screenshot](https://raw.githubusercontent.com/zeit/art/4bafffc43b38f3b796eb2f9071292d13d129a7d8/serve/example.png)
 

@@ -17,11 +17,14 @@ const nodeVersion = require('node-version')
 const pkg = require('../package')
 const listening = require('../lib/listening')
 const serverHandler = require('../lib/server')
+const { options, minimist } = require('../lib/options')
 
 // Throw an error if node version is too low
 if (nodeVersion.major < 6) {
   console.error(
-    `${red('Error!')} Serve requires at least version 6 of Node. Please upgrade!`
+    `${red(
+      'Error!'
+    )} Serve requires at least version 6 of Node. Please upgrade!`
   )
   process.exit(1)
 }
@@ -32,40 +35,13 @@ if (process.env.NODE_ENV !== 'production' && pkg.dist) {
   updateNotifier({ pkg }).notify()
 }
 
-args
-  .option('port', 'Port to listen on', process.env.PORT || 5000)
-  .option(
-    'cache',
-    'Time in milliseconds for caching files in the browser',
-    3600
-  )
-  .option('single', 'Serve single page apps with only one index.html')
-  .option('unzipped', 'Disable GZIP compression')
-  .option('ignore', 'Files and directories to ignore')
-  .option('auth', 'Serve behind basic auth')
-  .option(
-    'cors',
-    'Setup * CORS headers to allow requests from any origin',
-    false
-  )
-  .option('silent', `Don't log anything to the console`)
-  .option('no-clipboard', `Don't copy address to clipboard`, false)
-  .option('open', 'Open local address in browser', false)
-const flags = args.parse(process.argv, {
-  minimist: {
-    alias: {
-      a: 'auth',
-      C: 'cors',
-      S: 'silent',
-      s: 'single',
-      u: 'unzipped',
-      n: 'no-clipboard',
-      o: 'open'
-    },
-    boolean: ['auth', 'cors', 'silent', 'single', 'unzipped', 'no-clipboard', 'open']
-  }
-})
+// Register the list of options
+args.options(options)
 
+// And initialize `args`
+const flags = args.parse(process.argv, { minimist })
+
+// Figure out the content directory
 const directory = args.sub[0]
 
 // Don't log anything to the console if silent mode is enabled
@@ -106,10 +82,13 @@ detect(port).then(open => {
     }
   }
 
-  server.listen(
-    port,
-    coroutine(function*() {
-      yield listening(server, current, inUse, flags.noClipboard !== true, flags.open)
-    })
-  )
+  const listenArgs = [
+    server,
+    current,
+    inUse,
+    flags.clipless !== true,
+    flags.open
+  ]
+
+  server.listen(port, listening.bind(this, ...listenArgs))
 })
