@@ -71,7 +71,7 @@ const server = flags.unzipped ? micro(handler) : micro(compress(handler))
 let port = flags.port
 
 detect(port).then(open => {
-  let inUse = open !== port
+  let inUse = open != port
 
   if (inUse) {
     port = open
