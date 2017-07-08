@@ -67,7 +67,7 @@
     "mime-types": "2.1.15",
     "node-version": "1.0.0",
     "opn": "5.1.0",
-    "path-type": "2.0.0",
+    "path-type": "3.0.0",
     "send": "0.15.3",
     "update-notifier": "2.2.0"
   }
