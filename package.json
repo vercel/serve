@@ -53,7 +53,7 @@
     "args": "3.0.2",
     "basic-auth": "1.1.0",
     "bluebird": "3.5.0",
-    "boxen": "1.1.0",
+    "boxen": "1.2.0",
     "chalk": "2.0.1",
     "clipboardy": "1.1.4",
     "dargs": "5.1.0",
