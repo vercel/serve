@@ -45,7 +45,7 @@
   "devDependencies": {
     "eslint-config-prettier": "2.3.0",
     "husky": "0.14.3",
-    "lint-staged": "4.0.1",
+    "lint-staged": "4.0.2",
     "prettier": "1.5.3",
     "xo": "0.18.2"
   },
@@ -53,7 +53,7 @@
     "args": "3.0.4",
     "basic-auth": "1.1.0",
     "bluebird": "3.5.0",
-    "boxen": "1.2.0",
+    "boxen": "1.2.1",
     "chalk": "2.0.1",
     "clipboardy": "1.1.4",
     "dargs": "5.1.0",
