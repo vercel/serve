@@ -13,7 +13,7 @@ const updateNotifier = require('update-notifier')
 const { red } = require('chalk')
 const nodeVersion = require('node-version')
 
-// Ours
+// Utilities
 const pkg = require('../package')
 const listening = require('../lib/listening')
 const serverHandler = require('../lib/server')
