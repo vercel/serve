@@ -1,6 +1,6 @@
 {
   "name": "serve",
-  "version": "6.0.4",
+  "version": "6.0.5",
   "description": "Static file serving and directory listing",
   "scripts": {
     "precommit": "lint-staged",
