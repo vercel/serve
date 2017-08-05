@@ -58,7 +58,7 @@
     "fs-extra": "4.0.1",
     "handlebars": "4.0.10",
     "ip": "1.1.5",
-    "micro": "8.0.0",
+    "micro": "8.0.1",
     "micro-compress": "1.0.0",
     "mime-types": "2.1.16",
     "node-version": "1.1.0",
