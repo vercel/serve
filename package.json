@@ -39,10 +39,10 @@
   "author": "leo",
   "license": "MIT",
   "devDependencies": {
-    "eslint-config-prettier": "2.4.0",
+    "eslint-config-prettier": "2.6.0",
     "husky": "0.14.3",
-    "lint-staged": "4.1.3",
-    "prettier": "1.6.1",
+    "lint-staged": "4.2.3",
+    "prettier": "1.7.3",
     "xo": "0.18.2"
   },
   "dependencies": {
@@ -64,7 +64,7 @@
     "node-version": "1.1.0",
     "opn": "5.1.0",
     "path-type": "3.0.0",
-    "send": "0.15.4",
+    "send": "0.16.1",
     "update-notifier": "2.2.0"
   }
 }
