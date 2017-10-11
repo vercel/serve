@@ -73,20 +73,16 @@ const handler = coroutine(function*(req, res) {
   yield serverHandler(req, res, flags, current, ignoredFiles)
 })
 
-let server = flags.unzipped ? micro(handler) : micro(compress(handler))
-
-if (flags.ssl) {
-  const sslOpts = {
-    key: cert.key,
-    cert: cert.cert,
-    passphrase: cert.passphrase
-  }
-  const microHttps = fn =>
-    https.createServer(sslOpts, (req, res) => micro.run(req, res, fn))
-  server = microHttps(async (req, res) => {
-    micro.send(res, 200, { encrypted: req.client.encrypted })
-  })
+const httpsOpts = {
+  key: cert.key,
+  cert: cert.cert,
+  passphrase: cert.passphrase
 }
+const microHttps = fn =>
+  https.createServer(httpsOpts, (req, res) => micro.run(req, res, fn))
+const server = flags.ssl
+  ? microHttps(flags.unzipped ? handler : compress(handler))
+  : micro(flags.unzipped ? handler : compress(handler))
 
 let port = flags.port
 
