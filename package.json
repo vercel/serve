@@ -4,7 +4,8 @@
   "description": "Static file serving and directory listing",
   "scripts": {
     "precommit": "lint-staged",
-    "test": "xo"
+    "lint": "xo",
+    "test": "npm run lint && NODE_ENV=test nyc ava"
   },
   "files": [
     "bin",
@@ -25,7 +26,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "npm run test",
+      "npm run lint",
       "prettier --single-quote --no-semi --write",
       "git add"
     ]
@@ -39,9 +40,11 @@
   "author": "leo",
   "license": "MIT",
   "devDependencies": {
+    "ava": "0.22.0",
     "eslint-config-prettier": "2.6.0",
     "husky": "0.14.3",
     "lint-staged": "4.2.3",
+    "nyc": "11.2.1",
     "prettier": "1.7.3",
     "xo": "0.18.2"
   },
