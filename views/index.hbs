@@ -11,15 +11,19 @@
 
   <body>
     <main>
-      <h1>
-        <i>Index of&nbsp;</i>
+      <header>
+        <h1>
+          <i>Index of&nbsp;</i>
 
-        {{#each paths}}
-          <a href="/{{url}}">{{name}}</a>
-        {{/each}}
-      </h1>
+          {{#each paths}}
+            <a href="/{{url}}">{{name}}</a>
+          {{/each}}
+        </h1>
 
-      <ul>
+        <a class="single-column" id="toggle" title="click to toggle the view"></a>
+      </header>
+
+      <ul id="files">
         {{#each files}}
           <li>
             <a href="/{{relative}}" title="{{title}}" class="{{ext}}">{{base}}</a>
@@ -28,5 +32,14 @@
         {{/each}}
       </ul>
     </main>
+
+    <script type="text/javascript">
+      (function() {
+        toggle.addEventListener('click', function() {
+          files.classList.toggle('single-column');
+          toggle.classList.toggle('single-column');
+        });
+      })();
+    </script>
   </body>
 </html>
