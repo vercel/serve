@@ -2,9 +2,9 @@
 
 // Native
 const path = require('path')
+const https = require('https')
 
 // Packages
-const https = require('https')
 const micro = require('micro')
 const args = require('args')
 const compress = require('micro-compress')
@@ -78,6 +78,7 @@ const httpsOpts = {
   cert: cert.cert,
   passphrase: cert.passphrase
 }
+
 const microHttps = fn =>
   https.createServer(httpsOpts, (req, res) => micro.run(req, res, fn))
 const server = flags.ssl
