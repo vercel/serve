@@ -2,6 +2,7 @@
 
 // Native
 const path = require('path')
+const https = require('https')
 
 // Packages
 const micro = require('micro')
@@ -12,6 +13,7 @@ const { coroutine } = require('bluebird')
 const updateNotifier = require('update-notifier')
 const { red } = require('chalk')
 const nodeVersion = require('node-version')
+const cert = require('openssl-self-signed-certificate')
 
 // Utilities
 const pkg = require('../package')
@@ -49,7 +51,11 @@ if (flags.silent) {
   console.log = () => {}
 }
 
-process.env.ASSET_DIR = '/' + Math.random().toString(36).substr(2, 10)
+process.env.ASSET_DIR =
+  '/' +
+  Math.random()
+    .toString(36)
+    .substr(2, 10)
 
 let current = process.cwd()
 
@@ -67,7 +73,18 @@ const handler = coroutine(function*(req, res) {
   yield serverHandler(req, res, flags, current, ignoredFiles)
 })
 
-const server = flags.unzipped ? micro(handler) : micro(compress(handler))
+const httpsOpts = {
+  key: cert.key,
+  cert: cert.cert,
+  passphrase: cert.passphrase
+}
+
+const microHttps = fn =>
+  https.createServer(httpsOpts, (req, res) => micro.run(req, res, fn))
+const server = flags.ssl
+  ? microHttps(flags.unzipped ? handler : compress(handler))
+  : micro(flags.unzipped ? handler : compress(handler))
+
 let port = flags.port
 
 detect(port).then(open => {
@@ -87,7 +104,8 @@ detect(port).then(open => {
     current,
     inUse,
     flags.clipless !== true,
-    flags.open
+    flags.open,
+    flags.ssl
   ]
 
   server.listen(port, listening.bind(this, ...listenArgs))

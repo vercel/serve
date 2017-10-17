@@ -65,6 +65,7 @@
     "micro-compress": "1.0.0",
     "mime-types": "2.1.17",
     "node-version": "1.1.0",
+    "openssl-self-signed-certificate": "1.1.6",
     "opn": "5.1.0",
     "path-type": "3.0.0",
     "send": "0.16.1",
