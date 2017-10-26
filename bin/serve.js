@@ -63,16 +63,14 @@ if (directory) {
   current = path.resolve(process.cwd(), directory)
 }
 
-console.log(flags)
-
 let ignoredFiles = ['.DS_Store', '.git/']
 if (flags.ignore && flags.ignore.length > 0) {
   ignoredFiles = ignoredFiles.concat(flags.ignore.split(','))
 }
 
 let hiddenFiles = []
-if (flags.noshow && flags.noshow.length > 0) {
-  hiddenFiles = hiddenFiles.concat(flags.noshow.split(','))
+if (flags.donotshow && flags.donotshow.length > 0) {
+  hiddenFiles = hiddenFiles.concat(flags.donotshow.split(','))
 }
 
 const handler = coroutine(function*(req, res) {
