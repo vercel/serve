@@ -69,6 +69,7 @@
     "opn": "5.1.0",
     "path-type": "3.0.0",
     "send": "0.16.1",
-    "update-notifier": "2.3.0"
+    "update-notifier": "2.3.0",
+    "wildstring": "1.0.9"
   }
 }
