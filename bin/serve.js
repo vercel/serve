@@ -64,17 +64,13 @@ if (directory) {
 }
 
 let ignoredFiles = ['.DS_Store', '.git/']
+
 if (flags.ignore && flags.ignore.length > 0) {
   ignoredFiles = ignoredFiles.concat(flags.ignore.split(','))
 }
 
-let hiddenFiles = []
-if (flags.donotshow && flags.donotshow.length > 0) {
-  hiddenFiles = hiddenFiles.concat(flags.donotshow.split(','))
-}
-
 const handler = coroutine(function*(req, res) {
-  yield serverHandler(req, res, flags, current, ignoredFiles, hiddenFiles)
+  yield serverHandler(req, res, flags, current, ignoredFiles)
 })
 
 const httpsOpts = {

@@ -78,10 +78,6 @@ ul li {
   justify-content: space-between;
 }
 
-ul li.hidden {
-  display: none;
-}
-
 ul li i {
   color: #9B9B9B;
   font-size: 11px;
