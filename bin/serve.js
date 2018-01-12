@@ -10,7 +10,7 @@ const args = require('args')
 const compress = require('micro-compress')
 const detect = require('detect-port')
 const { coroutine } = require('bluebird')
-const updateNotifier = require('update-notifier')
+const updateNotifier = require('@zeit/check-updates')
 const { red } = require('chalk')
 const nodeVersion = require('node-version')
 const cert = require('openssl-self-signed-certificate')
@@ -34,7 +34,7 @@ if (nodeVersion.major < 6) {
 // Let user know if there's an update
 // This isn't important when deployed to production
 if (process.env.NODE_ENV !== 'production' && pkg.dist) {
-  updateNotifier({ pkg }).notify()
+  updateNotifier(pkg, 'serve')
 }
 
 // Register the list of options

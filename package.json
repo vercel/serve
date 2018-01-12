@@ -49,6 +49,7 @@
     "xo": "0.18.2"
   },
   "dependencies": {
+    "@zeit/check-updates": "1.0.5",
     "args": "3.0.8",
     "basic-auth": "2.0.0",
     "bluebird": "3.5.1",
@@ -68,7 +69,6 @@
     "openssl-self-signed-certificate": "1.1.6",
     "opn": "5.1.0",
     "path-type": "3.0.0",
-    "send": "0.16.1",
-    "update-notifier": "2.3.0"
+    "send": "0.16.1"
   }
 }
