@@ -5,7 +5,6 @@
   "scripts": {
     "precommit": "lint-staged",
     "lint": "xo",
-    "preinstall": "node -e 'if(process.env.npm_config_git)throw`Use yarn: https://err.sh/zeit/yarn`'",
     "test": "npm run lint && NODE_ENV=test nyc ava"
   },
   "files": [
