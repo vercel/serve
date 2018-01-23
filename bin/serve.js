@@ -51,11 +51,9 @@ if (flags.silent) {
   console.log = () => {}
 }
 
-process.env.ASSET_DIR =
-  '/' +
-  Math.random()
-    .toString(36)
-    .substr(2, 10)
+process.env.ASSET_DIR = Math.random()
+  .toString(36)
+  .substr(2, 10)
 
 let current = process.cwd()
 
