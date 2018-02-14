@@ -103,8 +103,13 @@ detect(port).then(open => {
     inUse,
     flags.clipless !== true,
     flags.open,
-    flags.ssl
+    flags.ssl,
+    flags.local
   ]
 
-  server.listen(port, listening.bind(this, ...listenArgs))
+  if (flags.local) {
+    server.listen(port, 'localhost', listening.bind(this, ...listenArgs))
+  } else {
+    server.listen(port, listening.bind(this, ...listenArgs))
+  }
 })
