@@ -64,7 +64,7 @@
     "ip": "1.1.5",
     "micro": "9.1.0",
     "micro-compress": "1.0.0",
-    "mime-types": "2.1.17",
+    "mime-types": "2.1.18",
     "node-version": "1.1.0",
     "openssl-self-signed-certificate": "1.1.6",
     "opn": "5.1.0",
