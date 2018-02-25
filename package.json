@@ -59,6 +59,7 @@
     "dargs": "5.1.0",
     "detect-port": "1.2.2",
     "filesize": "3.5.11",
+    "folder-zip": "0.0.5",
     "fs-extra": "5.0.0",
     "handlebars": "4.0.11",
     "ip": "1.1.5",
