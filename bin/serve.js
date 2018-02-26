@@ -44,7 +44,7 @@ args.options(options)
 const flags = args.parse(process.argv, { minimist })
 
 // Figure out the content directory
-const directory = args.sub[0]
+const [directory] = args.sub
 
 // Don't log anything to the console if silent mode is enabled
 if (flags.silent) {
@@ -83,7 +83,7 @@ const server = flags.ssl
   ? microHttps(flags.unzipped ? handler : compress(handler))
   : micro(flags.unzipped ? handler : compress(handler))
 
-let port = flags.port
+let { port } = flags
 
 detect(port).then(open => {
   let inUse = open !== port
