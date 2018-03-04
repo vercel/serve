@@ -17,7 +17,7 @@ test('blocks ignores', async t => {
     port
   })
 
-  await sleep(2500)
+  await sleep(5000)
 
   const res = await fetch(`http://localhost:${port}/test.txt`)
   t.is(res.status, 404)
@@ -31,7 +31,7 @@ test('blocks ignores even when requesting urlencoded url', async t => {
     port
   })
 
-  await sleep(2500)
+  await sleep(5000)
 
   const res = await fetch(`http://localhost:${port}/t%65st.txt`)
   t.is(res.status, 404)
