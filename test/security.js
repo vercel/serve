@@ -4,36 +4,30 @@ const path = require('path')
 // Packages
 const test = require('ava')
 const fetch = require('node-fetch')
-const sleep = require('then-sleep')
-const detect = require('detect-port')
+const micro = require('micro')
+const listen = require('test-listen')
 
 // Utilities
-const api = require('../lib/api')
+const server = require('../lib/server')
+
+const securityAppPath = path.join(__dirname, 'fixtures', 'security')
 
 test('blocks ignores', async t => {
-  const port = await detect(5000)
-  const { stop } = api(path.join(__dirname, 'fixtures', 'security'), {
-    ignore: ['test.txt'],
-    port
-  })
+  const srv = micro((req, res) =>
+    server(req, res, {}, securityAppPath, ['test.txt'])
+  )
 
-  await sleep(5000)
-
-  const res = await fetch(`http://localhost:${port}/test.txt`)
+  const url = await listen(srv)
+  const res = await fetch(`${url}/test.txt`)
   t.is(res.status, 404)
-  stop()
 })
 
 test('blocks ignores even when requesting urlencoded url', async t => {
-  const port = await detect(5000)
-  const { stop } = api(path.join(__dirname, 'fixtures', 'security'), {
-    ignore: ['test.txt'],
-    port
-  })
+  const srv = micro((req, res) =>
+    server(req, res, {}, securityAppPath, ['test.txt'])
+  )
 
-  await sleep(5000)
-
-  const res = await fetch(`http://localhost:${port}/t%65st.txt`)
+  const url = await listen(srv)
+  const res = await fetch(`${url}/t%65st.txt`)
   t.is(res.status, 404)
-  stop()
 })
