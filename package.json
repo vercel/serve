@@ -44,8 +44,10 @@
     "eslint-config-prettier": "2.9.0",
     "husky": "0.14.3",
     "lint-staged": "7.0.0",
+    "node-fetch": "2.0.0",
     "nyc": "11.4.1",
     "prettier": "1.11.0",
+    "test-listen": "1.1.0",
     "xo": "0.20.3"
   },
   "dependencies": {
