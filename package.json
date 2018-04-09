@@ -51,7 +51,6 @@
     "xo": "0.20.3"
   },
   "dependencies": {
-    "@zeit/check-updates": "1.1.0",
     "args": "3.0.8",
     "basic-auth": "2.0.0",
     "bluebird": "3.5.1",
@@ -72,6 +71,7 @@
     "opn": "5.2.0",
     "path-is-inside": "1.0.2",
     "path-type": "3.0.0",
-    "send": "0.16.2"
+    "send": "0.16.2",
+    "update-check": "1.2.0"
   }
 }

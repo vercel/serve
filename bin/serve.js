@@ -10,10 +10,11 @@ const args = require('args')
 const compress = require('micro-compress')
 const detect = require('detect-port')
 const { coroutine } = require('bluebird')
-const updateNotifier = require('@zeit/check-updates')
-const { red } = require('chalk')
+const checkForUpdate = require('update-check')
+const { red, bold } = require('chalk')
 const nodeVersion = require('node-version')
 const cert = require('openssl-self-signed-certificate')
+const boxen = require('boxen')
 
 // Utilities
 const pkg = require('../package')
@@ -29,12 +30,6 @@ if (nodeVersion.major < 6) {
     )} Serve requires at least version 6 of Node. Please upgrade!`
   )
   process.exit(1)
-}
-
-// Let user know if there's an update
-// This isn't important when deployed to production
-if (process.env.NODE_ENV !== 'production' && pkg.dist) {
-  updateNotifier(pkg, 'serve')
 }
 
 // Register the list of options
@@ -85,7 +80,24 @@ const server = flags.ssl
 
 let { port } = flags
 
-detect(port).then(open => {
+detect(port).then(async open => {
+  const { NODE_ENV } = process.env
+  const update = await checkForUpdate(pkg)
+
+  if (NODE_ENV !== 'production' && update) {
+    const message = `${bold(
+      'UPDATE AVAILABLE:'
+    )} The latest version of \`serve\` is ${update.latest}`
+
+    console.log(
+      boxen(message, {
+        padding: 1,
+        borderColor: 'green',
+        margin: 1
+      })
+    )
+  }
+
   let inUse = open !== port
 
   if (inUse) {
