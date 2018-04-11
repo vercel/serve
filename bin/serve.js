@@ -82,20 +82,23 @@ let { port } = flags
 
 detect(port).then(async open => {
   const { NODE_ENV } = process.env
-  const update = await checkForUpdate(pkg)
 
-  if (NODE_ENV !== 'production' && update) {
-    const message = `${bold(
-      'UPDATE AVAILABLE:'
-    )} The latest version of \`serve\` is ${update.latest}`
+  if (NODE_ENV !== 'production') {
+    const update = await checkForUpdate(pkg)
 
-    console.log(
-      boxen(message, {
-        padding: 1,
-        borderColor: 'green',
-        margin: 1
-      })
-    )
+    if (update) {
+      const message = `${bold(
+        'UPDATE AVAILABLE:'
+      )} The latest version of \`serve\` is ${update.latest}`
+  
+      console.log(
+        boxen(message, {
+          padding: 1,
+          borderColor: 'green',
+          margin: 1
+        })
+      )
+    }
   }
 
   let inUse = open !== port
