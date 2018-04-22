@@ -1,15 +1,15 @@
 // Native
 
 // Packages
-const test = require('ava')
+const test = require('ava');
 
 // Utilities
-const { options, minimist } = require('../lib/options')
+const {options, minimist} = require('../lib/options');
 
 test('options options', t => {
-  t.snapshot(options)
-})
+	t.snapshot(options);
+});
 
 test('options minimist', t => {
-  t.snapshot(minimist)
-})
+	t.snapshot(minimist);
+});
