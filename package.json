@@ -3,8 +3,6 @@
   "version": "6.5.5",
   "description": "Static file serving and directory listing",
   "scripts": {
-    "precommit": "lint-staged",
-    "lint": "xo",
     "test": "yarn lint && NODE_ENV=test nyc ava"
   },
   "files": [
@@ -21,16 +19,6 @@
   "engines": {
     "node": ">=6.9.0"
   },
-  "xo": {
-    "extends": "prettier"
-  },
-  "lint-staged": {
-    "*.js": [
-      "yarn lint",
-      "prettier --single-quote --no-semi --write",
-      "git add"
-    ]
-  },
   "keywords": [
     "now",
     "serve",
@@ -41,14 +29,9 @@
   "license": "MIT",
   "devDependencies": {
     "ava": "0.25.0",
-    "eslint-config-prettier": "2.9.0",
-    "husky": "0.14.3",
-    "lint-staged": "7.0.0",
     "node-fetch": "2.1.1",
     "nyc": "11.4.1",
-    "prettier": "1.11.1",
-    "test-listen": "1.1.0",
-    "xo": "0.20.3"
+    "test-listen": "1.1.0"
   },
   "dependencies": {
     "args": "3.0.8",
