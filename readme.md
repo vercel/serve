@@ -1,9 +1,9 @@
 # serve
 
-[![Build Status](https://travis-ci.org/zeit/serve.svg?branch=master)](https://travis-ci.org/zeit/serve)
+[![Build Status](https://circleci.com/gh/zeit/serve.svg?&style=shield)](https://circleci.com/gh/zeit/serve)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/micro/serve)
 
-Ever wanted to share a project on your network by running just a command? Then this module is exactly what you're looking for: It provides a neat interface for listing the directory's contents and switching into sub folders.
+Have you ever wanted to share a project on your network by running just a command? Then this module is exactly what you're looking for: It provides a neat interface for listing the directory's contents and switching into sub folders.
 
 In addition, it's also awesome when it comes to serving static sites!
 
@@ -11,13 +11,19 @@ In addition, it's also awesome when it comes to serving static sites!
 
 ## Usage
 
-Install it (needs at least Node LTS):
+Firstly, install the package from [npm](https://npmjs.com/release) (you'll need at least Node.js 7.6.0):
 
 ```bash
 npm install -g serve
 ```
 
-And run this command in your terminal:
+Alternatively, you can use [Yarn](https://yarnpkg.com/en/) to install it:
+
+```bash
+yarn global add serve
+```
+
+Once that's done, you can run this command inside your project's directory:
 
 ```bash
 serve [options] <path>
