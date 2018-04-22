@@ -3,7 +3,9 @@
   "version": "6.5.5",
   "description": "Static file serving and directory listing",
   "scripts": {
-    "test": "yarn lint && NODE_ENV=test nyc ava"
+    "test": "yarn lint && NODE_ENV=test nyc ava",
+    "lint": "zeit-eslint --ext .jsx,.js .",
+    "lint-staged": "git diff --diff-filter=ACMRT --cached --name-only '*.js' '*.jsx' | xargs zeit-eslint"
   },
   "files": [
     "bin",
@@ -28,7 +30,10 @@
   "author": "leo",
   "license": "MIT",
   "devDependencies": {
+    "@zeit/eslint-config-node": "0.2.13",
+    "@zeit/git-hooks": "0.1.4",
     "ava": "0.25.0",
+    "eslint": "4.19.1",
     "node-fetch": "2.1.1",
     "nyc": "11.4.1",
     "test-listen": "1.1.0"
@@ -56,5 +61,13 @@
     "path-type": "3.0.0",
     "send": "0.16.2",
     "update-check": "1.2.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@zeit/eslint-config-node"
+    ]
+  },
+  "git": {
+    "pre-commit": "lint-staged"
   }
 }
