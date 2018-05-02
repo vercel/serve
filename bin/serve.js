@@ -84,19 +84,33 @@ detect(port).then(async open => {
 	const {NODE_ENV} = process.env;
 
 	if (NODE_ENV !== 'production') {
-		const update = await checkForUpdate(pkg);
+		try {
+			const update = await checkForUpdate(pkg);
 
-		if (update) {
-			const message = `${bold(
-				'UPDATE AVAILABLE:'
-			)} The latest version of \`serve\` is ${update.latest}`;
+			if (update) {
+				const message = `${bold(
+					'UPDATE AVAILABLE:'
+				)} The latest version of \`serve\` is ${update.latest}`;
 
+				console.log(
+					boxen(message, {
+						padding: 1,
+						borderColor: 'green',
+						margin: 1
+					})
+				);
+			}
+		} catch (err) {
 			console.log(
-				boxen(message, {
-					padding: 1,
-					borderColor: 'green',
-					margin: 1
-				})
+				boxen(
+					`${bold(
+						'UPDATE CHECK FAILED:'
+					)} ${err.message}`, {
+						padding: 1,
+						borderColor: 'red',
+						margin: 1
+					}
+				)
 			);
 		}
 	}
