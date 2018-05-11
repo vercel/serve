@@ -68,8 +68,7 @@ const handler = coroutine(function *run(req, res) {
 
 const httpsOpts = {
 	key: cert.key,
-	cert: cert.cert,
-	passphrase: cert.passphrase
+	cert: cert.cert
 };
 
 const microHttps = fn =>
