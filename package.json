@@ -19,7 +19,7 @@
     "serve": "./bin/serve.js"
   },
   "engines": {
-    "node": ">=6.9.0"
+    "node": ">=7.6.0"
   },
   "keywords": [
     "now",
