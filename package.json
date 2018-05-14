@@ -1,6 +1,6 @@
 {
   "name": "serve",
-  "version": "6.5.6",
+  "version": "6.5.7",
   "description": "Static file serving and directory listing",
   "scripts": {
     "test": "yarn lint && NODE_ENV=test nyc ava",
