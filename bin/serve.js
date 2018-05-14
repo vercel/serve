@@ -15,6 +15,7 @@ const {red, bold} = require('chalk');
 const nodeVersion = require('node-version');
 const cert = require('openssl-self-signed-certificate');
 const boxen = require('boxen');
+const promiseTimeout = require('promise-timeout');
 
 // Utilities
 const pkg = require('../package');
@@ -83,19 +84,33 @@ detect(port).then(async open => {
 	const {NODE_ENV} = process.env;
 
 	if (NODE_ENV !== 'production') {
-		const update = await checkForUpdate(pkg);
+		try {
+			const update = await promiseTimeout.timeout(checkForUpdate(pkg), 2000);
 
-		if (update) {
-			const message = `${bold(
-				'UPDATE AVAILABLE:'
-			)} The latest version of \`serve\` is ${update.latest}`;
+			if (update) {
+				const message = `${bold(
+					'UPDATE AVAILABLE:'
+				)} The latest version of \`serve\` is ${update.latest}`;
 
+				console.log(
+					boxen(message, {
+						padding: 1,
+						borderColor: 'green',
+						margin: 1
+					})
+				);
+			}
+		} catch (err) {
 			console.log(
-				boxen(message, {
-					padding: 1,
-					borderColor: 'green',
-					margin: 1
-				})
+				boxen(
+					`${bold(
+						'UPDATE CHECK FAILED:'
+					)} ${err.message}`, {
+						padding: 1,
+						borderColor: 'red',
+						margin: 1
+					}
+				)
 			);
 		}
 	}
