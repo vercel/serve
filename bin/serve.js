@@ -15,7 +15,6 @@ const {red, bold} = require('chalk');
 const nodeVersion = require('node-version');
 const cert = require('openssl-self-signed-certificate');
 const boxen = require('boxen');
-const promiseTimeout = require('promise-timeout');
 
 // Utilities
 const pkg = require('../package');
@@ -85,7 +84,7 @@ detect(port).then(async open => {
 
 	if (NODE_ENV !== 'production') {
 		try {
-			const update = await promiseTimeout.timeout(checkForUpdate(pkg), 2000);
+			const update = await checkForUpdate(pkg);
 
 			if (update) {
 				const message = `${bold(
