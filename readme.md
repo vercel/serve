@@ -1,7 +1,7 @@
 # serve
 
 [![Build Status](https://circleci.com/gh/zeit/serve.svg?&style=shield)](https://circleci.com/gh/zeit/serve)
-[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/micro/serve)
+[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/micro/serve) [![Greenkeeper badge](https://badges.greenkeeper.io/zeit/serve.svg)](https://greenkeeper.io/)
 
 Have you ever wanted to share a project on your network by running just a command? Then this module is exactly what you're looking for: It provides a neat interface for listing the directory's contents and switching into sub folders.
 
