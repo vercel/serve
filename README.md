@@ -3,21 +3,17 @@
 [![Build Status](https://circleci.com/gh/zeit/serve.svg?&style=shield)](https://circleci.com/gh/zeit/serve)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/micro/serve)
 
-Have you ever wanted to share a project on your network by running just a command? Then this module is exactly what you're looking for: It provides a neat interface for listing the directory's contents and switching into sub folders.
+Assuming you would like to serve a static site, single page application or just a static file (no matter if on your device or on the local network), this package is just the right choice for you.
 
-In addition, it's also awesome when it comes to serving static sites!
+It behaves exactly like static deployments on [Now](https://zeit.co/now), so it's perfect for developing your static project. Then, when it's time to push it into production, you [deploy it](https://zeit.co/docs/examples/static).
 
-![screenshot](https://raw.githubusercontent.com/zeit/art/4bafffc43b38f3b796eb2f9071292d13d129a7d8/serve/example.png)
+Furthermore, it also provides a neat interface for listing the directory's contents:
+
+![screenshot](https://user-images.githubusercontent.com/6170607/40541195-167ff460-601b-11e8-8f66-3b0c7ff96cbb.png)
 
 ## Usage
 
-Firstly, install the package from [npm](https://npmjs.com/release) (you'll need at least Node.js 7.6.0):
-
-```bash
-npm install -g serve
-```
-
-Alternatively, you can use [Yarn](https://yarnpkg.com/en/) to install it:
+Firstly, install the package using [Yarn](https://yarnpkg.com/en/) (you'll need at least Node.js LTS):
 
 ```bash
 yarn global add serve
@@ -26,55 +22,30 @@ yarn global add serve
 Once that's done, you can run this command inside your project's directory:
 
 ```bash
-serve [options] <path>
+serve
 ```
 
-### Options
-
-Run this command to see a list of all available options:
+Finally, run this command to see a list of all available options:
 
 ```bash
-serve help
+serve --help
 ```
 
-### Authentication
+Now you understand how the package works! :tada:
 
-If you set the `--auth` flag, the package will look for a username and password in the `SERVE_USER` and `SERVE_PASSWORD` environment variables.
+## Configuration
 
-As an example, this is how such a command could look like:
-
-```bash
-SERVE_USER=leo SERVE_PASSWORD=1234 serve --auth
-```
+To customize `serve`'s behavior, create a `serve.json` file and insert any of [these properties](https://github.com/zeit/serve-handler#options). In addition, `serve` will also detect `now.json` files if they contain the `static` property.
 
 ## API
 
-You can also use the package inside your application. Just load it:
-
-```js
-const serve = require('serve')
-```
-
-And call it with flags (run [this command](#options) for the full list):
-
-```js
-const server = serve(__dirname, {
-  port: 1337,
-  ignore: ['node_modules']
-})
-```
-
-Later in the code, you can stop the server using this method:
-
-```js
-server.stop()
-```
+The core of `serve` is [serve-handler](https://github.com/zeit/serve-handler), which can be used as middleware in existing HTTP servers.
 
 ## Contributing
 
 1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
-2. Uninstall `serve` if it's already installed: `npm uninstall -g serve`
-3. Link it to the global module directory: `npm link`
+2. Uninstall `serve` if it's already installed: `yarn global remove serve`
+3. Link it to the global module directory: `yarn link`
 
 After that, you can use the `serve` command everywhere. [Here](https://github.com/zeit/serve/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+for+beginners%22)'s a list of issues that are great for beginners.
 
