@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 // Packages
-const boxen = require('boxen');
 const checkForUpdate = require('update-check');
 const chalk = require('chalk');
 const micro = require('micro');
@@ -11,37 +10,26 @@ const handler = require('serve-handler');
 // Utilities
 const pkg = require('../package');
 
-const {NODE_ENV} = process.env;
+const warning = message => chalk`{yellow WARNING:} ${message}`;
 
-const updateCheck = async () => {
-	if (NODE_ENV === 'production') {
-		return;
-	}
-
-	const boxenConfig = {
-		padding: 1,
-		margin: 1,
-		borderColor: 'green'
-	};
-
+const updateCheck = async isDebugging => {
 	let update = null;
 
 	try {
 		update = await checkForUpdate(pkg);
 	} catch (err) {
-		const message = `${chalk.bold('UPDATE CHECK FAILED:')} ${err.message}`;
+		console.error(warning(`Checking for updates failed${isDebugging ? ':' : ' (use `--debug` to see full error)'}`));
 
-		console.error(boxen(message, Object.assign({}, boxenConfig, {
-			borderColor: 'red'
-		})));
+		if (isDebugging) {
+			console.error(err);
+		}
 	}
 
 	if (!update) {
 		return;
 	}
 
-	const message = `${chalk.bold('UPDATE AVAILABLE:')} The latest version of \`serve\` is ${update.latest}`;
-	console.error(boxen(message, boxenConfig));
+	console.log(`${chalk.bgRed('UPDATE AVAILABLE')} The latest version of \`serve\` is ${update.latest}`);
 };
 
 const getHelp = () => chalk`
@@ -65,7 +53,9 @@ const getHelp = () => chalk`
       -v, --version                       Displays the current version of serve
 
       -l, --listen {underline listen_uri}             Specify a URI endpoint on which to listen (see below) -
-												more than one may be specified to listen in multiple places
+                                          more than one may be specified to listen in multiple places
+
+      -d, --debug                         Show debugging information
 
   {bold ENDPOINTS}
 
@@ -154,16 +144,18 @@ const startEndpoint = endpoint => {
 };
 
 (async () => {
-	await updateCheck();
-
 	const args = arg({
 		'--help': Boolean,
 		'--version': Boolean,
 		'--listen': [parseEndpoint],
+		'--debug': Boolean,
 		'-h': '--help',
 		'-v': '--version',
-		'-l': '--listen'
+		'-l': '--listen',
+		'-d': '--debug'
 	});
+
+	await updateCheck(args['--debug']);
 
 	if (args['--version']) {
 		console.log(pkg.version);

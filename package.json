@@ -44,7 +44,6 @@
   },
   "dependencies": {
     "arg": "2.0.0",
-    "boxen": "1.3.0",
     "chalk": "2.4.1",
     "micro": "9.3.1",
     "serve-handler": "2.3.7",
