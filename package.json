@@ -8,10 +8,7 @@
     "lint-staged": "git diff --diff-filter=ACMRT --cached --name-only '*.js' '*.jsx' | xargs zeit-eslint"
   },
   "files": [
-    "bin",
-    "lib",
-    "assets",
-    "views"
+    "bin"
   ],
   "repository": "zeit/serve",
   "bin": {
