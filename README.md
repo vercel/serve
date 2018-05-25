@@ -3,15 +3,15 @@
 [![Build Status](https://circleci.com/gh/zeit/serve.svg?&style=shield)](https://circleci.com/gh/zeit/serve)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/micro/serve)
 
-Have you ever wanted to share a project on your network by running just a command? Then this module is exactly what you're looking for: It provides a neat interface for listing the directory's contents and switching into sub folders.
+If you would like to share a project on your network, serve a static file or even entire single page applications, this package is just the right choice for you.
 
-In addition, it's also awesome when it comes to serving static sites.
+Furthermore, it also provides a neat interface for listing the directory's contents:
 
 ![screenshot](https://user-images.githubusercontent.com/6170607/40541195-167ff460-601b-11e8-8f66-3b0c7ff96cbb.png)
 
 ## Usage
 
-Firstly, install the package from [npm](https://npmjs.com/release) (you'll need at least Node.js 7.6.0):
+Firstly, install the package from [npm](https://npmjs.com/release) (you'll need at least Node.js LTS):
 
 ```bash
 npm install -g serve
@@ -29,7 +29,7 @@ Once that's done, you can run this command inside your project's directory:
 serve [options] <path>
 ```
 
-### Options
+### Command Line Options
 
 Run this command to see a list of all available options:
 
@@ -37,19 +37,13 @@ Run this command to see a list of all available options:
 serve --help
 ```
 
-### Authentication
+### Configuration
 
-If you set the `--auth` flag, the package will look for a username and password in the `SERVE_USER` and `SERVE_PASSWORD` environment variables.
-
-As an example, this is how such a command could look like:
-
-```bash
-SERVE_USER=leo SERVE_PASSWORD=1234 serve --auth
-```
+To customize `serve`'s behavior, create a `serve.json` file and insert any of [these properties](https://github.com/zeit/serve-handler#options). In addition, `serve` will also detect `now.json` files if they contain the `static` property.
 
 ## API
 
-The core of `serve` is [serve-handler](https://github.com/zeit/serve-handler), which you can use as middleware in existing HTTP servers.
+The core of `serve` is [serve-handler](https://github.com/zeit/serve-handler), which can be used as middleware in existing HTTP servers.
 
 ## Contributing
 
