@@ -13,13 +13,7 @@ Furthermore, it also provides a neat interface for listing the directory's conte
 
 ## Usage
 
-Firstly, install the package from [npm](https://npmjs.com/release) (you'll need at least Node.js LTS):
-
-```bash
-npm install -g serve
-```
-
-Alternatively, you can use [Yarn](https://yarnpkg.com/en/) to install it:
+Firstly, install the package using [Yarn](https://yarnpkg.com/en/) (you'll need at least Node.js LTS):
 
 ```bash
 yarn global add serve
@@ -28,18 +22,18 @@ yarn global add serve
 Once that's done, you can run this command inside your project's directory:
 
 ```bash
-serve [options] <path>
+serve
 ```
 
-### Command Line Options
-
-Run this command to see a list of all available options:
+Finally, run this command to see a list of all available options:
 
 ```bash
 serve --help
 ```
 
-### Configuration
+Now you understand how the package works! :tada:
+
+## Configuration
 
 To customize `serve`'s behavior, create a `serve.json` file and insert any of [these properties](https://github.com/zeit/serve-handler#options). In addition, `serve` will also detect `now.json` files if they contain the `static` property.
 
