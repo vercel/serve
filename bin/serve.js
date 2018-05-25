@@ -4,7 +4,9 @@
 const boxen = require('boxen');
 const checkForUpdate = require('update-check');
 const chalk = require('chalk');
+const micro = require('micro');
 const arg = require('arg');
+const handler = require('serve-handler');
 
 // Utilities
 const pkg = require('../package');
@@ -111,6 +113,46 @@ const parseEndpoint = str => {
 	}
 };
 
+const registerShutdown = fn => {
+	let run = false;
+
+	const wrapper = () => {
+		if (!run) {
+			run = true;
+			fn();
+		}
+	};
+
+	process.on('SIGINT', wrapper);
+	process.on('SIGTERM', wrapper);
+	process.on('exit', wrapper);
+};
+
+const startEndpoint = endpoint => {
+	const server = micro(async (request, response) => handler(request, response));
+
+	server.on('error', err => {
+		console.error('serve:', err.stack);
+		process.exit(1);
+	});
+
+	server.listen(...endpoint, () => {
+		const details = server.address();
+
+		registerShutdown(() => server.close());
+
+		// `micro` is designed to run only in production, so
+		// this message is perfectly for prod
+		if (typeof details === 'string') {
+			console.log(`serve: Accepting connections on ${details}`);
+		} else if (typeof details === 'object' && details.port) {
+			console.log(`serve: Accepting connections on port ${details.port}`);
+		} else {
+			console.log('serve: Accepting connections');
+		}
+	});
+};
+
 (async () => {
 	await updateCheck();
 
@@ -133,5 +175,14 @@ const parseEndpoint = str => {
 		return;
 	}
 
-	console.log('serving!');
+	if (!args['--listen']) {
+		// Default endpoint
+		args['--listen'] = [[3000]];
+	}
+
+	for (const endpoint of args['--listen']) {
+		startEndpoint(endpoint);
+	}
+
+	registerShutdown(() => console.log('serve: Gracefully shutting down. Please wait...'));
 })();
