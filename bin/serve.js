@@ -3,7 +3,8 @@
 // Packages
 const boxen = require('boxen');
 const checkForUpdate = require('update-check');
-const {bold} = require('chalk');
+const chalk = require('chalk');
+const arg = require('arg');
 
 // Utilities
 const pkg = require('../package');
@@ -26,7 +27,7 @@ const updateCheck = async () => {
 	try {
 		update = await checkForUpdate(pkg);
 	} catch (err) {
-		const message = `${bold('UPDATE CHECK FAILED:')} ${err.message}`;
+		const message = `${chalk.bold('UPDATE CHECK FAILED:')} ${err.message}`;
 
 		console.error(boxen(message, Object.assign({}, boxenConfig, {
 			borderColor: 'red'
@@ -37,10 +38,100 @@ const updateCheck = async () => {
 		return;
 	}
 
-	const message = `${bold('UPDATE AVAILABLE:')} The latest version of \`serve\` is ${update.latest}`;
+	const message = `${chalk.bold('UPDATE AVAILABLE:')} The latest version of \`serve\` is ${update.latest}`;
 	console.error(boxen(message, boxenConfig));
+};
+
+const getHelp = () => chalk`
+  {bold.cyan serve} - Static file serving and directory listing
+
+  {bold USAGE}
+
+      {bold $} {cyan serve} --help
+      {bold $} {cyan serve} --version
+      {bold $} {cyan serve} [-l {underline listen_uri} [-l ...]] [{underline directory}]
+
+      By default, {cyan serve} will listen on {bold 0.0.0.0:3000} and serve the
+      current working directory on that address.
+
+      Specifying a single {bold --listen} argument will overwrite the default, not supplement it.
+
+  {bold OPTIONS}
+
+      --help                              Shows this help message
+
+      -v, --version                       Displays the current version of serve
+
+      -l, --listen {underline listen_uri}             Specify a URI endpoint on which to listen (see below) -
+												more than one may be specified to listen in multiple places
+
+  {bold ENDPOINTS}
+
+      Listen endpoints (specified by the {bold --listen} or {bold -l} options above) instruct {cyan micro}
+      to listen on one or more interfaces/ports, UNIX domain sockets, or Windows named pipes.
+
+      For TCP (traditional host/port) endpoints:
+
+          {bold $} {cyan serve} -l tcp://{underline hostname}:{underline 1234}
+
+      For UNIX domain socket endpoints:
+
+          {bold $} {cyan serve} -l unix:{underline /path/to/socket.sock}
+
+      For Windows named pipe endpoints:
+
+          {bold $} {cyan serve} -l pipe:\\\\.\\pipe\\{underline PipeName}
+`;
+
+const parseEndpoint = str => {
+	const url = new URL(str);
+
+	switch (url.protocol) {
+	case 'pipe:': {
+		// some special handling
+		const cutStr = str.replace(/^pipe:/, '');
+
+		if (cutStr.slice(0, 4) !== '\\\\.\\') {
+			throw new Error(`Invalid Windows named pipe endpoint: ${str}`);
+		}
+
+		return [cutStr];
+	}
+	case 'unix:':
+		if (!url.pathname) {
+			throw new Error(`Invalid UNIX domain socket endpoint: ${str}`);
+		}
+
+		return [url.pathname];
+	case 'tcp:':
+		url.port = url.port || '3000';
+		return [parseInt(url.port, 10), url.hostname];
+	default:
+		throw new Error(`Unknown --listen endpoint scheme (protocol): ${url.protocol}`);
+	}
 };
 
 (async () => {
 	await updateCheck();
+
+	const args = arg({
+		'--help': Boolean,
+		'--version': Boolean,
+		'--listen': [parseEndpoint],
+		'-h': '--help',
+		'-v': '--version',
+		'-l': '--listen'
+	});
+
+	if (args['--version']) {
+		console.log(pkg.version);
+		return;
+	}
+
+	if (args['--help']) {
+		console.log(getHelp());
+		return;
+	}
+
+	console.log('serving!');
 })();
