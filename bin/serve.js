@@ -18,7 +18,8 @@ const updateCheck = async isDebugging => {
 	try {
 		update = await checkForUpdate(pkg);
 	} catch (err) {
-		console.error(warning(`Checking for updates failed${isDebugging ? ':' : ' (use `--debug` to see full error)'}`));
+		const suffix = isDebugging ? ':' : ' (use `--debug` to see full error)';
+		console.error(warning(`Checking for updates failed${suffix}`));
 
 		if (isDebugging) {
 			console.error(err);
