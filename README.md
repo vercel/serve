@@ -3,7 +3,7 @@
 [![Build Status](https://circleci.com/gh/zeit/serve.svg?&style=shield)](https://circleci.com/gh/zeit/serve)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/micro/serve)
 
-Assuming you would like to serve a static site, single page application or just a static file (on the network or locally), this package is just the right choice for you.
+Assuming you would like to serve a static site, single page application or just a static file (no matter if on your device or on the local network), this package is just the right choice for you.
 
 It behaves exactly like static deployments on [Now](https://zeit.co/now), so it's perfect for developing your static project. Then, when it's time to push it into production, you [deploy it](https://zeit.co/docs/examples/static).
 
