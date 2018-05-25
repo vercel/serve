@@ -3,7 +3,7 @@
   "version": "6.5.8",
   "description": "Static file serving and directory listing",
   "scripts": {
-    "test": "yarn lint && NODE_ENV=test nyc ava",
+    "test": "yarn lint",
     "lint": "zeit-eslint --ext .jsx,.js .",
     "lint-staged": "git diff --diff-filter=ACMRT --cached --name-only '*.js' '*.jsx' | xargs zeit-eslint"
   },
@@ -28,11 +28,7 @@
   "devDependencies": {
     "@zeit/eslint-config-node": "0.2.13",
     "@zeit/git-hooks": "0.1.4",
-    "ava": "0.25.0",
-    "eslint": "4.19.1",
-    "node-fetch": "2.1.2",
-    "nyc": "11.8.0",
-    "test-listen": "1.1.0"
+    "eslint": "4.19.1"
   },
   "eslintConfig": {
     "extends": [
