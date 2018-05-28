@@ -250,5 +250,12 @@ const loadConfig = async (cwd, entry) => {
 		startEndpoint(endpoint, config);
 	}
 
-	registerShutdown(() => console.log(`\n${info('Gracefully shutting down. Please wait...')}`));
+	registerShutdown(() => {
+		console.log(`\n${info('Gracefully shutting down. Please wait...')}`);
+
+		process.on('SIGINT', () => {
+			console.log(`\n${warning('Force-closing all open sockets...')}`);
+			process.exit(0);
+		});
+	});
 })();
