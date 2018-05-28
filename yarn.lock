@@ -880,9 +880,9 @@ semver@^5.3.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
-serve-handler@2.3.8:
-  version "2.3.8"
-  resolved "https://registry.yarnpkg.com/serve-handler/-/serve-handler-2.3.8.tgz#e11b8c935e8cf179a666435d4f540f16c0c309c5"
+serve-handler@2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/serve-handler/-/serve-handler-2.3.9.tgz#c157a6c5646aff3d44b87e395026a5cf751a1c72"
   dependencies:
     bytes "3.0.0"
     fast-url-parser "1.1.3"

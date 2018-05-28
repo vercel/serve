@@ -43,7 +43,7 @@
     "dot-prop": "4.2.0",
     "fs-extra": "6.0.1",
     "micro": "9.3.1",
-    "serve-handler": "2.3.8",
+    "serve-handler": "2.3.9",
     "update-check": "1.5.2"
   }
 }
