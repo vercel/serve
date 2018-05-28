@@ -201,16 +201,23 @@ const loadConfig = async (cwd, entry) => {
 };
 
 (async () => {
-	const args = arg({
-		'--help': Boolean,
-		'--version': Boolean,
-		'--listen': [parseEndpoint],
-		'--debug': Boolean,
-		'-h': '--help',
-		'-v': '--version',
-		'-l': '--listen',
-		'-d': '--debug'
-	});
+	let args = null;
+
+	try {
+		args = arg({
+			'--help': Boolean,
+			'--version': Boolean,
+			'--listen': [parseEndpoint],
+			'--debug': Boolean,
+			'-h': '--help',
+			'-v': '--version',
+			'-l': '--listen',
+			'-d': '--debug'
+		});
+	} catch (err) {
+		console.error(error(err.message));
+		process.exit(1);
+	}
 
 	await updateCheck(args['--debug']);
 
