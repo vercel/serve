@@ -1,21 +1,23 @@
 #!/usr/bin/env node
 
 // Native
+const http = require('http');
 const path = require('path');
+const fs = require('fs');
+const {promisify} = require('util');
 
 // Packages
 const Ajv = require('ajv');
-const dotProp = require('dot-prop');
 const checkForUpdate = require('update-check');
 const chalk = require('chalk');
-const micro = require('micro');
 const arg = require('arg');
 const handler = require('serve-handler');
 const schema = require('@zeit/schemas/deployment/config-static');
-const fs = require('fs-extra');
 
 // Utilities
 const pkg = require('../package');
+
+const readFile = promisify(fs.readFile);
 
 const warning = message => chalk`{yellow WARNING:} ${message}`;
 const info = message => chalk`{magenta INFO:} ${message}`;
@@ -69,7 +71,7 @@ const getHelp = () => chalk`
 
   {bold ENDPOINTS}
 
-      Listen endpoints (specified by the {bold --listen} or {bold -l} options above) instruct {cyan micro}
+      Listen endpoints (specified by the {bold --listen} or {bold -l} options above) instruct {cyan serve}
       to listen on one or more interfaces/ports, UNIX domain sockets, or Windows named pipes.
 
       For TCP (traditional host/port) endpoints:
@@ -129,7 +131,7 @@ const registerShutdown = fn => {
 };
 
 const startEndpoint = (endpoint, config) => {
-	const server = micro(async (request, response) => handler(request, response, config));
+	const server = http.createServer((request, response) => handler(request, response, config));
 
 	server.on('error', err => {
 		console.error('serve:', err.stack);
@@ -138,11 +140,8 @@ const startEndpoint = (endpoint, config) => {
 
 	server.listen(...endpoint, () => {
 		const details = server.address();
-
 		registerShutdown(() => server.close());
 
-		// `micro` is designed to run only in production, so
-		// this message is perfectly for prod
 		if (typeof details === 'string') {
 			console.log(info(`Accepting connections at ${details}`));
 		} else if (typeof details === 'object' && details.port) {
@@ -154,29 +153,58 @@ const startEndpoint = (endpoint, config) => {
 };
 
 const loadConfig = async (cwd, entry) => {
-	const paths = {
-		'serve.json': null,
-		'now.json': 'static',
-		'package.json': 'now.static'
-	};
+	const files = [
+		'serve.json',
+		'now.json',
+		'package.json'
+	];
 
 	const config = {};
 
-	for (const file of Object.keys(paths)) {
+	for (const file of files) {
 		const location = path.join(entry, file);
-		const prop = paths[file];
+		let content = null;
 
 		try {
-			const content = await fs.readJSON(location);
-			Object.assign(config, prop ? dotProp.get(content, prop) : content);
+			content = await readFile(location, 'utf8');
+		} catch (err) {
+			if (err.code === 'ENOENT') {
+				continue;
+			}
+
+			console.error(error(`Not able to read ${location}: ${err.message}`));
+			process.exit(1);
+		}
+
+		try {
+			content = JSON.parse(content);
+		} catch (err) {
+			console.error(error(`Could not parse ${location} as JSON: ${err.message}`));
+			process.exit(1);
+		}
+
+		if (typeof content !== 'object') {
+			console.error(warning(`Didn't find a valid object in ${location}. Skipping...`));
+			continue;
+		}
+
+		try {
+			switch (file) {
+			case 'now.json':
+				content = content.static;
+				break;
+			case 'package.json':
+				content = content.now.static;
+				break;
+			}
 		} catch (err) {
 			continue;
 		}
 
-		if (Object.keys(config).length !== 0) {
-			console.log(info(`Discovered configuration in \`${file}\``));
-			break;
-		}
+		Object.assign(config, content);
+		console.log(info(`Discovered configuration in \`${file}\``));
+
+		break;
 	}
 
 	if (entry) {
