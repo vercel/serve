@@ -20,11 +20,6 @@
     "micro",
     "http-server"
   ],
-  "now": {
-    "static": {
-      "public": "bin"
-    }
-  },
   "author": "leo",
   "license": "MIT",
   "devDependencies": {

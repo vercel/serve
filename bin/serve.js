@@ -144,11 +144,11 @@ const startEndpoint = (endpoint, config) => {
 		// `micro` is designed to run only in production, so
 		// this message is perfectly for prod
 		if (typeof details === 'string') {
-			console.log(`serve: Accepting connections on ${details}`);
+			console.log(info(`Accepting connections at ${details}`));
 		} else if (typeof details === 'object' && details.port) {
-			console.log(`serve: Accepting connections on port ${details.port}`);
+			console.log(info(`Accepting connections at http://localhost:${details.port}`));
 		} else {
-			console.log('serve: Accepting connections');
+			console.log(info('Accepting connections'));
 		}
 	});
 };
@@ -169,11 +169,13 @@ const loadConfig = async (cwd, entry) => {
 		try {
 			const content = await fs.readJSON(location);
 			Object.assign(config, prop ? dotProp.get(content, prop) : content);
-			console.log(info(`Discovered configuration in ${file}`));
-
-			break;
 		} catch (err) {
 			continue;
+		}
+
+		if (Object.keys(config).length !== 0) {
+			console.log(info(`Discovered configuration in \`${file}\``));
+			break;
 		}
 	}
 
@@ -241,5 +243,5 @@ const loadConfig = async (cwd, entry) => {
 		startEndpoint(endpoint, config);
 	}
 
-	registerShutdown(() => console.log('serve: Gracefully shutting down. Please wait...'));
+	registerShutdown(() => console.log(`\n${info('Gracefully shutting down. Please wait...')}`));
 })();
