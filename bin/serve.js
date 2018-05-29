@@ -77,6 +77,10 @@ const getHelp = () => chalk`
       Listen endpoints (specified by the {bold --listen} or {bold -l} options above) instruct {cyan serve}
       to listen on one or more interfaces/ports, UNIX domain sockets, or Windows named pipes.
 
+      For TCP ports on hostname "localhost":
+
+          {bold $} {cyan serve} -l {underline 1234}
+
       For TCP (traditional host/port) endpoints:
 
           {bold $} {cyan serve} -l tcp://{underline hostname}:{underline 1234}
@@ -91,6 +95,10 @@ const getHelp = () => chalk`
 `;
 
 const parseEndpoint = str => {
+	if (!isNaN(str)) {
+		return [str];
+	}
+
 	const url = new URL(str);
 
 	switch (url.protocol) {
