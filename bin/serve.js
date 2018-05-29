@@ -5,6 +5,7 @@ const http = require('http');
 const path = require('path');
 const fs = require('fs');
 const {promisify} = require('util');
+const {URL} = require('url');
 
 // Packages
 const Ajv = require('ajv');
