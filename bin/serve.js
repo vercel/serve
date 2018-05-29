@@ -70,7 +70,7 @@ const getHelp = () => chalk`
 
       -d, --debug                         Show debugging information
 
-      -s, --single                        Rewrite all requests to \`index.html\`
+      -s, --single                        Rewrite all not-found requests to \`index.html\`
 
   {bold ENDPOINTS}
 
