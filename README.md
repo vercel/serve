@@ -39,7 +39,24 @@ To customize `serve`'s behavior, create a `serve.json` file and insert any of [t
 
 ## API
 
-The core of `serve` is [serve-handler](https://github.com/zeit/serve-handler), which can be used as middleware in existing HTTP servers.
+The core of `serve` is [serve-handler](https://github.com/zeit/serve-handler), which can be used as middleware in existing HTTP servers:
+
+```js
+const handler = require('serve-handler');
+const http = require('http');
+
+const server = http.createServer((request, response) => {
+  // You pass two more arguments for config and middleware
+  // More details here: https://github.com/zeit/serve-handler#options
+  return handler(request, response);
+})
+
+server.listen(3000, () => {
+  console.log('Listening on http://localhost:3000');
+});
+```
+
+**NOTE:** You can also replace `http.createServer` with [micro](https://github.com/zeit/micro), if you want.
 
 ## Contributing
 
