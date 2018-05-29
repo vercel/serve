@@ -70,6 +70,8 @@ const getHelp = () => chalk`
 
       -d, --debug                         Show debugging information
 
+      -s, --single                        Rewrite all requests to \`index.html\`
+
   {bold ENDPOINTS}
 
       Listen endpoints (specified by the {bold --listen} or {bold -l} options above) instruct {cyan serve}
@@ -237,11 +239,13 @@ const loadConfig = async (cwd, entry) => {
 			'--help': Boolean,
 			'--version': Boolean,
 			'--listen': [parseEndpoint],
+			'--single': Boolean,
 			'--debug': Boolean,
 			'-h': '--help',
 			'-v': '--version',
 			'-l': '--listen',
-			'-d': '--debug'
+			'-d': '--debug',
+			'-s': '--single'
 		});
 	} catch (err) {
 		console.error(error(err.message));
@@ -274,6 +278,17 @@ const loadConfig = async (cwd, entry) => {
 	const entry = args._.length > 0 ? path.join(cwd, args._[0]) : cwd;
 
 	const config = await loadConfig(cwd, entry);
+
+	if (args['--single']) {
+		const {rewrites} = config;
+		const existingRewrites = Array.isArray(rewrites) ? rewrites : [];
+
+		// As the first rewrite rule, make `--single` work
+		config.rewrites = [{
+			source: '**',
+			destination: '/index.html'
+		}, ...existingRewrites];
+	}
 
 	for (const endpoint of args['--listen']) {
 		startEndpoint(endpoint, config);
