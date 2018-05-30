@@ -36,11 +36,11 @@
     "pre-commit": "lint-staged"
   },
   "dependencies": {
-    "@zeit/schemas": "1.1.1",
+    "@zeit/schemas": "1.1.2",
     "ajv": "6.5.0",
     "arg": "2.0.0",
     "chalk": "2.4.1",
-    "serve-handler": "2.3.12",
+    "serve-handler": "2.3.13",
     "update-check": "1.5.2"
   }
 }
