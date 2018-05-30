@@ -7,13 +7,13 @@ Assuming you would like to serve a static site, single page application or just 
 
 It behaves exactly like static deployments on [Now](https://zeit.co/now), so it's perfect for developing your static project. Then, when it's time to push it into production, you [deploy it](https://zeit.co/docs/examples/static).
 
-Furthermore, it also provides a neat interface for listing the directory's contents:
+Furthermore, it provides a neat interface for listing the directory's contents:
 
 ![screenshot](https://user-images.githubusercontent.com/6170607/40541195-167ff460-601b-11e8-8f66-3b0c7ff96cbb.png)
 
 ## Usage
 
-Firstly, install the package using [Yarn](https://yarnpkg.com/en/) (you'll need at least Node.js LTS):
+Firstly, install the package using [Yarn](https://yarnpkg.com/en/) (you'll need at least [Node.js LTS](https://nodejs.org/en/)):
 
 ```bash
 yarn global add serve
@@ -35,7 +35,7 @@ Now you understand how the package works! :tada:
 
 ## Configuration
 
-To customize `serve`'s behavior, create a `serve.json` file and insert any of [these properties](https://github.com/zeit/serve-handler#options). In addition, `serve` will also detect `now.json` files if they contain the `static` property.
+To customize `serve`'s behavior, create a `serve.json` file and insert any of [these properties](https://github.com/zeit/serve-handler#options).
 
 ## API
 
@@ -52,7 +52,7 @@ const server = http.createServer((request, response) => {
 })
 
 server.listen(3000, () => {
-  console.log('Listening on http://localhost:3000');
+  console.log('Running at http://localhost:3000');
 });
 ```
 
@@ -61,8 +61,8 @@ server.listen(3000, () => {
 ## Contributing
 
 1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
-2. Uninstall `serve` if it's already installed: `yarn global remove serve`
-3. Link it to the global module directory: `yarn link`
+2. Uninstall `serve` if it's already installed: `npm uninstall -g serve`
+3. Link it to the global module directory: `npm link`
 
 After that, you can use the `serve` command everywhere. [Here](https://github.com/zeit/serve/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+for+beginners%22)'s a list of issues that are great for beginners.
 
