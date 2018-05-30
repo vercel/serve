@@ -19,9 +19,9 @@
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/@zeit/git-hooks/-/git-hooks-0.1.4.tgz#70583db5dd69726a62c7963520e67f2c3a33cc5f"
 
-"@zeit/schemas@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@zeit/schemas/-/schemas-1.1.1.tgz#728177acb96d8ea8e9ac07e0cbee3f8d0cd0fcf2"
+"@zeit/schemas@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@zeit/schemas/-/schemas-1.1.2.tgz#ac16e541311bd7bd211aad25bb525f2686f600e8"
 
 acorn-jsx@^3.0.0:
   version "3.0.1"
@@ -129,8 +129,8 @@ brace-expansion@^1.1.7:
     concat-map "0.0.1"
 
 buffer-from@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.0.0.tgz#4cb8832d23612589b0406e9e2956c17f06fdf531"
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.0.tgz#87fcaa3a298358e0ade6e442cfce840740d1ad04"
 
 bytes@3.0.0:
   version "3.0.0"
@@ -804,9 +804,9 @@ semver@^5.3.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
-serve-handler@2.3.12:
-  version "2.3.12"
-  resolved "https://registry.yarnpkg.com/serve-handler/-/serve-handler-2.3.12.tgz#7c4f402753c74a7ff33b8607130b28bc45a07222"
+serve-handler@2.3.13:
+  version "2.3.13"
+  resolved "https://registry.yarnpkg.com/serve-handler/-/serve-handler-2.3.13.tgz#f897dd1d2af7003c0e7e9e84b55e3dd4ef51d6bb"
   dependencies:
     bytes "3.0.0"
     fast-url-parser "1.1.3"
