@@ -1,4 +1,4 @@
-# serve
+![](https://assets.zeit.co/image/upload/v1527770721/repositories/serve/serve-repo-banner.png)
 
 [![Build Status](https://circleci.com/gh/zeit/serve.svg?&style=shield)](https://circleci.com/gh/zeit/serve)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/micro/serve)
