@@ -40,7 +40,7 @@
     "ajv": "6.5.0",
     "arg": "2.0.0",
     "chalk": "2.4.1",
-    "serve-handler": "2.3.16",
+    "serve-handler": "2.4.0",
     "update-check": "1.5.2"
   }
 }
