@@ -156,7 +156,8 @@ const startEndpoint = (endpoint, config) => {
 		if (typeof details === 'string') {
 			console.log(info(`Accepting connections at ${details}`));
 		} else if (typeof details === 'object' && details.port) {
-			console.log(info(`Accepting connections at http://${details.address}:${details.port}`));
+			const address = details.address === '::' ? 'localhost' : details.address;
+			console.log(info(`Accepting connections at http://${address}:${details.port}`));
 		} else {
 			console.log(info('Accepting connections'));
 		}
