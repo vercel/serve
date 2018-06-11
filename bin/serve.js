@@ -254,7 +254,9 @@ const loadConfig = async (cwd, entry) => {
 			'-v': '--version',
 			'-l': '--listen',
 			'-d': '--debug',
-			'-s': '--single'
+			'-s': '--single',
+			// This is deprecated and only for backwards-compatibility.
+			'-p': '--listen'
 		});
 	} catch (err) {
 		console.error(error(err.message));
