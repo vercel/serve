@@ -255,6 +255,7 @@ const loadConfig = async (cwd, entry) => {
 			'-l': '--listen',
 			'-d': '--debug',
 			'-s': '--single',
+			// This is deprecated and only for backwards-compatibility.
 			'-p': '--listen'
 		});
 	} catch (err) {
