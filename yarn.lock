@@ -818,9 +818,9 @@ semver@^5.3.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
-serve-handler@3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/serve-handler/-/serve-handler-3.1.1.tgz#351d2947b409863e4dab69106b0c26fb3b53b7ca"
+serve-handler@3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/serve-handler/-/serve-handler-3.1.2.tgz#99b1490c64229f2e21a806d591f208ed65653da7"
   dependencies:
     bytes "3.0.0"
     content-disposition "0.5.2"
