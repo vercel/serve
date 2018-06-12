@@ -72,6 +72,8 @@ const getHelp = () => chalk`
 
       -s, --single                        Rewrite all not-found requests to \`index.html\`
 
+      -c, --config                        Specify custom path to \`serve.json\`
+
   {bold ENDPOINTS}
 
       Listen endpoints (specified by the {bold --listen} or {bold -l} options above) instruct {cyan serve}
@@ -164,12 +166,16 @@ const startEndpoint = (endpoint, config) => {
 	});
 };
 
-const loadConfig = async (cwd, entry) => {
+const loadConfig = async (cwd, entry, args) => {
 	const files = [
 		'serve.json',
 		'now.json',
 		'package.json'
 	];
+
+	if (args['--config']) {
+		files.unshift(args['--config']);
+	}
 
 	const config = {};
 
@@ -250,11 +256,13 @@ const loadConfig = async (cwd, entry) => {
 			'--listen': [parseEndpoint],
 			'--single': Boolean,
 			'--debug': Boolean,
+			'--config': String,
 			'-h': '--help',
 			'-v': '--version',
 			'-l': '--listen',
-			'-d': '--debug',
 			'-s': '--single',
+			'-d': '--debug',
+			'-c': '--config',
 			// This is deprecated and only for backwards-compatibility.
 			'-p': '--listen'
 		});
@@ -288,7 +296,7 @@ const loadConfig = async (cwd, entry) => {
 	const cwd = process.cwd();
 	const entry = args._.length > 0 ? path.join(cwd, args._[0]) : cwd;
 
-	const config = await loadConfig(cwd, entry);
+	const config = await loadConfig(cwd, entry, args);
 
 	if (args['--single']) {
 		const {rewrites} = config;
