@@ -1,6 +1,6 @@
 {
   "name": "serve",
-  "version": "8.1.4",
+  "version": "8.2.0",
   "description": "Static file serving and directory listing",
   "scripts": {
     "test": "yarn lint",
