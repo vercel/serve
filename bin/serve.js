@@ -54,7 +54,7 @@ const getHelp = () => chalk`
       {bold $} {cyan serve} --version
       {bold $} {cyan serve} [-l {underline listen_uri} [-l ...]] [{underline directory}]
 
-      By default, {cyan serve} will listen on {bold 0.0.0.0:3000} and serve the
+      By default, {cyan serve} will listen on {bold 0.0.0.0:5000} and serve the
       current working directory on that address.
 
       Specifying a single {bold --listen} argument will overwrite the default, not supplement it.
@@ -121,7 +121,7 @@ const parseEndpoint = str => {
 
 		return [url.pathname];
 	case 'tcp:':
-		url.port = url.port || '3000';
+		url.port = url.port || '5000';
 		return [parseInt(url.port, 10), url.hostname];
 	default:
 		throw new Error(`Unknown --listen endpoint scheme (protocol): ${url.protocol}`);
@@ -285,7 +285,7 @@ const loadConfig = async (cwd, entry, args) => {
 
 	if (!args['--listen']) {
 		// Default endpoint
-		args['--listen'] = [[3000]];
+		args['--listen'] = [[5000]];
 	}
 
 	if (args._.length > 1) {
