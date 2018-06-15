@@ -5,7 +5,7 @@ const http = require('http');
 const path = require('path');
 const fs = require('fs');
 const {promisify} = require('util');
-const {URL} = require('url');
+const {parse} = require('url');
 const dns = require('dns');
 const os = require('os');
 
@@ -108,7 +108,9 @@ const parseEndpoint = str => {
 		return [str];
 	}
 
-	const url = new URL(str);
+	// We cannot use `new URL` here, otherwise it will not
+	// parse the host properly and it would drop support for IPv6.
+	const url = parse(str);
 
 	switch (url.protocol) {
 	case 'pipe:': {
