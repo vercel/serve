@@ -14,6 +14,7 @@ const Ajv = require('ajv');
 const checkForUpdate = require('update-check');
 const chalk = require('chalk');
 const arg = require('arg');
+const {write: copy} = require('clipboardy');
 const handler = require('serve-handler');
 const schema = require('@zeit/schemas/deployment/config-static');
 const boxen = require('boxen');
@@ -77,6 +78,8 @@ const getHelp = () => chalk`
       -s, --single                        Rewrite all not-found requests to \`index.html\`
 
       -c, --config                        Specify custom path to \`serve.json\`
+
+      -n, --no-clipboard                  Do not copy the local address to the clipboard
 
   {bold ENDPOINTS}
 
@@ -147,11 +150,13 @@ const registerShutdown = fn => {
 	process.on('exit', wrapper);
 };
 
-const startEndpoint = (endpoint, config) => {
+const startEndpoint = (endpoint, config, args) => {
 	const server = http.createServer((request, response) => handler(request, response, config));
+	const {isTTY} = process.stdout;
+	const clipboard = args['--no-clipboard'] !== true;
 
 	server.on('error', err => {
-		console.error('serve:', err.stack);
+		console.error(error(`Failed to serve: ${err.stack}`));
 		process.exit(1);
 	});
 
@@ -172,24 +177,38 @@ const startEndpoint = (endpoint, config) => {
 			networkAddress = `http://${ip}:${details.port}`;
 		}
 
-		let message = chalk.green('Serving!');
+		if (isTTY && process.env.NODE_ENV !== 'production') {
+			let message = chalk.green('Serving!');
 
-		if (localAddress) {
-			const prefix = networkAddress ? '- ' : '';
-			const space = networkAddress ? '            ' : '  ';
+			if (localAddress) {
+				const prefix = networkAddress ? '- ' : '';
+				const space = networkAddress ? '            ' : '  ';
 
-			message += `\n\n${chalk.bold(`${prefix}Local:`)}${space}${localAddress}`;
+				message += `\n\n${chalk.bold(`${prefix}Local:`)}${space}${localAddress}`;
+			}
+
+			if (networkAddress) {
+				message += `\n${chalk.bold('- On Your Network:')}  ${networkAddress}`;
+			}
+
+			if (clipboard) {
+				try {
+					await copy(localAddress);
+					message += `\n\n${chalk.grey('Copied local address to clipboard!')}`;
+				} catch (err) {
+					console.error(error(`Cannot copy to clipboard: ${err.message}`));
+				}
+			}
+
+			console.log(boxen(message, {
+				padding: 1,
+				borderColor: 'green',
+				margin: 1
+			}));
+		} else {
+			const suffix = localAddress ? ` at ${localAddress}` : '';
+			console.log(info(`Accepting connections${suffix}`));
 		}
-
-		if (networkAddress) {
-			message += `\n${chalk.bold('- On Your Network:')}  ${networkAddress}`;
-		}
-
-		console.log(boxen(message, {
-			padding: 1,
-			borderColor: 'green',
-			margin: 1
-		}));
 	});
 };
 
@@ -284,12 +303,14 @@ const loadConfig = async (cwd, entry, args) => {
 			'--single': Boolean,
 			'--debug': Boolean,
 			'--config': String,
+			'--no-clipboard': Boolean,
 			'-h': '--help',
 			'-v': '--version',
 			'-l': '--listen',
 			'-s': '--single',
 			'-d': '--debug',
 			'-c': '--config',
+			'-n': '--no-clipboard',
 			// This is deprecated and only for backwards-compatibility.
 			'-p': '--listen'
 		});
@@ -337,7 +358,7 @@ const loadConfig = async (cwd, entry, args) => {
 	}
 
 	for (const endpoint of args['--listen']) {
-		startEndpoint(endpoint, config);
+		startEndpoint(endpoint, config, args);
 	}
 
 	registerShutdown(() => {
