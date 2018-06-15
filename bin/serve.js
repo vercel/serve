@@ -6,6 +6,8 @@ const path = require('path');
 const fs = require('fs');
 const {promisify} = require('util');
 const {URL} = require('url');
+const dns = require('dns');
+const os = require('os');
 
 // Packages
 const Ajv = require('ajv');
@@ -14,11 +16,13 @@ const chalk = require('chalk');
 const arg = require('arg');
 const handler = require('serve-handler');
 const schema = require('@zeit/schemas/deployment/config-static');
+const boxen = require('boxen');
 
 // Utilities
 const pkg = require('../package');
 
 const readFile = promisify(fs.readFile);
+const lookup = promisify(dns.lookup);
 
 const warning = message => chalk`{yellow WARNING:} ${message}`;
 const info = message => chalk`{magenta INFO:} ${message}`;
@@ -151,18 +155,41 @@ const startEndpoint = (endpoint, config) => {
 		process.exit(1);
 	});
 
-	server.listen(...endpoint, () => {
+	server.listen(...endpoint, async () => {
 		const details = server.address();
 		registerShutdown(() => server.close());
 
+		let localAddress = null;
+		let networkAddress = null;
+
 		if (typeof details === 'string') {
-			console.log(info(`Accepting connections at ${details}`));
+			localAddress = details;
 		} else if (typeof details === 'object' && details.port) {
 			const address = details.address === '::' ? 'localhost' : details.address;
-			console.log(info(`Accepting connections at http://${address}:${details.port}`));
-		} else {
-			console.log(info('Accepting connections'));
+			const {address: ip} = await lookup(os.hostname());
+
+			localAddress = `http://${address}:${details.port}`;
+			networkAddress = `http://${ip}:${details.port}`;
 		}
+
+		let message = chalk.green('Serving!');
+
+		if (localAddress) {
+			const prefix = networkAddress ? '- ' : '';
+			const space = networkAddress ? '            ' : '  ';
+
+			message += `\n\n${chalk.bold(`${prefix}Local:`)}${space}${localAddress}`;
+		}
+
+		if (networkAddress) {
+			message += `\n${chalk.bold('- On Your Network:')}  ${networkAddress}`;
+		}
+
+		console.log(boxen(message, {
+			padding: 1,
+			borderColor: 'green',
+			margin: 1
+		}));
 	});
 };
 
