@@ -335,7 +335,7 @@ const loadConfig = async (cwd, entry, args) => {
 
 	if (!args['--listen']) {
 		// Default endpoint
-		args['--listen'] = [[5000]];
+		args['--listen'] = [[process.env.PORT || 5000]];
 	}
 
 	if (args._.length > 1) {
