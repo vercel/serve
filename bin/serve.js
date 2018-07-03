@@ -25,11 +25,11 @@ const pkg = require('../package');
 const readFile = promisify(fs.readFile);
 const lookup = promisify(dns.lookup);
 
-const warning = message => chalk`{yellow WARNING:} ${message}`;
-const info = message => chalk`{magenta INFO:} ${message}`;
-const error = message => chalk`{red ERROR:} ${message}`;
+const warning = (message) => chalk`{yellow WARNING:} ${message}`;
+const info = (message) => chalk`{magenta INFO:} ${message}`;
+const error = (message) => chalk`{red ERROR:} ${message}`;
 
-const updateCheck = async isDebugging => {
+const updateCheck = async (isDebugging) => {
 	let update = null;
 
 	try {
@@ -103,7 +103,7 @@ const getHelp = () => chalk`
           {bold $} {cyan serve} -l pipe:\\\\.\\pipe\\{underline PipeName}
 `;
 
-const parseEndpoint = str => {
+const parseEndpoint = (str) => {
 	if (!isNaN(str)) {
 		return [str];
 	}
@@ -137,7 +137,7 @@ const parseEndpoint = str => {
 	}
 };
 
-const registerShutdown = fn => {
+const registerShutdown = (fn) => {
 	let run = false;
 
 	const wrapper = () => {
@@ -157,7 +157,7 @@ const startEndpoint = (endpoint, config, args) => {
 	const {isTTY} = process.stdout;
 	const clipboard = args['--no-clipboard'] !== true;
 
-	server.on('error', err => {
+	server.on('error', (err) => {
 		console.error(error(`Failed to serve: ${err.stack}`));
 		process.exit(1);
 	});
