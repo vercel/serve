@@ -19,9 +19,9 @@
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/@zeit/git-hooks/-/git-hooks-0.1.4.tgz#70583db5dd69726a62c7963520e67f2c3a33cc5f"
 
-"@zeit/schemas@1.5.1":
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/@zeit/schemas/-/schemas-1.5.1.tgz#ce665a9caba7185bce07c27c9bab8b1ae2e60657"
+"@zeit/schemas@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@zeit/schemas/-/schemas-1.6.0.tgz#2f49cb7b3fff308bd35d6a934c5e0a143d598e17"
 
 acorn-jsx@^4.1.1:
   version "4.1.1"
@@ -915,9 +915,9 @@ semver@^5.5.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
-serve-handler@3.2.3:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/serve-handler/-/serve-handler-3.2.3.tgz#d17cbe1e53b223b4ecfca9f937ee3b84c49633e3"
+serve-handler@3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/serve-handler/-/serve-handler-3.3.0.tgz#bf1af88d244850cb7fa5bddef5c5a9ccdae1e8d3"
   dependencies:
     bytes "3.0.0"
     content-disposition "0.5.2"
