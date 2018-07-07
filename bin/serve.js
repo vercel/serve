@@ -348,7 +348,7 @@ const loadConfig = async (cwd, entry, args) => {
 	}
 
 	const cwd = process.cwd();
-	const entry = args._.length > 0 ? path.join(cwd, args._[0]) : cwd;
+	const entry = args._.length > 0 ? path.resolve(args._[0]) : cwd;
 
 	const config = await loadConfig(cwd, entry, args);
 
