@@ -19,9 +19,9 @@
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/@zeit/git-hooks/-/git-hooks-0.1.4.tgz#70583db5dd69726a62c7963520e67f2c3a33cc5f"
 
-"@zeit/schemas@1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@zeit/schemas/-/schemas-1.6.0.tgz#2f49cb7b3fff308bd35d6a934c5e0a143d598e17"
+"@zeit/schemas@1.6.3":
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/@zeit/schemas/-/schemas-1.6.3.tgz#dda6a1999873ad4bbbd501c80e200faab90d4ed4"
 
 acorn-jsx@^4.1.1:
   version "4.1.1"
@@ -306,13 +306,17 @@ eslint-scope@^4.0.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
+eslint-utils@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/eslint-utils/-/eslint-utils-1.3.1.tgz#9a851ba89ee7c460346f97cf8939c7298827e512"
+
 eslint-visitor-keys@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#3f3180fb2e291017716acb4c9d6d5b5c34a6a81d"
 
-eslint@5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-5.0.1.tgz#109b90ab7f7a736f54e0f341c8bb9d09777494c3"
+eslint@5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-5.1.0.tgz#2ed611f1ce163c0fb99e1e0cda5af8f662dff645"
   dependencies:
     ajv "^6.5.0"
     babel-code-frame "^6.26.0"
@@ -321,6 +325,7 @@ eslint@5.0.1:
     debug "^3.1.0"
     doctrine "^2.1.0"
     eslint-scope "^4.0.0"
+    eslint-utils "^1.3.1"
     eslint-visitor-keys "^1.0.0"
     espree "^4.0.0"
     esquery "^1.0.1"
@@ -328,7 +333,7 @@ eslint@5.0.1:
     file-entry-cache "^2.0.0"
     functional-red-black-tree "^1.0.1"
     glob "^7.1.2"
-    globals "^11.5.0"
+    globals "^11.7.0"
     ignore "^3.3.3"
     imurmurhash "^0.1.4"
     inquirer "^5.2.0"
@@ -361,8 +366,8 @@ espree@^4.0.0:
     acorn-jsx "^4.1.1"
 
 esprima@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/esprima/-/esprima-4.0.0.tgz#4499eddcd1110e0b218bacf2fa7f7f59f55ca804"
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/esprima/-/esprima-4.0.1.tgz#13b04cdb3e6c5d19df91ab6987a8695619b0aa71"
 
 esquery@^1.0.1:
   version "1.0.1"
@@ -499,7 +504,7 @@ glob@^7.0.3, glob@^7.0.5, glob@^7.1.2:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-globals@^11.5.0:
+globals@^11.7.0:
   version "11.7.0"
   resolved "https://registry.yarnpkg.com/globals/-/globals-11.7.0.tgz#a583faa43055b1aca771914bf68258e2fc125673"
 
@@ -915,9 +920,9 @@ semver@^5.5.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
-serve-handler@3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/serve-handler/-/serve-handler-3.3.0.tgz#bf1af88d244850cb7fa5bddef5c5a9ccdae1e8d3"
+serve-handler@3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/serve-handler/-/serve-handler-3.3.1.tgz#98f052a62a1f46dc6024fc0daf9b69d5bc37d6ec"
   dependencies:
     bytes "3.0.0"
     content-disposition "0.5.2"
