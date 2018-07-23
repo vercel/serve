@@ -18,6 +18,7 @@ const {write: copy} = require('clipboardy');
 const handler = require('serve-handler');
 const schema = require('@zeit/schemas/deployment/config-static');
 const boxen = require('boxen');
+const opn = require('opn');
 
 // Utilities
 const pkg = require('../package');
@@ -80,6 +81,8 @@ const getHelp = () => chalk`
       -c, --config                        Specify custom path to \`serve.json\`
 
       -n, --no-clipboard                  Do not copy the local address to the clipboard
+
+      -o, --open                          Open the server in your local browser
 
   {bold ENDPOINTS}
 
@@ -156,6 +159,7 @@ const startEndpoint = (endpoint, config, args) => {
 	const server = http.createServer((request, response) => handler(request, response, config));
 	const {isTTY} = process.stdout;
 	const clipboard = args['--no-clipboard'] !== true;
+	const open = args['--open'] === true;
 
 	server.on('error', (err) => {
 		console.error(error(`Failed to serve: ${err.stack}`));
@@ -204,6 +208,10 @@ const startEndpoint = (endpoint, config, args) => {
 				} catch (err) {
 					console.error(error(`Cannot copy to clipboard: ${err.message}`));
 				}
+			}
+
+			if (open) {
+				opn(localAddress);
 			}
 
 			console.log(boxen(message, {
@@ -310,6 +318,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--debug': Boolean,
 			'--config': String,
 			'--no-clipboard': Boolean,
+			'--open': Boolean,
 			'-h': '--help',
 			'-v': '--version',
 			'-l': '--listen',
@@ -317,6 +326,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'-d': '--debug',
 			'-c': '--config',
 			'-n': '--no-clipboard',
+			'-o': '--open',
 			// This is deprecated and only for backwards-compatibility.
 			'-p': '--listen'
 		});
