@@ -310,6 +310,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--debug': Boolean,
 			'--config': String,
 			'--no-clipboard': Boolean,
+			'--no-update-check': Boolean,
 			'-h': '--help',
 			'-v': '--version',
 			'-l': '--listen',
@@ -325,7 +326,9 @@ const loadConfig = async (cwd, entry, args) => {
 		process.exit(1);
 	}
 
-	await updateCheck(args['--debug']);
+	if (!args['--no-update-check'] && process.env.NO_UPDATE_CHECK !== '1') {
+		await updateCheck(args['--debug']);
+	}
 
 	if (args['--version']) {
 		console.log(pkg.version);
