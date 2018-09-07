@@ -229,7 +229,9 @@ const loadConfig = async (cwd, entry, args) => {
 		files.unshift(args['--config']);
 	}
 
-	const config = {};
+	const config = {
+		cleanUrls: false // Disable serve-handler's redirections for url's ending in "html"
+	};
 
 	for (const file of files) {
 		const location = path.join(entry, file);
