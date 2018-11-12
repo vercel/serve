@@ -157,9 +157,13 @@ const registerShutdown = (fn) => {
 const startEndpoint = (endpoint, config, args) => {
 	const {isTTY} = process.stdout;
 	const clipboard = args['--no-clipboard'] !== true;
+	const compress = args['--no-compression'] !== true;
 
 	const server = http.createServer(async (request, response) => {
-		await compressionHandler(request, response);
+		if (compress) {
+			await compressionHandler(request, response);
+		}
+
 		return handler(request, response, config);
 	});
 
@@ -316,6 +320,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--debug': Boolean,
 			'--config': String,
 			'--no-clipboard': Boolean,
+			'--no-compression': Boolean,
 			'-h': '--help',
 			'-v': '--version',
 			'-l': '--listen',
@@ -323,6 +328,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'-d': '--debug',
 			'-c': '--config',
 			'-n': '--no-clipboard',
+			'-u': '--no-compression',
 			// This is deprecated and only for backwards-compatibility.
 			'-p': '--listen'
 		});
