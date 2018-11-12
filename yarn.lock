@@ -557,11 +557,6 @@ get-stream@^3.0.0:
   resolved "https://registry.yarnpkg.com/get-stream/-/get-stream-3.0.0.tgz#8e943d1358dc37555054ecbe2edb05aa174ede14"
   integrity sha1-jpQ9E1jcN1VQVOy+LtsFqhdO3hQ=
 
-glob-slash@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/glob-slash/-/glob-slash-1.0.0.tgz#fe52efa433233f74a2fe64c7abb9bc848202ab95"
-  integrity sha1-/lLvpDMjP3Si/mTHq7m8hIICq5U=
-
 glob@^7.0.3, glob@^7.0.5, glob@^7.1.2:
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.3.tgz#3960832d3f1574108342dafd3a67b332c0969df1"
@@ -1054,15 +1049,14 @@ semver@^5.5.0:
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.6.0.tgz#7e74256fbaa49c75aa7c7a205cc22799cac80004"
   integrity sha512-RS9R6R35NYgQn++fkDWaOmqGoj4Ek9gGs+DPxNUZKuwE183xjJroKvyo1IzVFeXvUrvmALy6FWD5xrdJT25gMg==
 
-serve-handler@5.0.3:
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/serve-handler/-/serve-handler-5.0.3.tgz#19033fa7f804c4c9447aacd6d323fa595845c878"
-  integrity sha512-qtIOHXC+pgEQO+bMwtcQBP3IjuKH5vXwnTb0J9SzTORDqGHvQmPXO3v/DEIEHI1oENWLmbDRBezRnJiw3t/2nA==
+serve-handler@5.0.6:
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/serve-handler/-/serve-handler-5.0.6.tgz#da15ca35a7d8106010108478f0a30114b21ccd1a"
+  integrity sha512-o0Ydyn0+wpaTrNhvgrVzaWWSsRU2Zg78ryjbRZdcDPn01/RkX8tnRJsOG+NvkPhpH96EzgHneymisHn+N/wFDg==
   dependencies:
     bytes "3.0.0"
     content-disposition "0.5.2"
     fast-url-parser "1.1.3"
-    glob-slash "1.0.0"
     mime-types "2.1.18"
     minimatch "3.0.4"
     path-is-inside "1.0.2"
