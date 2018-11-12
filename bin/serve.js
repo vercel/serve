@@ -18,12 +18,14 @@ const {write: copy} = require('clipboardy');
 const handler = require('serve-handler');
 const schema = require('@zeit/schemas/deployment/config-static');
 const boxen = require('boxen');
+const compression = require('compression');
 
 // Utilities
 const pkg = require('../package');
 
 const readFile = promisify(fs.readFile);
 const lookup = promisify(dns.lookup);
+const compressionHandler = promisify(compression());
 
 const warning = (message) => chalk`{yellow WARNING:} ${message}`;
 const info = (message) => chalk`{magenta INFO:} ${message}`;
@@ -153,9 +155,17 @@ const registerShutdown = (fn) => {
 };
 
 const startEndpoint = (endpoint, config, args) => {
-	const server = http.createServer((request, response) => handler(request, response, config));
 	const {isTTY} = process.stdout;
 	const clipboard = args['--no-clipboard'] !== true;
+	const compress = args['--no-compression'] !== true;
+
+	const server = http.createServer(async (request, response) => {
+		if (compress) {
+			await compressionHandler(request, response);
+		}
+
+		return handler(request, response, config);
+	});
 
 	server.on('error', (err) => {
 		console.error(error(`Failed to serve: ${err.stack}`));
@@ -310,6 +320,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--debug': Boolean,
 			'--config': String,
 			'--no-clipboard': Boolean,
+			'--no-compression': Boolean,
 			'-h': '--help',
 			'-v': '--version',
 			'-l': '--listen',
@@ -317,6 +328,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'-d': '--debug',
 			'-c': '--config',
 			'-n': '--no-clipboard',
+			'-u': '--no-compression',
 			// This is deprecated and only for backwards-compatibility.
 			'-p': '--listen'
 		});
