@@ -154,7 +154,7 @@ const registerShutdown = (fn) => {
 	process.on('exit', wrapper);
 };
 
-const startEndpoint = (endpoint, config, args) => {
+const startEndpoint = (endpoint, config, args, previous) => {
 	const {isTTY} = process.stdout;
 	const clipboard = args['--no-clipboard'] !== true;
 	const compress = args['--no-compression'] !== true;
@@ -168,6 +168,11 @@ const startEndpoint = (endpoint, config, args) => {
 	});
 
 	server.on('error', (err) => {
+		if (err.code === 'EADDRINUSE' && endpoint.length === 1 && !isNaN(endpoint[0])) {
+			startEndpoint([0], config, args, endpoint[0]);
+			return;
+		}
+
 		console.error(error(`Failed to serve: ${err.stack}`));
 		process.exit(1);
 	});
@@ -205,6 +210,10 @@ const startEndpoint = (endpoint, config, args) => {
 
 			if (networkAddress) {
 				message += `\n${chalk.bold('- On Your Network:')}  ${networkAddress}`;
+			}
+
+			if (previous) {
+				message += chalk.red(`\n\nThis port was picked because ${chalk.underline(previous)} is in use.`);
 			}
 
 			if (clipboard) {
