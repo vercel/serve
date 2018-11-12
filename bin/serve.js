@@ -284,6 +284,10 @@ const loadConfig = async (cwd, entry, args) => {
 		Object.assign(config, content);
 		console.log(info(`Discovered configuration in \`${file}\``));
 
+		if (file === 'now.json' || file === 'package.json') {
+			console.error(warning('The config files `now.json` and `package.json` are deprecated. Please use `serve.json`.'));
+		}
+
 		break;
 	}
 
