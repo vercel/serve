@@ -36,7 +36,7 @@ Now you understand how the package works! :tada:
 
 ## Configuration
 
-To customize `serve`'s behavior, create a `serve.json` file and insert any of [these properties](https://github.com/zeit/serve-handler#options). In addition, `serve` will also detect `now.json` files if they contain the `static` property.
+To customize `serve`'s behavior, create a `serve.json` file and insert any of [these properties](https://github.com/zeit/serve-handler#options).
 
 ## API
 
