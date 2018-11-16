@@ -6,7 +6,6 @@ const path = require('path');
 const fs = require('fs');
 const {promisify} = require('util');
 const {parse} = require('url');
-const dns = require('dns');
 const os = require('os');
 
 // Packages
@@ -24,8 +23,9 @@ const compression = require('compression');
 const pkg = require('../package');
 
 const readFile = promisify(fs.readFile);
-const lookup = promisify(dns.lookup);
 const compressionHandler = promisify(compression());
+
+const interfaces = os.networkInterfaces();
 
 const warning = (message) => chalk`{yellow WARNING:} ${message}`;
 const info = (message) => chalk`{magenta INFO:} ${message}`;
@@ -154,6 +154,17 @@ const registerShutdown = (fn) => {
 	process.on('exit', wrapper);
 };
 
+const getNetworkAddress = () => {
+	for (const name of Object.keys(interfaces)) {
+		for (const interface of interfaces[name]) {
+			const {address, family, internal} = interface;
+			if (family === 'IPv4' && !internal) {
+				return address;
+			}
+		}
+	}
+};
+
 const startEndpoint = (endpoint, config, args, previous) => {
 	const {isTTY} = process.stdout;
 	const clipboard = args['--no-clipboard'] !== true;
@@ -188,14 +199,10 @@ const startEndpoint = (endpoint, config, args, previous) => {
 			localAddress = details;
 		} else if (typeof details === 'object' && details.port) {
 			const address = details.address === '::' ? 'localhost' : details.address;
+			const ip = getNetworkAddress();
 
 			localAddress = `http://${address}:${details.port}`;
-			try {
-				const {address: ip} = await lookup(os.hostname());
-				networkAddress = `http://${ip}:${details.port}`;
-			} catch (err) {
-				console.error(error(`DNS lookup failed: ${err.message}`));
-			}
+			networkAddress = `http://${ip}:${details.port}`;
 		}
 
 		if (isTTY && process.env.NODE_ENV !== 'production') {
