@@ -61,7 +61,7 @@ const getHelp = () => chalk`
       {bold $} {cyan serve} --version
       {bold $} {cyan serve} [-l {underline listen_uri} [-l ...]] [{underline directory}]
 
-      By default, {cyan serve} will listen on {bold 0.0.0.0:5000} and serve the
+      By default, {cyan serve} will listen on {bold localhost:5000} and serve the
       current working directory on that address.
 
       Specifying a single {bold --listen} argument will overwrite the default, not supplement it.
