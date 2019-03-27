@@ -14,7 +14,9 @@ Furthermore, it provides a neat interface for listing the directory's contents:
 
 ## Usage
 
-Firstly, install the package using [Yarn](https://yarnpkg.com/en/) (you'll need at least [Node.js LTS](https://nodejs.org/en/)):
+The quickest way to get started is to just run `npx serve` in your project's directory.
+
+If you prefer, you can also install the package globally using [Yarn](https://yarnpkg.com/en/) (you'll need at least [Node.js LTS](https://nodejs.org/en/)):
 
 ```bash
 yarn global add serve
