@@ -83,6 +83,8 @@ const getHelp = () => chalk`
 
       -n, --no-clipboard                  Do not copy the local address to the clipboard
 
+      -S, --symlinks                      Resolve symlinks instead of showing 404 errors
+
   {bold ENDPOINTS}
 
       Listen endpoints (specified by the {bold --listen} or {bold -l} options above) instruct {cyan serve}
@@ -341,6 +343,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--config': String,
 			'--no-clipboard': Boolean,
 			'--no-compression': Boolean,
+			'--symlinks': Boolean,
 			'-h': '--help',
 			'-v': '--version',
 			'-l': '--listen',
@@ -349,6 +352,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'-c': '--config',
 			'-n': '--no-clipboard',
 			'-u': '--no-compression',
+			'-S': '--symlinks',
 			// This is deprecated and only for backwards-compatibility.
 			'-p': '--listen'
 		});
@@ -395,6 +399,10 @@ const loadConfig = async (cwd, entry, args) => {
 			source: '**',
 			destination: '/index.html'
 		}, ...existingRewrites];
+	}
+
+	if (args['--symlinks']) {
+		config.symlinks = true;
 	}
 
 	for (const endpoint of args['--listen']) {
