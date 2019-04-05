@@ -2,6 +2,7 @@
 
 // Native
 const http = require('http');
+const https = require('https');
 const path = require('path');
 const fs = require('fs');
 const {promisify} = require('util');
@@ -84,6 +85,10 @@ const getHelp = () => chalk`
       -n, --no-clipboard                  Do not copy the local address to the clipboard
 
       -S, --symlinks                      Resolve symlinks instead of showing 404 errors
+
+      --ssl-cert                          Optional path to an SSL/TLS certificate to serve with HTTPS
+
+      --ssl-key                           Optional path to the SSL/TLS certificate\'s private key
 
   {bold ENDPOINTS}
 
@@ -171,14 +176,22 @@ const startEndpoint = (endpoint, config, args, previous) => {
 	const {isTTY} = process.stdout;
 	const clipboard = args['--no-clipboard'] !== true;
 	const compress = args['--no-compression'] !== true;
+	const httpMode = args['--ssl-cert'] && args['--ssl-key'] ? 'https' : 'http';
 
-	const server = http.createServer(async (request, response) => {
+	const serverHandler = async (request, response) => {
 		if (compress) {
 			await compressionHandler(request, response);
 		}
 
 		return handler(request, response, config);
-	});
+	};
+
+	const server = httpMode === 'https'
+		? https.createServer({
+			key: fs.readFileSync(args['--ssl-key']),
+			cert: fs.readFileSync(args['--ssl-cert'])
+		}, serverHandler)
+		: http.createServer(serverHandler);
 
 	server.on('error', (err) => {
 		if (err.code === 'EADDRINUSE' && endpoint.length === 1 && !isNaN(endpoint[0])) {
@@ -203,8 +216,8 @@ const startEndpoint = (endpoint, config, args, previous) => {
 			const address = details.address === '::' ? 'localhost' : details.address;
 			const ip = getNetworkAddress();
 
-			localAddress = `http://${address}:${details.port}`;
-			networkAddress = `http://${ip}:${details.port}`;
+			localAddress = `${httpMode}://${address}:${details.port}`;
+			networkAddress = `${httpMode}://${ip}:${details.port}`;
 		}
 
 		if (isTTY && process.env.NODE_ENV !== 'production') {
@@ -344,6 +357,8 @@ const loadConfig = async (cwd, entry, args) => {
 			'--no-clipboard': Boolean,
 			'--no-compression': Boolean,
 			'--symlinks': Boolean,
+			'--ssl-cert': String,
+			'--ssl-key': String,
 			'-h': '--help',
 			'-v': '--version',
 			'-l': '--listen',
