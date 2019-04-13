@@ -81,7 +81,9 @@ const getHelp = () => chalk`
 
       -c, --config                        Specify custom path to \`serve.json\`
 
-      -n, --no-clipboard                  Do not copy the local address to the clipboard
+	  -n, --no-clipboard                  Do not copy the local address to the clipboard
+	  
+      -u, --no-compression                Do not compress files
 
       -S, --symlinks                      Resolve symlinks instead of showing 404 errors
 
