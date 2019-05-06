@@ -176,7 +176,10 @@ const startEndpoint = (endpoint, config, args, previous) => {
 		if (compress) {
 			await compressionHandler(request, response);
 		}
-
+		if(args["--cors"]){
+			response.setHeader("Access-Control-Allow-Origin", "*");
+		}
+		
 		return handler(request, response, config);
 	});
 
@@ -344,6 +347,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--no-clipboard': Boolean,
 			'--no-compression': Boolean,
 			'--symlinks': Boolean,
+			'--cors': Boolean,
 			'-h': '--help',
 			'-v': '--version',
 			'-l': '--listen',
@@ -353,6 +357,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'-n': '--no-clipboard',
 			'-u': '--no-compression',
 			'-S': '--symlinks',
+			'-C': '--cors',
 			// This is deprecated and only for backwards-compatibility.
 			'-p': '--listen'
 		});
