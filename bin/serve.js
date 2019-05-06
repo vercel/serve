@@ -173,11 +173,12 @@ const startEndpoint = (endpoint, config, args, previous) => {
 	const compress = args['--no-compression'] !== true;
 
 	const server = http.createServer(async (request, response) => {
-		if (compress) {
-			await compressionHandler(request, response);
-		}
 		if (args['--cors']) {
 			response.setHeader('Access-Control-Allow-Origin', '*');
+		}
+
+		if (compress) {
+			await compressionHandler(request, response);
 		}
 
 		return handler(request, response, config);
