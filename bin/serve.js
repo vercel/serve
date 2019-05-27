@@ -18,6 +18,8 @@ const handler = require('serve-handler');
 const schema = require('@zeit/schemas/deployment/config-static');
 const boxen = require('boxen');
 const compression = require('compression');
+const qrcode = require('qrcode-terminal');
+const indentString = require('indent-string');
 
 // Utilities
 const pkg = require('../package');
@@ -30,6 +32,10 @@ const interfaces = os.networkInterfaces();
 const warning = (message) => chalk`{yellow WARNING:} ${message}`;
 const info = (message) => chalk`{magenta INFO:} ${message}`;
 const error = (message) => chalk`{red ERROR:} ${message}`;
+
+const printQRCode = (url) => {
+	qrcode.generate(url, (code) => console.log(`${indentString(code, 3)}\n`));
+};
 
 const updateCheck = async (isDebugging) => {
 	let update = null;
@@ -233,12 +239,19 @@ const startEndpoint = (endpoint, config, args, previous) => {
 					console.error(error(`Cannot copy to clipboard: ${err.message}`));
 				}
 			}
-
+			if (networkAddress) {
+				const prefix = networkAddress ? '- ' : '';
+				message += `\n\n${chalk.bold(`${prefix} You can scan this QR code:`)}`;
+			}
 			console.log(boxen(message, {
 				padding: 1,
 				borderColor: 'green',
 				margin: 1
 			}));
+
+			if (networkAddress) {
+				printQRCode(networkAddress);
+			}
 		} else {
 			const suffix = localAddress ? ` at ${localAddress}` : '';
 			console.log(info(`Accepting connections${suffix}`));

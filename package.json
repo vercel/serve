@@ -43,6 +43,8 @@
     "chalk": "2.4.1",
     "clipboardy": "1.2.3",
     "compression": "1.7.3",
+    "indent-string": "4.0.0",
+    "qrcode-terminal": "0.12.0",
     "serve-handler": "6.0.0",
     "update-check": "1.5.2"
   }
