@@ -241,7 +241,7 @@ const startEndpoint = (endpoint, config, args, previous) => {
 			}
 			if (networkAddress) {
 				const prefix = networkAddress ? '- ' : '';
-				message += `\n\n${chalk.bold(`${prefix} You can scan this QR code:`)}`;
+				message += `\n\n${chalk.bold(`${prefix}You can scan the next QR code:`)}`;
 			}
 			console.log(boxen(message, {
 				padding: 1,
