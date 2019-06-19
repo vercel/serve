@@ -19,6 +19,7 @@ const handler = require('serve-handler');
 const schema = require('@zeit/schemas/deployment/config-static');
 const boxen = require('boxen');
 const compression = require('compression');
+const qrcode = require('qrcode-terminal');
 
 // Utilities
 const pkg = require('../package');
@@ -95,7 +96,9 @@ const getHelp = () => chalk`
 
       --ssl-cert                          Optional path to an SSL/TLS certificate to serve with HTTPS
 
-      --ssl-key                           Optional path to the SSL/TLS certificate\'s private key
+	  --ssl-key                           Optional path to the SSL/TLS certificate\'s private key
+
+      -q, --qrcode                        Display the QR code of network url
 
   {bold ENDPOINTS}
 
@@ -242,6 +245,11 @@ const startEndpoint = (endpoint, config, args, previous) => {
 
 			if (networkAddress) {
 				message += `\n${chalk.bold('- On Your Network:')}  ${networkAddress}`;
+				if (config.qrcode) {
+					qrcode.generate(networkAddress, {small: true}, function getQrcode(qrcodeString) {
+						message += `\n${chalk.bold('- Scan With Phone:')} \n${qrcodeString}`;
+					});
+				}
 			}
 
 			if (previous) {
@@ -374,6 +382,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--cors': Boolean,
 			'--ssl-cert': String,
 			'--ssl-key': String,
+			'--qrcode': Boolean,
 			'-h': '--help',
 			'-v': '--version',
 			'-l': '--listen',
@@ -384,6 +393,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'-u': '--no-compression',
 			'-S': '--symlinks',
 			'-C': '--cors',
+			'-q': '--qrcode',
 			// This is deprecated and only for backwards-compatibility.
 			'-p': '--listen'
 		});
@@ -434,6 +444,10 @@ const loadConfig = async (cwd, entry, args) => {
 
 	if (args['--symlinks']) {
 		config.symlinks = true;
+	}
+
+	if (args['--qrcode']) {
+		config.qrcode = true;
 	}
 
 	for (const endpoint of args['--listen']) {
