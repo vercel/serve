@@ -4,6 +4,8 @@
 const http = require('http');
 const path = require('path');
 const fs = require('fs');
+const SSI = require('./ssi.js');
+const Readable = require('stream').Readable;
 const {promisify} = require('util');
 const {parse} = require('url');
 const os = require('os');
@@ -83,7 +85,9 @@ const getHelp = () => chalk`
 
       -n, --no-clipboard                  Do not copy the local address to the clipboard
 
-      -S, --symlinks                      Resolve symlinks instead of showing 404 errors
+			--ssi,															 	Set specific path to get the SSI includes
+
+			-S, --symlinks                      Resolve symlinks instead of showing 404 errors
 
   {bold ENDPOINTS}
 
@@ -177,7 +181,23 @@ const startEndpoint = (endpoint, config, args, previous) => {
 			await compressionHandler(request, response);
 		}
 
-		return handler(request, response, config);
+		return handler(request, response, config, {
+			createReadStream(pathToFile) {
+				// SSI part
+				if (pathToFile.substr(-4) === 'html' && config.ssi) {
+					const html = fs.readFileSync(pathToFile, 'utf8');
+					const ssi = new SSI({ location: config.ssi });
+					const newHtml = ssi(html);
+					const s = new Readable();
+					s._read = () => {};
+					s.push(newHtml);
+					s.push(null);
+					return s;
+				}
+				return fs.createReadStream(pathToFile);
+				// /SSI part
+			}
+		});
 	});
 
 	server.on('error', (err) => {
@@ -343,7 +363,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--config': String,
 			'--no-clipboard': Boolean,
 			'--no-compression': Boolean,
-			'--symlinks': Boolean,
+			'--ssi': String,
 			'-h': '--help',
 			'-v': '--version',
 			'-l': '--listen',
@@ -380,6 +400,7 @@ const loadConfig = async (cwd, entry, args) => {
 		args['--listen'] = [[process.env.PORT || 5000]];
 	}
 
+
 	if (args._.length > 1) {
 		console.error(error('Please provide one path argument at maximum'));
 		process.exit(1);
@@ -389,6 +410,16 @@ const loadConfig = async (cwd, entry, args) => {
 	const entry = args._.length > 0 ? path.resolve(args._[0]) : cwd;
 
 	const config = await loadConfig(cwd, entry, args);
+
+	if (args['--ssi']) {
+		config.ssi = args['--ssi'];
+		const urlPattern = /(http|ftp|https):\/\/[\w-]+(\.[\w-]+)*([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/;
+		const matches = config.ssi.match(urlPattern);
+		if (config.ssi !== '' && !matches) {
+			config.ssi = null;
+			console.error(error('Please provide url for SSI'));
+		}
+	}
 
 	if (args['--single']) {
 		const {rewrites} = config;
