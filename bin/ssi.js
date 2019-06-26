@@ -5,7 +5,12 @@ const SSI = function (param) {
 	options.includesMatcher = /<!--\s?#\s?include\s+(?:virtual|file)="([^"]+)"(?:\s+stub="(\w+)")?\s+-->/;
 
 	function getContent(location) {
-		const url = `${options.location}${location}`;
+		let url;
+		if (location.substring(0, 4) === 'http') {
+			url = location;
+		} else {
+			url = `${options.location}${location}`;
+		}
 		const res = request('GET', url);
 		return [res.statusCode, res.statusCode < 400 ? res.getBody('utf8') : ''];
 	}
