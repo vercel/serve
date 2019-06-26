@@ -6,13 +6,15 @@ const SSI = function (param) {
 
 	function getContent(location) {
 		let url;
-		if (location.substring(0, 4) === 'http') {
+		const urlPattern = /(http|ftp|https):\/\/[\w-]+(\.[\w-]+)*([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/;
+		const matches = location.match(urlPattern);
+		if (matches) {
 			url = location;
 		} else {
 			url = `${options.location}${location}`;
 		}
 		const res = request('GET', url);
-		return [res.statusCode, res.statusCode < 400 ? res.getBody('utf8') : ''];
+		return [res.statusCode, res.statusCode < 400 ? res.getBody('utf8') : [200, `ERROR : ${location}`]];
 	}
 
 	function processInclude(part, blocks) {
