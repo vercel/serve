@@ -363,6 +363,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--config': String,
 			'--no-clipboard': Boolean,
 			'--no-compression': Boolean,
+			'--symlinks': Boolean,
 			'--ssi': String,
 			'-h': '--help',
 			'-v': '--version',
