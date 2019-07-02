@@ -81,6 +81,8 @@ const getHelp = () => chalk`
 
       -c, --config                        Specify custom path to \`serve.json\`
 
+      --charset                           override header charset for every http request of html, htm, css file
+
       -n, --no-clipboard                  Do not copy the local address to the clipboard
 
       -S, --symlinks                      Resolve symlinks instead of showing 404 errors
@@ -167,6 +169,30 @@ const getNetworkAddress = () => {
 	}
 };
 
+const scanContentTypeCharset = (fullPath, ext) => {
+	const defaultCharset = 'utf-8';
+
+	let content = '';
+	let charset = [];
+	let matcher = null;
+	try {
+		content = fs.readFileSync(fullPath, 'utf8');
+	} catch (e) {
+		console.error(`could not find the file ${fullPath}`);
+	}
+
+	if (ext === 'html') {
+		matcher = /<meta(?!\s*(?:name|value)\s*=)[^>]*?charset\s*=[\s"']*([^\s"'/>]*)/;
+	} else if (ext === 'css') {
+		matcher = /@charset\s*[\s"']*([^\s"'/>]*)/;
+	}
+
+	charset = content.match(matcher);
+	charset = charset && charset.length > 1 ? charset[1].toLowerCase() : defaultCharset;
+
+	return `text/${ext}; charset=${charset}`;
+};
+
 const startEndpoint = (endpoint, config, args, previous) => {
 	const {isTTY} = process.stdout;
 	const clipboard = args['--no-clipboard'] !== true;
@@ -175,6 +201,37 @@ const startEndpoint = (endpoint, config, args, previous) => {
 	const server = http.createServer(async (request, response) => {
 		if (compress) {
 			await compressionHandler(request, response);
+		}
+
+
+		const fullPath = path.resolve() + request.url + (request.url === '/' ? 'index.html' : '');
+		const extention = fullPath.split(/\#|\?/)[0].split('.').pop()
+			.trim()
+			.toLowerCase();
+
+		// if the file type is html or css we can try to detect the charset specified in the content
+		if (extention === 'css' || extention === 'html' || extention === 'htm') {
+			if (!config.headers) {
+				config.headers = [];
+			}
+
+			if (config.charset) {
+				config.headers.push({
+					source: (request.url === '/' ? 'index.html' : ''),
+					headers: [{
+						key: 'Content-Type',
+						value: `text/${extention}; charset=${config.charset}`
+					}]
+				});
+			} else {
+				config.headers.push({
+					source: (request.url === '/' ? 'index.html' : ''),
+					headers: [{
+						key: 'Content-Type',
+						value: scanContentTypeCharset(fullPath, extention)
+					}]
+				});
+			}
 		}
 
 		return handler(request, response, config);
@@ -341,6 +398,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--single': Boolean,
 			'--debug': Boolean,
 			'--config': String,
+			'--charset': String,
 			'--no-clipboard': Boolean,
 			'--no-compression': Boolean,
 			'--symlinks': Boolean,
@@ -403,6 +461,10 @@ const loadConfig = async (cwd, entry, args) => {
 
 	if (args['--symlinks']) {
 		config.symlinks = true;
+	}
+
+	if (args['--charset']) {
+		config.charset = args['--charset'];
 	}
 
 	for (const endpoint of args['--listen']) {
