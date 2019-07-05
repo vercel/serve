@@ -45,6 +45,7 @@
     "compression": "1.7.3",
     "serve-handler": "6.0.2",
     "sync-request": "6.1.0",
-    "update-check": "1.5.2"
+    "update-check": "1.5.2",
+    "iconv-lite": "0.5.0"
   }
 }

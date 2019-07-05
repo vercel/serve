@@ -183,19 +183,38 @@ const startEndpoint = (endpoint, config, args, previous) => {
 
 		return handler(request, response, config, {
 			createReadStream(pathToFile) {
-				// SSI part
-				if (pathToFile.substr(-4) === 'html' && config.ssi) {
-					const html = fs.readFileSync(pathToFile, 'utf8');
-					const ssi = new SSI({ location: config.ssi });
-					const newHtml = ssi(html);
-					const s = new Readable();
-					s._read = () => {};
-					s.push(newHtml);
-					s.push(null);
-					return s;
+				const stream = fs.createReadStream(pathToFile);
+				const fileExt = path.extname(pathToFile).substring(1);
+
+				let stats = null;
+				try {
+					stats = fs.lstatSync(pathToFile);
+				} catch (e) {
+					return stream;
 				}
-				return fs.createReadStream(pathToFile);
-				// /SSI part
+
+
+				return new Promise((resolve) => {
+					if (stats.isDirectory()) {
+						resolve(stream);
+					}
+
+					// SSI part
+					if ((fileExt === 'html' || fileExt === 'shtml' || fileExt === 'htm') && config.ssi) {
+						stream.on('data', (chunk) => {
+							const ssi = new SSI({ location: config.ssi });
+							const newHtml = ssi(chunk.toString());
+							const newStream = new Readable();
+							newStream._read = () => {};
+							newStream.push(newHtml);
+							newStream.push(null);
+
+							resolve(newStream);
+						});
+					} else {
+						resolve(stream);
+					} // if (allowExt.indexOf(fileExt) >= 0)
+				});
 			}
 		});
 	});

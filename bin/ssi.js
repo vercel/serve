@@ -1,8 +1,17 @@
 const request = require('sync-request');
+const iconv = require('iconv-lite');
 
 const SSI = function (param) {
 	const options = param;
-	options.includesMatcher = /<!--\s?#\s?include\s+(?:virtual|file)="([^"]+)"(?:\s+stub="(\w+)")?\s+-->/;
+	options.includesMatcher = /<!--\s?#\s?include\s+(?:virtual|file)="([^"]+)"(?:\s+stub="(\w+)")?\s?-->/;
+
+	function extractCharSet(httpCall) {
+		if (!httpCall || !httpCall.headers || !httpCall.headers['content-type']) {
+			return 'utf-8';
+		}
+		const re = /charset=([^()<>@,;:\"/[\]?.=\s]*)/i;
+		return re.test(httpCall.headers['content-type']) ? re.exec(httpCall.headers['content-type'])[1] : 'utf-8';
+	}
 
 	function getContent(location) {
 		let url;
@@ -14,7 +23,12 @@ const SSI = function (param) {
 			url = `${options.location}${location}`;
 		}
 		const res = request('GET', url);
-		return [res.statusCode, res.statusCode < 400 ? res.getBody('utf8') : [200, `ERROR : ${location}`]];
+		if (!res.statusCode || res.statusCode >= 400) {
+			return [200, `ERROR : ${location}`];
+		}
+
+		const charset = extractCharSet(res);
+		return [res.statusCode, iconv.decode(res.body, charset)];
 	}
 
 	function processInclude(part, blocks) {
@@ -34,7 +48,6 @@ const SSI = function (param) {
 		let output = [];
 		const blocks = {};
 		const splitContent = content.split('\n');
-
 		for (const line of splitContent) {
 			const part = line.trim();
 			output += processInclude(part, blocks);
