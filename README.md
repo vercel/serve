@@ -38,7 +38,7 @@ Now you understand how the package works! :tada:
 
 ## Configuration
 
-To customize `serve`'s behavior, create a `serve.json` file and insert any of [these properties](https://github.com/zeit/serve-handler#options).
+To customize `serve`'s behavior, create a `serve.json` file in the public folder and insert any of [these properties](https://github.com/zeit/serve-handler#options).
 
 ## API
 
