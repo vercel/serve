@@ -262,7 +262,7 @@ const loadConfig = async (cwd, entry, args) => {
 	const config = {};
 
 	for (const file of files) {
-		const location = path.join(entry, file);
+		const location = path.resolve(entry, file);
 		let content = null;
 
 		try {
@@ -313,7 +313,7 @@ const loadConfig = async (cwd, entry, args) => {
 
 	if (entry) {
 		const {public} = config;
-		config.public = path.relative(cwd, (public ? path.join(entry, public) : entry));
+		config.public = path.relative(cwd, (public ? path.resolve(entry, public) : entry));
 	}
 
 	if (Object.keys(config).length !== 0) {
