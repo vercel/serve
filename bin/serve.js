@@ -83,6 +83,8 @@ const getHelp = () => chalk`
 
       -n, --no-clipboard                  Do not copy the local address to the clipboard
 
+      --no-etag                           Send \`Last-Modified\` header instead of \`ETag\`
+
       -S, --symlinks                      Resolve symlinks instead of showing 404 errors
 
   {bold ENDPOINTS}
@@ -327,6 +329,9 @@ const loadConfig = async (cwd, entry, args) => {
 		}
 	}
 
+	// "ETag" headers are enabled by default unless `--no-etag` is provided
+	config.etag = !args['--no-etag'];
+
 	return config;
 };
 
@@ -343,6 +348,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--config': String,
 			'--no-clipboard': Boolean,
 			'--no-compression': Boolean,
+			'--no-etag': Boolean,
 			'--symlinks': Boolean,
 			'-h': '--help',
 			'-v': '--version',
