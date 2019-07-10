@@ -83,6 +83,8 @@ const getHelp = () => chalk`
 
       -n, --no-clipboard                  Do not copy the local address to the clipboard
 
+      --no-etag                           Send \`Last-Modified\` header instead of \`ETag\`
+
       -S, --symlinks                      Resolve symlinks instead of showing 404 errors
 
   {bold ENDPOINTS}
