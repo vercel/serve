@@ -327,6 +327,9 @@ const loadConfig = async (cwd, entry, args) => {
 		}
 	}
 
+	// "ETag" headers are enabled by default unless `--no-etag` is provided
+	config.etag = !args['--no-etag'];
+
 	return config;
 };
 
@@ -340,6 +343,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--listen': [parseEndpoint],
 			'--single': Boolean,
 			'--debug': Boolean,
+			'--no-etag': Boolean,
 			'--config': String,
 			'--no-clipboard': Boolean,
 			'--no-compression': Boolean,
