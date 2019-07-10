@@ -82,6 +82,8 @@ const getHelp = () => chalk`
       -c, --config                        Specify custom path to \`serve.json\`
 
       -n, --no-clipboard                  Do not copy the local address to the clipboard
+	  
+      -u, --no-compression                Do not compress files
 
       --no-etag                           Send \`Last-Modified\` header instead of \`ETag\`
 
