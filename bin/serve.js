@@ -202,7 +202,7 @@ const startEndpoint = (endpoint, config, args, previous) => {
 					// SSI part
 					if ((fileExt === 'html' || fileExt === 'shtml' || fileExt === 'htm') && config.ssi) {
 						stream.on('data', (chunk) => {
-							const ssi = new SSI({ location: config.ssi });
+							const ssi = new SSI({ location: config.ssi, localPath: path.resolve(), defaultCharset: 'utf-8' });
 							const newHtml = ssi(chunk.toString());
 							const newStream = new Readable();
 							newStream._read = () => {};
