@@ -1,5 +1,6 @@
 const request = require('sync-request');
 const iconv = require('iconv-lite');
+const chardet = require('chardet');
 const fs = require('fs');
 
 const SSI = function (param) {
@@ -7,11 +8,8 @@ const SSI = function (param) {
 	options.includesMatcher = /<!--\s?#\s?include\s+(?:virtual|file)="([^"]+)"(?:\s+stub="(\w+)")?\s?-->/;
 
 	function extractCharSet(httpCall) {
-		if (!httpCall || !httpCall.headers || !httpCall.headers['content-type']) {
-			return 'utf-8';
-		}
-		const re = /charset=([^()<>@,;:\"/[\]?.=\s]*)/i;
-		return re.test(httpCall.headers['content-type']) ? re.exec(httpCall.headers['content-type'])[1] : 'utf-8';
+		const tempChar = chardet.detect(httpCall.body);
+		return tempChar ? tempChar : 'utf-8';
 	}
 
 	function getContent(location) {
@@ -32,13 +30,14 @@ const SSI = function (param) {
 				url = location;
 			} else {
 				// if nothing match let generate an URL with the provided base url
-				url = `${options.location}${location}`;
+				url = `${options.location.charAt(options.location.length - 1) === '/' ? options.location.substring(0, options.location.length - 1) : options.location}${location}`;
 			}
 
 			const res = request('GET', url);
 			if (!res.statusCode || res.statusCode >= 400) {
 				return [200, `ERROR : ${location}`];
 			}
+
 			const charset = extractCharSet(res);
 			return [res.statusCode, iconv.decode(res.body, charset)];
 		} // catch (e)
