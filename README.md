@@ -28,6 +28,12 @@ Once that's done, you can run this command inside your project's directory:
 serve
 ```
 
+or you can specify which folder you want to serve:
+
+```bash
+serve folder_name
+```
+
 Finally, run this command to see a list of all available options:
 
 ```bash

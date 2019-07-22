@@ -58,7 +58,8 @@ const getHelp = () => chalk`
   {bold USAGE}
 
       {bold $} {cyan serve} --help
-      {bold $} {cyan serve} --version
+	  {bold $} {cyan serve} --version
+	  {bold $} {cyan serve} folder_path
       {bold $} {cyan serve} [-l {underline listen_uri} [-l ...]] [{underline directory}]
 
       By default, {cyan serve} will listen on {bold 0.0.0.0:5000} and serve the
@@ -82,7 +83,7 @@ const getHelp = () => chalk`
       -c, --config                        Specify custom path to \`serve.json\`
 
       -n, --no-clipboard                  Do not copy the local address to the clipboard
-	  
+
       -u, --no-compression                Do not compress files
 
       --no-etag                           Send \`Last-Modified\` header instead of \`ETag\`
