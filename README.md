@@ -6,7 +6,7 @@
 
 Assuming you would like to serve a static site, single page application or just a static file (no matter if on your device or on the local network), this package is just the right choice for you.
 
-It behaves exactly like static deployments on [Now](https://zeit.co/now), so it's perfect for developing your static project. Then, when it's time to push it into production, you [deploy it](https://zeit.co/docs/examples/static).
+It behaves exactly like static deployments on [Now](https://zeit.co/now), so it's perfect for developing your static project. Then, when it's time to push it into production, you [deploy it](https://zeit.co/docs/v2/introduction/).
 
 Furthermore, it provides a neat interface for listing the directory's contents:
 
