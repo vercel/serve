@@ -22,10 +22,16 @@ If you prefer, you can also install the package globally using [Yarn](https://ya
 yarn global add serve
 ```
 
-Once that's done, you can run this command inside your project's directory:
+Once that's done, you can run this command inside your project's directory...
 
 ```bash
 serve
+```
+
+...or specify which folder you want to serve:
+
+```bash
+serve folder_name
 ```
 
 Finally, run this command to see a list of all available options:
