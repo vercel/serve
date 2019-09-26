@@ -59,7 +59,7 @@ const getHelp = () => chalk`
 
       {bold $} {cyan serve} --help
       {bold $} {cyan serve} --version
-      {bold $} {cyan serve} folder_path
+      {bold $} {cyan serve} folder_name
       {bold $} {cyan serve} [-l {underline listen_uri} [-l ...]] [{underline directory}]
 
       By default, {cyan serve} will listen on {bold 0.0.0.0:5000} and serve the
