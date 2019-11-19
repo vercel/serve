@@ -77,6 +77,8 @@ const getHelp = () => chalk`
       -l, --listen {underline listen_uri}             Specify a URI endpoint on which to listen (see below) -
                                           more than one may be specified to listen in multiple places
 
+	  -r, --root {underline root}		  If you're not hosting this at a root URL set the root here
+
       -d, --debug                         Show debugging information
 
       -s, --single                        Rewrite all not-found requests to \`index.html\`
@@ -94,6 +96,16 @@ const getHelp = () => chalk`
       --ssl-cert                          Optional path to an SSL/TLS certificate to serve with HTTPS
 
       --ssl-key                           Optional path to the SSL/TLS certificate\'s private key
+
+  {bold ROOT}
+
+	  You can set the root URL at which serve is listening. Serve needs to be aware of this otherwise the path 
+	  to files gets messed up. 
+
+	  If the server is at http://foo.com/bar/ (e.g. through a reverse proxy) you should set the root to bar
+
+	  	  {bold $} {cyan serve} -r {underline bar}
+
 
   {bold ENDPOINTS}
 
@@ -177,13 +189,23 @@ const getNetworkAddress = () => {
 	}
 };
 
+const fixForwardSlash = function (url) {
+	return url[0] === '/' ? url : `/${url}`;
+};
+
 const startEndpoint = (endpoint, config, args, previous) => {
 	const {isTTY} = process.stdout;
 	const clipboard = args['--no-clipboard'] !== true;
 	const compress = args['--no-compression'] !== true;
 	const httpMode = args['--ssl-cert'] && args['--ssl-key'] ? 'https' : 'http';
+	const root = args['--root'] ? fixForwardSlash(args['--root']) : null;
 
 	const serverHandler = async (request, response) => {
+		if (root && request.url.substring(0, root.length) === root) {
+			// trim the root part
+			request.url = request.url.substring(root.length);
+		}
+
 		if (compress) {
 			await compressionHandler(request, response);
 		}
@@ -362,6 +384,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--single': Boolean,
 			'--debug': Boolean,
 			'--config': String,
+			'--root': String,
 			'--no-clipboard': Boolean,
 			'--no-compression': Boolean,
 			'--no-etag': Boolean,
@@ -374,6 +397,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'-s': '--single',
 			'-d': '--debug',
 			'-c': '--config',
+			'-r': '--root',
 			'-n': '--no-clipboard',
 			'-u': '--no-compression',
 			'-S': '--symlinks',
