@@ -6,9 +6,9 @@
 
 Assuming you would like to serve a static site, single page application or just a static file (no matter if on your device or on the local network), this package is just the right choice for you.
 
-It behaves exactly like static deployments on [Now](https://zeit.co/now), so it's perfect for developing your static project. Then, when it's time to push it into production, you [deploy it](https://zeit.co/docs/examples/static).
+Once it's time to push your site to production, we recommend using [ZEIT Now](https://zeit.co/now).
 
-Furthermore, it provides a neat interface for listing the directory's contents:
+In general, `serve` also provides a neat interface for listing the directory's contents:
 
 ![screenshot](https://user-images.githubusercontent.com/6170607/40541195-167ff460-601b-11e8-8f66-3b0c7ff96cbb.png)
 
@@ -22,10 +22,16 @@ If you prefer, you can also install the package globally using [Yarn](https://ya
 yarn global add serve
 ```
 
-Once that's done, you can run this command inside your project's directory:
+Once that's done, you can run this command inside your project's directory...
 
 ```bash
 serve
+```
+
+...or specify which folder you want to serve:
+
+```bash
+serve folder_name
 ```
 
 Finally, run this command to see a list of all available options:
@@ -38,7 +44,7 @@ Now you understand how the package works! :tada:
 
 ## Configuration
 
-To customize `serve`'s behavior, create a `serve.json` file and insert any of [these properties](https://github.com/zeit/serve-handler#options).
+To customize `serve`'s behavior, create a `serve.json` file in the public folder and insert any of [these properties](https://github.com/zeit/serve-handler#options).
 
 ## API
 
