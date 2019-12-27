@@ -184,7 +184,7 @@ const startEndpoint = (endpoint, config, args, previous) => {
 	const httpMode = args['--ssl-cert'] && args['--ssl-key'] ? 'https' : 'http';
 
 	const serverHandler = async (request, response) => {
-    if (args['--cors']) {
+		if (args['--cors']) {
 			response.setHeader('Access-Control-Allow-Origin', '*');
 		}
 		if (compress) {
