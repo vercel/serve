@@ -184,6 +184,9 @@ const startEndpoint = (endpoint, config, args, previous) => {
 	const httpMode = args['--ssl-cert'] && args['--ssl-key'] ? 'https' : 'http';
 
 	const serverHandler = async (request, response) => {
+		if (args['--cors']) {
+			response.setHeader('Access-Control-Allow-Origin', '*');
+		}
 		if (compress) {
 			await compressionHandler(request, response);
 		}
@@ -366,6 +369,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--no-compression': Boolean,
 			'--no-etag': Boolean,
 			'--symlinks': Boolean,
+			'--cors': Boolean,
 			'--ssl-cert': String,
 			'--ssl-key': String,
 			'-h': '--help',
@@ -377,6 +381,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'-n': '--no-clipboard',
 			'-u': '--no-compression',
 			'-S': '--symlinks',
+			'-C': '--cors',
 			// This is deprecated and only for backwards-compatibility.
 			'-p': '--listen'
 		});
