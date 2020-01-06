@@ -225,7 +225,7 @@ const startEndpoint = (endpoint, config, args, previous) => {
 			const ip = getNetworkAddress();
 
 			localAddress = `${httpMode}://${address}:${details.port}`;
-			networkAddress = `${httpMode}://${ip}:${details.port}`;
+			networkAddress = networkAddress ? `${httpMode}://${ip}:${details.port}` : null;
 		}
 
 		if (isTTY && process.env.NODE_ENV !== 'production') {
