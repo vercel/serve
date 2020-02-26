@@ -95,6 +95,11 @@ const getHelp = () => chalk`
 
       --ssl-key                           Optional path to the SSL/TLS certificate\'s private key
 
+      --ssl-passphrase                    Optional passphrase of the SSL/TLS certificate
+
+      --ssl-format                        Optional format of the SSL/TLS certificate.
+                                          {grey Supported formats: pem (default) and pfx}
+
   {bold ENDPOINTS}
 
       Listen endpoints (specified by the {bold --listen} or {bold -l} options above) instruct {cyan serve}
@@ -181,8 +186,7 @@ const startEndpoint = (endpoint, config, args, previous) => {
 	const {isTTY} = process.stdout;
 	const clipboard = args['--no-clipboard'] !== true;
 	const compress = args['--no-compression'] !== true;
-	const httpMode = args['--ssl-cert'] && args['--ssl-key'] ? 'https' : 'http';
-
+	const httpMode = args['--ssl-cert'] && (args['--ssl-key'] || args['--ssl-passphrase']) ? 'https' : 'http';
 	const serverHandler = async (request, response) => {
 		if (args['--cors']) {
 			response.setHeader('Access-Control-Allow-Origin', '*');
@@ -194,12 +198,27 @@ const startEndpoint = (endpoint, config, args, previous) => {
 		return handler(request, response, config);
 	};
 
-	const server = httpMode === 'https'
-		? https.createServer({
-			key: fs.readFileSync(args['--ssl-key']),
-			cert: fs.readFileSync(args['--ssl-cert'])
-		}, serverHandler)
-		: http.createServer(serverHandler);
+	let server;
+	if (httpMode !== 'https') {
+		server = http.createServer(serverHandler);
+	}
+	else {
+		switch (args['--ssl-format']) {
+			case "pfx":
+				server = https.createServer({
+					pfx: fs.readFileSync(args['--ssl-cert']),
+					passphrase: args['--ssl-passphrase']
+				}, serverHandler);
+				break;
+			case "pem":
+			default:
+				server = https.createServer({
+					key: fs.readFileSync(args['--ssl-key']),
+					cert: fs.readFileSync(args['--ssl-cert'])
+				}, serverHandler);
+				break;
+		}
+	}
 
 	server.on('error', (err) => {
 		if (err.code === 'EADDRINUSE' && endpoint.length === 1 && !isNaN(endpoint[0])) {
@@ -372,6 +391,8 @@ const loadConfig = async (cwd, entry, args) => {
 			'--cors': Boolean,
 			'--ssl-cert': String,
 			'--ssl-key': String,
+			'--ssl-passphrase': String,
+			'--ssl-format': String,
 			'-h': '--help',
 			'-v': '--version',
 			'-l': '--listen',
