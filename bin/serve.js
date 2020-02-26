@@ -199,25 +199,24 @@ const startEndpoint = (endpoint, config, args, previous) => {
 	};
 
 	let server;
-	if (httpMode !== 'https') {
-		server = http.createServer(serverHandler);
-	}
-	else {
+	if (httpMode === 'https') {
 		switch (args['--ssl-format']) {
-			case "pfx":
-				server = https.createServer({
-					pfx: fs.readFileSync(args['--ssl-cert']),
-					passphrase: args['--ssl-passphrase']
-				}, serverHandler);
-				break;
-			case "pem":
-			default:
-				server = https.createServer({
-					key: fs.readFileSync(args['--ssl-key']),
-					cert: fs.readFileSync(args['--ssl-cert'])
-				}, serverHandler);
-				break;
+		case 'pfx':
+			server = https.createServer({
+				pfx: fs.readFileSync(args['--ssl-cert']),
+				passphrase: args['--ssl-passphrase']
+			}, serverHandler);
+			break;
+		case 'pem':
+		default:
+			server = https.createServer({
+				key: fs.readFileSync(args['--ssl-key']),
+				cert: fs.readFileSync(args['--ssl-cert'])
+			}, serverHandler);
+			break;
 		}
+	} else {
+		server = http.createServer(serverHandler);
 	}
 
 	server.on('error', (err) => {
