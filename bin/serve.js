@@ -19,6 +19,7 @@ const handler = require('serve-handler');
 const schema = require('@zeit/schemas/deployment/config-static');
 const boxen = require('boxen');
 const compression = require('compression');
+const stripJsonComments = require('strip-json-comments');
 
 // Utilities
 const pkg = require('../package');
@@ -296,7 +297,7 @@ const loadConfig = async (cwd, entry, args) => {
 		}
 
 		try {
-			content = JSON.parse(content);
+			content = JSON.parse(stripJsonComments(content));
 		} catch (err) {
 			console.error(error(`Could not parse ${location} as JSON: ${err.message}`));
 			process.exit(1);
