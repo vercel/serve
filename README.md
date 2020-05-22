@@ -1,4 +1,4 @@
-![](https://assets.zeit.co/image/upload/v1527770721/repositories/serve/serve-repo-banner.png)
+![](https://assets.vercel.com/image/upload/v1527770721/repositories/serve/serve-repo-banner.png)
 
 [![Build Status](https://circleci.com/gh/zeit/serve.svg?&style=shield)](https://circleci.com/gh/zeit/serve)
 [![Install Size](https://packagephobia.now.sh/badge?p=serve)](https://packagephobia.now.sh/result?p=serve)
