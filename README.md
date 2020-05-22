@@ -1,12 +1,16 @@
 ![](https://assets.vercel.com/image/upload/v1527770721/repositories/serve/serve-repo-banner.png)
 
+<a aria-label="Vercel logo" href="https://vercel.com">
+  <img src="https://img.shields.io/badge/MADE%20BY%20Vercel-000000.svg?style=for-the-badge&logo=ZEIT&labelColor=000000&logoWidth=20">
+</a>
+
 [![Build Status](https://circleci.com/gh/zeit/serve.svg?&style=shield)](https://circleci.com/gh/zeit/serve)
 [![Install Size](https://packagephobia.now.sh/badge?p=serve)](https://packagephobia.now.sh/result?p=serve)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/zeit)
 
 Assuming you would like to serve a static site, single page application or just a static file (no matter if on your device or on the local network), this package is just the right choice for you.
 
-Once it's time to push your site to production, we recommend using [ZEIT Now](https://zeit.co/now).
+Once it's time to push your site to production, we recommend using [Vercel](https://vercel.com).
 
 In general, `serve` also provides a neat interface for listing the directory's contents:
 
@@ -81,4 +85,4 @@ This project used to be called "list" and "micro-list". But thanks to [TJ Holowa
 
 ## Author
 
-Leo Lamprecht ([@notquiteleo](https://twitter.com/notquiteleo)) - [ZEIT](https://zeit.co)
+Leo Lamprecht ([@notquiteleo](https://twitter.com/notquiteleo)) - [Vercel](https://vercel.com)
