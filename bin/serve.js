@@ -8,6 +8,7 @@ const fs = require('fs');
 const {promisify} = require('util');
 const {parse} = require('url');
 const os = require('os');
+const a = 1
 
 // Packages
 const Ajv = require('ajv');
