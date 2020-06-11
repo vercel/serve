@@ -77,6 +77,8 @@ const getHelp = () => chalk`
       -l, --listen {underline listen_uri}             Specify a URI endpoint on which to listen (see below) -
                                           more than one may be specified to listen in multiple places
 
+      -p                                  Specify custom port
+
       -d, --debug                         Show debugging information
 
       -s, --single                        Rewrite all not-found requests to \`index.html\`
