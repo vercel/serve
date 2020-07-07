@@ -356,11 +356,43 @@ const loadConfig = async (cwd, entry, args) => {
 	return config;
 };
 
+const serveHandlerOptions = {
+	'--cleanUrls': Boolean,
+	'--unlisted': parseUnlisted,
+	'--trailingSlash': Boolean,
+	'--renderSingle': Boolean,
+	'--symlinks': Boolean
+};
+
+function getConfigFromArgs(args) {
+	const config = {}
+	Object.entries(args).forEach(([option, value]) => {
+		config[option.replace('--', '')] = value;
+	});
+
+	return config;
+}
+
+function parseUnlisted(arg) {
+	let parsed;
+	try {
+		parsed = JSON.parse(arg);
+	} catch (err) {
+		throw new Error(`Failed to parse option "unlisted": ${arg}`);
+	}
+
+	if (!Array.isArray()) {
+		throw new Error(`Option "unlisted" must be an array, got: ${arg}`);
+	}
+
+	return parsed;
+}
+
 (async () => {
 	let args = null;
 
 	try {
-		args = arg({
+		args = arg(Object.assign(serveHandlerOptions, {
 			'--help': Boolean,
 			'--version': Boolean,
 			'--listen': [parseEndpoint],
@@ -386,7 +418,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'-C': '--cors',
 			// This is deprecated and only for backwards-compatibility.
 			'-p': '--listen'
-		});
+		}));
 	} catch (err) {
 		console.error(error(err.message));
 		process.exit(1);
@@ -419,7 +451,13 @@ const loadConfig = async (cwd, entry, args) => {
 	const cwd = process.cwd();
 	const entry = args._.length > 0 ? path.resolve(args._[0]) : cwd;
 
-	const config = await loadConfig(cwd, entry, args);
+	const config = Object.assign(
+		await loadConfig(cwd, entry, args),
+		// Overwrite config file with CLI args
+		getConfigFromArgs(args)
+	);
+
+	console.log(config)
 
 	if (args['--single']) {
 		const {rewrites} = config;
