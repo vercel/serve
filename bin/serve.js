@@ -356,6 +356,21 @@ const loadConfig = async (cwd, entry, args) => {
 	return config;
 };
 
+function parseUnlisted(unlistedArray) {
+	let parsed;
+	try {
+		parsed = JSON.parse(unlistedArray);
+	} catch (err) {
+		throw new Error(`Failed to parse option "unlisted": ${unlistedArray}`);
+	}
+
+	if (!Array.isArray()) {
+		throw new Error(`Option "unlisted" must be an array, got: ${parsed}`);
+	}
+
+	return parsed;
+}
+
 const serveHandlerOptions = {
 	'--cleanUrls': Boolean,
 	'--unlisted': parseUnlisted,
@@ -365,27 +380,12 @@ const serveHandlerOptions = {
 };
 
 function getConfigFromArgs(args) {
-	const config = {}
+	const config = {};
 	Object.entries(args).forEach(([option, value]) => {
 		config[option.replace('--', '')] = value;
 	});
 
 	return config;
-}
-
-function parseUnlisted(arg) {
-	let parsed;
-	try {
-		parsed = JSON.parse(arg);
-	} catch (err) {
-		throw new Error(`Failed to parse option "unlisted": ${arg}`);
-	}
-
-	if (!Array.isArray()) {
-		throw new Error(`Option "unlisted" must be an array, got: ${arg}`);
-	}
-
-	return parsed;
 }
 
 (async () => {
@@ -456,8 +456,6 @@ function parseUnlisted(arg) {
 		// Overwrite config file with CLI args
 		getConfigFromArgs(args)
 	);
-
-	console.log(config)
 
 	if (args['--single']) {
 		const {rewrites} = config;
