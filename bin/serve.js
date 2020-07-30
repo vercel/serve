@@ -95,7 +95,7 @@ const getHelp = () => chalk`
 
       --ssl-key                           Optional path to the SSL/TLS certificate\'s private key
 
-      --ssl-passphrase                    Optional passphrase of the SSL/TLS certificate
+      --ssl-passphrase                    Optional passphrase used for a private key or a SSL/TLS (PFX) certificate
 
       --ssl-format                        Optional format of the SSL/TLS certificate.
                                           {grey Supported formats: pem (default) and pfx}
@@ -209,10 +209,14 @@ const startEndpoint = (endpoint, config, args, previous) => {
 			break;
 		case 'pem':
 		default:
-			server = https.createServer({
+			const serverOptions = {
 				key: fs.readFileSync(args['--ssl-key']),
 				cert: fs.readFileSync(args['--ssl-cert'])
-			}, serverHandler);
+			};
+			if(args['--ssl-passphrase']){
+				serverOptions.passphrase = args['--ssl-passphrase'];
+			}
+			server = https.createServer(serverOptions, serverHandler);
 			break;
 		}
 	} else {
