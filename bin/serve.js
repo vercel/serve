@@ -209,16 +209,16 @@ const startEndpoint = (endpoint, config, args, previous) => {
 			break;
 		case 'pem':
 		default: {
-				const serverOptions = {
-					key: fs.readFileSync(args['--ssl-key']),
-					cert: fs.readFileSync(args['--ssl-cert'])
-				};
-				if (args['--ssl-passphrase']) {
-					serverOptions.passphrase = args['--ssl-passphrase'];
-				}
-				server = https.createServer(serverOptions, serverHandler);
-				break;
+			const serverOptions = {
+				key: fs.readFileSync(args['--ssl-key']),
+				cert: fs.readFileSync(args['--ssl-cert'])
+			};
+			if (args['--ssl-passphrase']) {
+				serverOptions.passphrase = args['--ssl-passphrase'];
 			}
+			server = https.createServer(serverOptions, serverHandler);
+			break;
+		}
 		}
 	} else {
 		server = http.createServer(serverHandler);
