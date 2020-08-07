@@ -3,6 +3,7 @@
   "version": "11.3.2",
   "description": "Static file serving and directory listing",
   "scripts": {
+    "build": "rimraf dist && webpack --progress",
     "test": "yarn lint",
     "lint": "zeit-eslint --ext .jsx,.js .",
     "lint-staged": "git diff --diff-filter=ACMRT --cached --name-only '*.js' '*.jsx' | xargs zeit-eslint"
@@ -23,9 +24,17 @@
   "author": "leo",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.4",
     "@zeit/eslint-config-node": "0.3.0",
     "@zeit/git-hooks": "0.1.4",
-    "eslint": "5.4.0"
+    "babel-loader": "8.0.6",
+    "copy-pkg-json-webpack-plugin": "0.0.39",
+    "copy-webpack-plugin": "5.0.5",
+    "eslint": "5.4.0",
+    "string-replace-loader": "2.2.0",
+    "webpack": "4.35.3",
+    "webpack-cli": "3.2.2"
   },
   "eslintConfig": {
     "extends": [
