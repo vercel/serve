@@ -1,6 +1,6 @@
 {
   "name": "serve",
-  "version": "11.3.2",
+  "version": "11.4.0",
   "description": "Static file serving and directory listing",
   "scripts": {
     "build": "rimraf dist && webpack --progress",
