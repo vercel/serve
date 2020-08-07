@@ -77,13 +77,15 @@ const getHelp = () => chalk`
       -l, --listen {underline listen_uri}             Specify a URI endpoint on which to listen (see below) -
                                           more than one may be specified to listen in multiple places
 
+      --virtual-path                      Virtual directory for the server
+
       -d, --debug                         Show debugging information
 
       -s, --single                        Rewrite all not-found requests to \`index.html\`
 
       -c, --config                        Specify custom path to \`serve.json\`
 
-      -C, --cors						  Enable CORS, sets \`Access-Control-Allow-Origin\` to \`*\`
+      -C, --cors                          Enable CORS, sets \`Access-Control-Allow-Origin\` to \`*\`
 
       -n, --no-clipboard                  Do not copy the local address to the clipboard
 
@@ -170,8 +172,8 @@ const registerShutdown = (fn) => {
 
 const getNetworkAddress = () => {
 	for (const name of Object.keys(interfaces)) {
-		for (const interface of interfaces[name]) {
-			const {address, family, internal} = interface;
+		for (const netInterface of interfaces[name]) {
+			const {address, family, internal} = netInterface;
 			if (family === 'IPv4' && !internal) {
 				return address;
 			}
@@ -185,7 +187,14 @@ const startEndpoint = (endpoint, config, args, previous) => {
 	const compress = args['--no-compression'] !== true;
 	const httpMode = args['--ssl-cert'] && args['--ssl-key'] ? 'https' : 'http';
 
+	const virtualPath = args['--virtual-path']
+		? new RegExp(`^([^/]*//[^/]+)?/${args['--virtual-path'].replace(/[^\w\s]/g, '\\$&')}(/|$)`, 'i')
+		: null;
+
 	const serverHandler = async (request, response) => {
+		if (virtualPath) {
+			request.url = request.url.replace(virtualPath, '$1/');
+		}
 		if (args['--cors']) {
 			response.setHeader('Access-Control-Allow-Origin', '*');
 		}
@@ -197,10 +206,13 @@ const startEndpoint = (endpoint, config, args, previous) => {
 	};
 
 	const server = httpMode === 'https'
-		? https.createServer({
-			key: fs.readFileSync(args['--ssl-key']),
-			cert: fs.readFileSync(args['--ssl-cert'])
-		}, serverHandler)
+		? https.createServer(
+			{
+				key: fs.readFileSync(args['--ssl-key']),
+				cert: fs.readFileSync(args['--ssl-cert'])
+			},
+			serverHandler
+		)
 		: http.createServer(serverHandler);
 
 	server.on('error', (err) => {
@@ -217,17 +229,18 @@ const startEndpoint = (endpoint, config, args, previous) => {
 		const details = server.address();
 		registerShutdown(() => server.close());
 
+		const addressSuffix = args['--virtual-path'] ? `/${args['--virtual-path']}` : '';
 		let localAddress = null;
 		let networkAddress = null;
 
 		if (typeof details === 'string') {
-			localAddress = details;
+			localAddress = details + addressSuffix;
 		} else if (typeof details === 'object' && details.port) {
 			const address = details.address === '::' ? 'localhost' : details.address;
 			const ip = getNetworkAddress();
 
-			localAddress = `${httpMode}://${address}:${details.port}`;
-			networkAddress = `${httpMode}://${ip}:${details.port}`;
+			localAddress = `${httpMode}://${address}:${details.port}${addressSuffix}`;
+			networkAddress = `${httpMode}://${ip}:${details.port}${addressSuffix}`;
 		}
 
 		if (isTTY && process.env.NODE_ENV !== 'production') {
@@ -257,11 +270,13 @@ const startEndpoint = (endpoint, config, args, previous) => {
 				}
 			}
 
-			console.log(boxen(message, {
-				padding: 1,
-				borderColor: 'green',
-				margin: 1
-			}));
+			console.log(
+				boxen(message, {
+					padding: 1,
+					borderColor: 'green',
+					margin: 1
+				})
+			);
 		} else {
 			const suffix = localAddress ? ` at ${localAddress}` : '';
 			console.log(info(`Accepting connections${suffix}`));
@@ -326,15 +341,17 @@ const loadConfig = async (cwd, entry, args) => {
 		console.log(info(`Discovered configuration in \`${file}\``));
 
 		if (file === 'now.json' || file === 'package.json') {
-			console.error(warning('The config files `now.json` and `package.json` are deprecated. Please use `serve.json`.'));
+			console.error(
+				warning('The config files `now.json` and `package.json` are deprecated. Please use `serve.json`.')
+			);
 		}
 
 		break;
 	}
 
 	if (entry) {
-		const {public} = config;
-		config.public = path.relative(cwd, (public ? path.resolve(entry, public) : entry));
+		const publicDir = config.public;
+		config.public = path.relative(cwd, publicDir ? path.resolve(entry, publicDir) : entry);
 	}
 
 	if (Object.keys(config).length !== 0) {
@@ -364,6 +381,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--help': Boolean,
 			'--version': Boolean,
 			'--listen': [parseEndpoint],
+			'--virtual-path': String,
 			'--single': Boolean,
 			'--debug': Boolean,
 			'--config': String,
@@ -411,6 +429,10 @@ const loadConfig = async (cwd, entry, args) => {
 		args['--listen'] = [[process.env.PORT || 5000]];
 	}
 
+	if (args['--virtual-path']) {
+		args['--virtual-path'] = args['--virtual-path'].replace(/^\/|\/$/g, '');
+	}
+
 	if (args._.length > 1) {
 		console.error(error('Please provide one path argument at maximum'));
 		process.exit(1);
@@ -426,10 +448,13 @@ const loadConfig = async (cwd, entry, args) => {
 		const existingRewrites = Array.isArray(rewrites) ? rewrites : [];
 
 		// As the first rewrite rule, make `--single` work
-		config.rewrites = [{
-			source: '**',
-			destination: '/index.html'
-		}, ...existingRewrites];
+		config.rewrites = [
+			{
+				source: '**',
+				destination: '/index.html'
+			},
+			...existingRewrites
+		];
 	}
 
 	if (args['--symlinks']) {
