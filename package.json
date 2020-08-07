@@ -45,5 +45,9 @@
     "compression": "1.7.3",
     "serve-handler": "6.1.3",
     "update-check": "1.5.2"
+  },
+  "resolutions": {
+    "**/serve-handler/mime-types": "~2.1.24",
+    "**/term-size/execa": "^0.8.0"
   }
 }
