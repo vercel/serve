@@ -58,5 +58,8 @@
   "resolutions": {
     "**/serve-handler/mime-types": "~2.1.24",
     "**/term-size/execa": "^0.8.0"
+  },
+  "engines": {
+    "node": ">=6"
   }
 }
