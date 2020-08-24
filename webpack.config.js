@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
-const CopyPkgJsonPlugin = require('copy-pkg-json-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
@@ -44,12 +43,16 @@ module.exports = {
 	},
 	plugins: [
 		new webpack.BannerPlugin({ banner: '#!/usr/bin/env node', raw: true }),
-		new CopyPkgJsonPlugin({
-			remove: ['dependencies', 'resolutions', 'files'],
-			replace: { bin: { serve: './index.js' } }
-		}),
 		new CopyPlugin([
-			{ from: '{LICENSE,README.md}' },
+			{
+				from: 'package.json',
+				transform(content) {
+					return content.toString()
+						.replace(/("(d(evD)?ependencies|resolutions|scripts)":\s*\{.*?\}|"files":\s*\[.*?\]),\s*/gs, '')
+						.replace(/("serve":\s*")(\.\/)?bin\/serve(\.js")/g, '$1$2index$3');
+				}
+			},
+			'{LICENSE,*.md}',
 			{ from: 'node_modules/clipboardy/fallbacks', to: 'fallbacks/', ignore: ['.DS_Store'] },
 			{ from: 'node_modules/term-size/vendor', to: 'vendor/' }
 		])
@@ -61,6 +64,7 @@ module.exports = {
 			new TerserPlugin({
 				cache: true,
 				parallel: true,
+				terserOptions: { mangle: false, output: { beautify: true } },
 				extractComments: { condition: /^\**!|@preserve|@license|@cc_on/i, banner: false }
 			})
 		]

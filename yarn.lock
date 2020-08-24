@@ -1728,11 +1728,6 @@ copy-descriptor@^0.1.0:
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
 
-copy-pkg-json-webpack-plugin@0.0.39:
-  version "0.0.39"
-  resolved "https://registry.yarnpkg.com/copy-pkg-json-webpack-plugin/-/copy-pkg-json-webpack-plugin-0.0.39.tgz#4d8c453b234b2399c24c0ee98bbc4b3852840ed3"
-  integrity sha512-2K/K5EvVYHhG4sZbDX942x/H5k5N4bicnjXAIET2EuTzqMzzjD1iqlprLYXYVCmQBvc2FRGf7+e3poQ0wJsI0Q==
-
 copy-webpack-plugin@5.0.5:
   version "5.0.5"
   resolved "https://registry.yarnpkg.com/copy-webpack-plugin/-/copy-webpack-plugin-5.0.5.tgz#731df6a837a2ef0f8f8e2345bdfe9b7c62a2da68"

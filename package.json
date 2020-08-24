@@ -29,7 +29,6 @@
     "@zeit/eslint-config-node": "0.3.0",
     "@zeit/git-hooks": "0.1.4",
     "babel-loader": "8.0.6",
-    "copy-pkg-json-webpack-plugin": "0.0.39",
     "copy-webpack-plugin": "5.0.5",
     "eslint": "5.4.0",
     "string-replace-loader": "2.2.0",
