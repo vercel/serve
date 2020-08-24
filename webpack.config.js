@@ -25,6 +25,11 @@ module.exports = {
 				options: { search: '^#!.*[\\r\\n]+', flags: '', replace: '' }
 			},
 			{
+				test: path.resolve(__dirname, 'package.json'),
+				loader: 'string-replace-loader',
+				options: { search: ',\\s*"scripts".*$', flags: 's', replace: '}' }
+			},
+			{
 				test: /node_modules.clipboardy\b.*\.js$/,
 				loader: 'string-replace-loader',
 				options: { search: '\\.\\./(fallbacks/)', flags: 'g', replace: '$1' }
