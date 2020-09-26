@@ -32,6 +32,7 @@
     "copy-webpack-plugin": "5.0.5",
     "eslint": "5.4.0",
     "string-replace-loader": "2.2.0",
+    "terser-webpack-plugin": "^1.1.0",
     "webpack": "4.35.3",
     "webpack-cli": "3.2.2"
   },
@@ -55,8 +56,13 @@
     "update-check": "1.5.2"
   },
   "resolutions": {
-    "**/serve-handler/mime-types": "~2.1.24",
-    "**/term-size/execa": "^0.8.0"
+    "**/assert/util": "^0.11.0",
+    "**/babel-code-frame/chalk": "^2.1.0",
+    "**/cliui/wrap-ansi": "~3.0.0",
+    "**/debug/ms": "^2.1.1",
+    "**/define-property/is-descriptor": "^1.0.0",
+    "boxen/term-size/execa": "^0.8.0",
+    "serve-handler/mime-types": "~2.1.24"
   },
   "engines": {
     "node": ">=6"

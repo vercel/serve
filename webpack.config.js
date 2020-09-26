@@ -16,9 +16,21 @@ module.exports = {
 		__filename: false,
 		__dirname: false
 	},
-	externals: ['spawn-sync'],
+	externals: {
+		'spawn-sync': 'commonjs spawn-sync'
+	},
 	module: {
 		rules: [
+			{
+				// transpile ES6-8 into ES5
+				test: /\.m?js$/,
+				exclude: /node_modules.(ajv|color-convert|cross-spawn|debug|isexe|negotiator|signal-exit|uri-js)\b/,
+				loader: 'babel-loader',
+				options: {
+					cacheDirectory: true,
+					presets: [['@babel/preset-env', { targets: { node: '6' } }]] // esmodules
+				}
+			},
 			{
 				test: path.resolve(__dirname, 'bin/serve.js'),
 				loader: 'string-replace-loader',
@@ -33,16 +45,6 @@ module.exports = {
 				test: /node_modules.clipboardy\b.*\.js$/,
 				loader: 'string-replace-loader',
 				options: { search: '\\.\\./(fallbacks/)', flags: 'g', replace: '$1' }
-			},
-			{
-				// transpile ES6-8 into ES5
-				test: /\.m?js$/,
-				exclude: /node_modules.(ajv|color-convert|cross-spawn|debug|isexe|negotiator|signal-exit|uri-js)\b/,
-				loader: 'babel-loader',
-				options: {
-					cacheDirectory: true,
-					presets: [['@babel/preset-env', { targets: { node: '6' } }]] // esmodules
-				}
 			}
 		]
 	},
