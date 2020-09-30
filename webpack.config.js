@@ -39,7 +39,7 @@ module.exports = {
 			{
 				test: path.resolve(__dirname, 'package.json'),
 				loader: 'string-replace-loader',
-				options: { search: ',\\s*"scripts".*$', flags: 's', replace: '}' }
+				options: { search: ',\\s*"scripts"[\\s\\S]*$', flags: '', replace: '\n}' }
 			},
 			{
 				test: /node_modules.clipboardy\b.*\.js$/,
@@ -53,10 +53,13 @@ module.exports = {
 		new CopyPlugin([
 			{
 				from: 'package.json',
-				transform(content) {
-					return content.toString()
-						.replace(/("(d(evD)?ependencies|resolutions|scripts)":\s*\{.*?\}|"files":\s*\[.*?\]),\s*/gs, '')
-						.replace(/("serve":\s*")(\.\/)?bin\/serve(\.js")/g, '$1$2index$3');
+				transform: (content) => {
+					const json = JSON.parse(content.toString());
+					['dependencies', 'devDependencies', 'resolutions', 'scripts', 'files'].forEach((key) => {
+						delete json[key];
+					});
+					Object.assign(json, { bin: { serve: './index.js' } });
+					return JSON.stringify(json, null, 2);
 				}
 			},
 			'{LICENSE,*.md}',
