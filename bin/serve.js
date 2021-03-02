@@ -85,7 +85,7 @@ const getHelp = () => chalk`
 
       -c, --config                        Specify custom path to \`serve.json\`
 
-      -C, --cors						  Enable CORS, sets \`Access-Control-Allow-Origin\` to \`*\`
+      -C, --cors                          Enable CORS, sets \`Access-Control-Allow-Origin\` to \`*\`
 
       -n, --no-clipboard                  Do not copy the local address to the clipboard
 
