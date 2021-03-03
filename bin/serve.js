@@ -99,6 +99,8 @@ const getHelp = () => chalk`
 
       --ssl-key                           Optional path to the SSL/TLS certificate\'s private key
 
+      --no-port-switching                 Do not open a port other than the one specified when it\'s taken.
+
   {bold ENDPOINTS}
 
       Listen endpoints (specified by the {bold --listen} or {bold -l} options above) instruct {cyan serve}
@@ -206,7 +208,7 @@ const startEndpoint = (endpoint, config, args, previous) => {
 		: http.createServer(serverHandler);
 
 	server.on('error', (err) => {
-		if (err.code === 'EADDRINUSE' && endpoint.length === 1 && !isNaN(endpoint[0])) {
+		if (err.code === 'EADDRINUSE' && endpoint.length === 1 && !isNaN(endpoint[0]) && args['--no-port-switching'] !== true) {
 			startEndpoint([0], config, args, endpoint[0]);
 			return;
 		}
@@ -374,6 +376,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--no-etag': Boolean,
 			'--symlinks': Boolean,
 			'--cors': Boolean,
+			'--no-port-switching': Boolean,
 			'--ssl-cert': String,
 			'--ssl-key': String,
 			'-h': '--help',
