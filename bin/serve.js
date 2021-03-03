@@ -95,6 +95,8 @@ const getHelp = () => chalk`
 
       --ssl-key                           Optional path to the SSL/TLS certificate\'s private key
 
+      --no-port-switching                 Do not open a port other than the one specified when it\'s taken.
+
   {bold ENDPOINTS}
 
       Listen endpoints (specified by the {bold --listen} or {bold -l} options above) instruct {cyan serve}
