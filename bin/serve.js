@@ -87,6 +87,9 @@ const getHelp = () => chalk`
 
       -C, --cors                          Enable CORS, sets \`Access-Control-Allow-Origin\` to \`*\`
 
+      --sab                               Enable SharedArrayBuffer, sets \`Cross-Origin-Opener-Policy\` to
+                                          \`same-origin\` and \`Cross-Origin-Embedder-Policy\` to \`require-corp\`
+
       -n, --no-clipboard                  Do not copy the local address to the clipboard
 
       -u, --no-compression                Do not compress files
@@ -192,6 +195,10 @@ const startEndpoint = (endpoint, config, args, previous) => {
 	const serverHandler = async (request, response) => {
 		if (args['--cors']) {
 			response.setHeader('Access-Control-Allow-Origin', '*');
+		}
+		if (args['--sab']) {
+			response.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+			response.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
 		}
 		if (compress) {
 			await compressionHandler(request, response);
@@ -376,6 +383,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--no-etag': Boolean,
 			'--symlinks': Boolean,
 			'--cors': Boolean,
+			'--sab': Boolean,
 			'--no-port-switching': Boolean,
 			'--ssl-cert': String,
 			'--ssl-key': String,
