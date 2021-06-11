@@ -99,8 +99,6 @@ const getHelp = () => chalk`
 	  
 	  --ssl-key                           Optional path to the SSL/TLS certificate\'s private key
 
-	  --ssl-ca                            Optional path to the SSL/TLS certificate\'s certificate authority
-
 	  --ssl-pass                          Optional path to the SSL/TLS certificate\'s passphrase
 
       --no-port-switching                 Do not open a port other than the one specified when it\'s taken.
@@ -204,12 +202,13 @@ const startEndpoint = (endpoint, config, args, previous) => {
 		return handler(request, response, config);
 	};
 
+	const sslPass = args['--ssl-pass'];
+
 	const server = httpMode === 'https'
 		? https.createServer({
 			key: fs.readFileSync(args['--ssl-key']),
 			cert: fs.readFileSync(args['--ssl-cert']),
-			ca: fs.readFileSync(args['--ssl-ca']),
-			passphrase: fs.readFileSync(args['--ssl-pass'])
+			passphrase: sslPass ? fs.readFileSync(sslPass) : ''
 		}, serverHandler)
 		: http.createServer(serverHandler);
 
@@ -385,6 +384,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--no-port-switching': Boolean,
 			'--ssl-cert': String,
 			'--ssl-key': String,
+			'--ssl-pass': String,
 			'-h': '--help',
 			'-v': '--version',
 			'-l': '--listen',
