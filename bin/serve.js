@@ -94,10 +94,12 @@ const getHelp = () => chalk`
       --no-etag                           Send \`Last-Modified\` header instead of \`ETag\`
 
       -S, --symlinks                      Resolve symlinks instead of showing 404 errors
+	  
+	  --ssl-cert                          Optional path to an SSL/TLS certificate to serve with HTTPS
+	  
+	  --ssl-key                           Optional path to the SSL/TLS certificate\'s private key
 
-      --ssl-cert                          Optional path to an SSL/TLS certificate to serve with HTTPS
-
-      --ssl-key                           Optional path to the SSL/TLS certificate\'s private key
+	  --ssl-pass                          Optional path to the SSL/TLS certificate\'s passphrase
 
       --no-port-switching                 Do not open a port other than the one specified when it\'s taken.
 
@@ -200,10 +202,13 @@ const startEndpoint = (endpoint, config, args, previous) => {
 		return handler(request, response, config);
 	};
 
+	const sslPass = args['--ssl-pass'];
+
 	const server = httpMode === 'https'
 		? https.createServer({
 			key: fs.readFileSync(args['--ssl-key']),
-			cert: fs.readFileSync(args['--ssl-cert'])
+			cert: fs.readFileSync(args['--ssl-cert']),
+			passphrase: sslPass ? fs.readFileSync(sslPass) : ''
 		}, serverHandler)
 		: http.createServer(serverHandler);
 
@@ -379,6 +384,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--no-port-switching': Boolean,
 			'--ssl-cert': String,
 			'--ssl-key': String,
+			'--ssl-pass': String,
 			'-h': '--help',
 			'-v': '--version',
 			'-l': '--listen',
