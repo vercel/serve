@@ -221,7 +221,7 @@ const startEndpoint = (endpoint, config, args, previous) => {
 				passphrase: sslPass ? fs.readFileSync(sslPass) : ''
 			}, serverHandler);
 			break;
-			}
+		}
 		}
 	} else {
 		server = http.createServer(serverHandler);
