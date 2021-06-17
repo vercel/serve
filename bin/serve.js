@@ -191,7 +191,7 @@ const startEndpoint = (endpoint, config, args, previous) => {
 	const {isTTY} = process.stdout;
 	const clipboard = args['--no-clipboard'] !== true;
 	const compress = args['--no-compression'] !== true;
-	const httpMode = args['--ssl-cert'] && (args['--ssl-key'] || args['--ssl-passphrase']) ? 'https' : 'http';
+	const httpMode = args['--ssl-cert'] && (args['--ssl-key'] || args['--ssl-pass']) ? 'https' : 'http';
 	const serverHandler = async (request, response) => {
 		if (args['--cors']) {
 			response.setHeader('Access-Control-Allow-Origin', '*');
