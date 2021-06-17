@@ -219,9 +219,9 @@ const startEndpoint = (endpoint, config, args, previous) => {
 				key: fs.readFileSync(args['--ssl-key']),
 				cert: fs.readFileSync(args['--ssl-cert']),
 				passphrase: sslPass ? fs.readFileSync(sslPass) : ''
-			}, serverHandler)
+			}, serverHandler);
 			break;
-		}
+			}
 		}
 	} else {
 		server = http.createServer(serverHandler);
