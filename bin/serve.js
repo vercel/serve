@@ -94,12 +94,12 @@ const getHelp = () => chalk`
       --no-etag                           Send \`Last-Modified\` header instead of \`ETag\`
 
       -S, --symlinks                      Resolve symlinks instead of showing 404 errors
+	  
+	  --ssl-cert                          Optional path to an SSL/TLS certificate to serve with HTTPS
+	  
+	  --ssl-key                           Optional path to the SSL/TLS certificate\'s private key
 
-      --ssl-cert                          Optional path to an SSL/TLS certificate to serve with HTTPS
-
-      --ssl-key                           Optional path to the SSL/TLS certificate\'s private key
-
-      --ssl-passphrase                    Optional passphrase used for a private key or a SSL/TLS (PFX) certificate
+	  --ssl-pass                          Optional path to the SSL/TLS certificate\'s passphrase
 
       --ssl-format                        Optional format of the SSL/TLS certificate.
                                           {grey Supported formats: pem (default) and pfx}
@@ -203,25 +203,23 @@ const startEndpoint = (endpoint, config, args, previous) => {
 		return handler(request, response, config);
 	};
 
+	const sslPass = args['--ssl-pass'];
 	let server;
 	if (httpMode === 'https') {
 		switch (args['--ssl-format']) {
 		case 'pfx':
 			server = https.createServer({
 				pfx: fs.readFileSync(args['--ssl-cert']),
-				passphrase: args['--ssl-passphrase']
+				passphrase: sslPass ? fs.readFileSync(sslPass) : ''
 			}, serverHandler);
 			break;
 		case 'pem':
 		default: {
-			const serverOptions = {
+			https.createServer({
 				key: fs.readFileSync(args['--ssl-key']),
-				cert: fs.readFileSync(args['--ssl-cert'])
-			};
-			if (args['--ssl-passphrase']) {
-				serverOptions.passphrase = args['--ssl-passphrase'];
-			}
-			server = https.createServer(serverOptions, serverHandler);
+				cert: fs.readFileSync(args['--ssl-cert']),
+				passphrase: sslPass ? fs.readFileSync(sslPass) : ''
+			}, serverHandler)
 			break;
 		}
 		}
@@ -401,8 +399,8 @@ const loadConfig = async (cwd, entry, args) => {
 			'--no-port-switching': Boolean,
 			'--ssl-cert': String,
 			'--ssl-key': String,
-			'--ssl-passphrase': String,
 			'--ssl-format': String,
+			'--ssl-pass': String,
 			'-h': '--help',
 			'-v': '--version',
 			'-l': '--listen',
