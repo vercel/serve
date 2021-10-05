@@ -135,27 +135,27 @@ const parseEndpoint = (str) => {
 	const url = parse(str);
 
 	switch (url.protocol) {
-		case 'pipe:': {
-			// some special handling
-			const cutStr = str.replace(/^pipe:/, '');
+	case 'pipe:': {
+		// some special handling
+		const cutStr = str.replace(/^pipe:/, '');
 
-			if (cutStr.slice(0, 4) !== '\\\\.\\') {
-				throw new Error(`Invalid Windows named pipe endpoint: ${str}`);
-			}
-
-			return [cutStr];
+		if (cutStr.slice(0, 4) !== '\\\\.\\') {
+			throw new Error(`Invalid Windows named pipe endpoint: ${str}`);
 		}
-		case 'unix:':
-			if (!url.pathname) {
-				throw new Error(`Invalid UNIX domain socket endpoint: ${str}`);
-			}
 
-			return [url.pathname];
-		case 'tcp:':
-			url.port = url.port || '5000';
-			return [parseInt(url.port, 10), url.hostname];
-		default:
-			throw new Error(`Unknown --listen endpoint scheme (protocol): ${url.protocol}`);
+		return [cutStr];
+	}
+	case 'unix:':
+		if (!url.pathname) {
+			throw new Error(`Invalid UNIX domain socket endpoint: ${str}`);
+		}
+
+		return [url.pathname];
+	case 'tcp:':
+		url.port = url.port || '5000';
+		return [parseInt(url.port, 10), url.hostname];
+	default:
+		throw new Error(`Unknown --listen endpoint scheme (protocol): ${url.protocol}`);
 	}
 };
 
@@ -203,8 +203,9 @@ const startEndpoint = (endpoint, config, args, previous) => {
 
 	let sslPass = args['--ssl-pass'];
 	try {
-		sslPass = readFileSync(sslPass);
+		sslPass = fs.readFileSync(sslPass, 'utf8').trim();
 	} catch (err) {
+		console.log('keeping plain value in ssl-pass');
 	}
 
 	const certPath = args['--ssl-cert'];
@@ -221,7 +222,7 @@ const startEndpoint = (endpoint, config, args, previous) => {
 				key: fs.readFileSync(args['--ssl-key']),
 				cert: fs.readFileSync(certPath),
 				passphrase: sslPass
-			}, serverHandler)
+			}, serverHandler);
 		}
 	} else {
 		server = http.createServer(serverHandler);
@@ -335,12 +336,12 @@ const loadConfig = async (cwd, entry, args) => {
 
 		try {
 			switch (file) {
-				case 'now.json':
-					content = content.static;
-					break;
-				case 'package.json':
-					content = content.now.static;
-					break;
+			case 'now.json':
+				content = content.static;
+				break;
+			case 'package.json':
+				content = content.now.static;
+				break;
 			}
 		} catch (err) {
 			continue;
