@@ -94,13 +94,13 @@ const getHelp = () => chalk`
       --no-etag                           Send \`Last-Modified\` header instead of \`ETag\`
 
       -S, --symlinks                      Resolve symlinks instead of showing 404 errors
-	  
-	  --ssl-cert                          Optional path to an SSL/TLS certificate to serve with HTTPS
-	  
-	  --ssl-key                           Optional path to the SSL/TLS certificate\'s private key
 
-	  --ssl-pass                          Optional path to the SSL/TLS certificate\'s passphrase
+      --ssl-cert                          Optional path to an SSL/TLS certificate in PEM or PKCS #12 format
+                                          to serve with HTTPS
+      --ssl-key                           Optional path to the PEM certificate\'s private key
 
+      --ssl-pass                          Optional path to the PEM or PKCS #12 certificate\'s passphrase
+                                          or password for PEM or PKCS #12 crypto file
       --no-port-switching                 Do not open a port other than the one specified when it\'s taken.
 
   {bold ENDPOINTS}
@@ -135,27 +135,27 @@ const parseEndpoint = (str) => {
 	const url = parse(str);
 
 	switch (url.protocol) {
-	case 'pipe:': {
-		// some special handling
-		const cutStr = str.replace(/^pipe:/, '');
+		case 'pipe:': {
+			// some special handling
+			const cutStr = str.replace(/^pipe:/, '');
 
-		if (cutStr.slice(0, 4) !== '\\\\.\\') {
-			throw new Error(`Invalid Windows named pipe endpoint: ${str}`);
+			if (cutStr.slice(0, 4) !== '\\\\.\\') {
+				throw new Error(`Invalid Windows named pipe endpoint: ${str}`);
+			}
+
+			return [cutStr];
 		}
+		case 'unix:':
+			if (!url.pathname) {
+				throw new Error(`Invalid UNIX domain socket endpoint: ${str}`);
+			}
 
-		return [cutStr];
-	}
-	case 'unix:':
-		if (!url.pathname) {
-			throw new Error(`Invalid UNIX domain socket endpoint: ${str}`);
-		}
-
-		return [url.pathname];
-	case 'tcp:':
-		url.port = url.port || '5000';
-		return [parseInt(url.port, 10), url.hostname];
-	default:
-		throw new Error(`Unknown --listen endpoint scheme (protocol): ${url.protocol}`);
+			return [url.pathname];
+		case 'tcp:':
+			url.port = url.port || '5000';
+			return [parseInt(url.port, 10), url.hostname];
+		default:
+			throw new Error(`Unknown --listen endpoint scheme (protocol): ${url.protocol}`);
 	}
 };
 
@@ -189,8 +189,7 @@ const startEndpoint = (endpoint, config, args, previous) => {
 	const {isTTY} = process.stdout;
 	const clipboard = args['--no-clipboard'] !== true;
 	const compress = args['--no-compression'] !== true;
-	const httpMode = args['--ssl-cert'] && args['--ssl-key'] ? 'https' : 'http';
-
+	const httpMode = args['--ssl-cert'] ? 'https' : 'http';
 	const serverHandler = async (request, response) => {
 		if (args['--cors']) {
 			response.setHeader('Access-Control-Allow-Origin', '*');
@@ -202,15 +201,31 @@ const startEndpoint = (endpoint, config, args, previous) => {
 		return handler(request, response, config);
 	};
 
-	const sslPass = args['--ssl-pass'];
+	let sslPass = args['--ssl-pass'];
+	try {
+		sslPass = readFileSync(sslPass);
+	} catch (err) {
+	}
 
-	const server = httpMode === 'https'
-		? https.createServer({
-			key: fs.readFileSync(args['--ssl-key']),
-			cert: fs.readFileSync(args['--ssl-cert']),
-			passphrase: sslPass ? fs.readFileSync(sslPass) : ''
-		}, serverHandler)
-		: http.createServer(serverHandler);
+	const certPath = args['--ssl-cert'];
+
+	let server;
+	if (httpMode === 'https') {
+		if (certPath.match('\.(pfx|p12)$')) {
+			server = https.createServer({
+				pfx: fs.readFileSync(certPath),
+				passphrase: sslPass
+			}, serverHandler);
+		} else {
+			server = https.createServer({
+				key: fs.readFileSync(args['--ssl-key']),
+				cert: fs.readFileSync(certPath),
+				passphrase: sslPass
+			}, serverHandler)
+		}
+	} else {
+		server = http.createServer(serverHandler);
+	}
 
 	server.on('error', (err) => {
 		if (err.code === 'EADDRINUSE' && endpoint.length === 1 && !isNaN(endpoint[0]) && args['--no-port-switching'] !== true) {
@@ -320,12 +335,12 @@ const loadConfig = async (cwd, entry, args) => {
 
 		try {
 			switch (file) {
-			case 'now.json':
-				content = content.static;
-				break;
-			case 'package.json':
-				content = content.now.static;
-				break;
+				case 'now.json':
+					content = content.static;
+					break;
+				case 'package.json':
+					content = content.now.static;
+					break;
 			}
 		} catch (err) {
 			continue;
