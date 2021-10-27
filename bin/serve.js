@@ -20,6 +20,8 @@ const schema = require('@zeit/schemas/deployment/config-static');
 const boxen = require('boxen');
 const compression = require('compression');
 
+const next = require('next');
+
 // Utilities
 const pkg = require('../package');
 
@@ -102,6 +104,8 @@ const getHelp = () => chalk`
 	  --ssl-pass                          Optional path to the SSL/TLS certificate\'s passphrase
 
       --no-port-switching                 Do not open a port other than the one specified when it\'s taken.
+
+			--nextjs                            Start next.js server with production build in given directory.
 
   {bold ENDPOINTS}
 
@@ -198,8 +202,12 @@ const startEndpoint = (endpoint, config, args, previous) => {
 		if (compress) {
 			await compressionHandler(request, response);
 		}
-
-		return handler(request, response, config);
+		if (config.nextHandler) {
+			const parsedUrl = parse(request.url, true);
+			config.nextHandler(request, response, parsedUrl);
+		} else {
+			return handler(request, response, config);
+		}
 	};
 
 	const sslPass = args['--ssl-pass'];
@@ -340,22 +348,28 @@ const loadConfig = async (cwd, entry, args) => {
 
 		break;
 	}
+	if (args['--nextjs']) {
+		if (entry) {
+			const {dir} = config;
+			config.dir = path.relative(cwd, (dir ? path.resolve(entry, dir) : entry));
+		}
+	} else {
+		if (entry) {
+			const {public} = config;
+			config.public = path.relative(cwd, (public ? path.resolve(entry, public) : entry));
+		}
 
-	if (entry) {
-		const {public} = config;
-		config.public = path.relative(cwd, (public ? path.resolve(entry, public) : entry));
-	}
+		if (Object.keys(config).length !== 0) {
+			const ajv = new Ajv();
+			const validateSchema = ajv.compile(schema);
 
-	if (Object.keys(config).length !== 0) {
-		const ajv = new Ajv();
-		const validateSchema = ajv.compile(schema);
+			if (!validateSchema(config)) {
+				const defaultMessage = error('The configuration you provided is wrong:');
+				const {message, params} = validateSchema.errors[0];
 
-		if (!validateSchema(config)) {
-			const defaultMessage = error('The configuration you provided is wrong:');
-			const {message, params} = validateSchema.errors[0];
-
-			console.error(`${defaultMessage}\n${message}\n${JSON.stringify(params)}`);
-			process.exit(1);
+				console.error(`${defaultMessage}\n${message}\n${JSON.stringify(params)}`);
+				process.exit(1);
+			}
 		}
 	}
 
@@ -385,6 +399,7 @@ const loadConfig = async (cwd, entry, args) => {
 			'--ssl-cert': String,
 			'--ssl-key': String,
 			'--ssl-pass': String,
+			'--nextjs': Boolean,
 			'-h': '--help',
 			'-v': '--version',
 			'-l': '--listen',
@@ -447,10 +462,20 @@ const loadConfig = async (cwd, entry, args) => {
 		config.symlinks = true;
 	}
 
-	for (const endpoint of args['--listen']) {
-		startEndpoint(endpoint, config, args);
-	}
+	if (args['--nextjs']) {
+		const app = next(config);
+		config.nextHandler = app.getRequestHandler();
 
+		app.prepare().then(() => {
+			for (const endpoint of args['--listen']) {
+				startEndpoint(endpoint, config, args);
+			}
+		});
+	} else {
+		for (const endpoint of args['--listen']) {
+			startEndpoint(endpoint, config, args);
+		}
+	}
 	registerShutdown(() => {
 		console.log(`\n${info('Gracefully shutting down. Please wait...')}`);
 
