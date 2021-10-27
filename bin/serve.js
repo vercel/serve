@@ -202,10 +202,12 @@ const startEndpoint = (endpoint, config, args, previous) => {
 	};
 
 	let sslPass = args['--ssl-pass'];
-	try {
-		sslPass = fs.readFileSync(sslPass, 'utf8').trim();
-	} catch (err) {
-		console.log('keeping plain value in ssl-pass');
+	if (sslPass) {
+		try {
+			sslPass = fs.readFileSync(sslPass, 'utf8').trim();
+		} catch (err) {
+			console.log('keeping plain value in ssl-pass');
+		}
 	}
 
 	const certPath = args['--ssl-cert'];
