@@ -13,7 +13,7 @@ Once it's time to push your site to production, we recommend using [Vercel](http
 
 In general, `serve` also provides a neat interface for listing the directory's contents:
 
-![screenshot](https://user-images.githubusercontent.com/6170607/40541195-167ff460-601b-11e8-8f66-3b0c7ff96cbb.png)
+![Screenshot](https://user-images.githubusercontent.com/6170607/140350796-eec852ee-7067-47a9-86df-1bdf4d1b93c0.png)
 
 ## Usage
 
