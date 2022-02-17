@@ -208,7 +208,7 @@ const startEndpoint = (endpoint, config, args, previous) => {
 		? https.createServer({
 			key: fs.readFileSync(args['--ssl-key']),
 			cert: fs.readFileSync(args['--ssl-cert']),
-			passphrase: sslPass ? fs.readFileSync(sslPass) : ''
+			passphrase: sslPass ? fs.readFileSync(sslPass, "utf8") : ''
 		}, serverHandler)
 		: http.createServer(serverHandler);
 
