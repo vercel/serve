@@ -178,7 +178,7 @@ const getNetworkAddress = () => {
 	for (const name of Object.keys(interfaces)) {
 		for (const interface of interfaces[name]) {
 			const {address, family, internal} = interface;
-			if (family === 'IPv4' && !internal) {
+			if (['IPv4', 4].includes(family) && !internal) {
 				return address;
 			}
 		}
