@@ -3,9 +3,7 @@
   "version": "13.0.3",
   "description": "Static file serving and directory listing",
   "scripts": {
-    "test": "yarn lint",
-    "lint": "zeit-eslint --ext .jsx,.js .",
-    "lint-staged": "git diff --diff-filter=ACMRT --cached --name-only '*.js' '*.jsx' | xargs zeit-eslint"
+    "test": ""
   },
   "files": [
     "bin"
@@ -21,19 +19,6 @@
     "http-server"
   ],
   "license": "MIT",
-  "devDependencies": {
-    "@zeit/eslint-config-node": "0.3.0",
-    "@zeit/git-hooks": "0.1.4",
-    "eslint": "5.4.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@zeit/eslint-config-node"
-    ]
-  },
-  "git": {
-    "pre-commit": "lint-staged"
-  },
   "dependencies": {
     "@zeit/schemas": "2.6.0",
     "ajv": "6.12.6",
