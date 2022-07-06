@@ -15,12 +15,11 @@
     "serve": "./bin/serve.js"
   },
   "keywords": [
-    "now",
+    "vercel",
     "serve",
     "micro",
     "http-server"
   ],
-  "author": "leo",
   "license": "MIT",
   "devDependencies": {
     "@zeit/eslint-config-node": "0.3.0",
