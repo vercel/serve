@@ -1,57 +1,56 @@
-![](https://assets.vercel.com/image/upload/v1527770721/repositories/serve/serve-repo-banner.png)
+![](media/banner.png)
 
 <div align="center">
   <a aria-label="Vercel logo" href="https://vercel.com">
-    <img src="https://img.shields.io/badge/MADE%20BY%20Vercel-000000.svg?style=for-the-badge&logo=ZEIT&labelColor=000000&logoWidth=20">
+    <img src="https://img.shields.io/badge/made%20by-vercel-%23000000">
   </a>
   <br>
-  <a aria-label="Build Status" href="https://github.com/vercel/serve/actions/workflows/ci.yaml">
-    <img src="https://github.com/gamemaker1/serve/actions/workflows/ci.yaml/badge.svg">
-  </a>
   <a aria-label="Install Size" href="https://packagephobia.now.sh/result?p=serve">
     <img src="https://packagephobia.now.sh/badge?p=serve">
   </a>
   <a aria-label="Stars" href="https://github.com/vercel/serve/stargazers">
     <img src="https://img.shields.io/github/stars/vercel/serve">
   </a>
+  <a aria-label="Build Status" href="https://github.com/vercel/serve/actions/workflows/ci.yaml">
+    <img src="https://github.com/gamemaker1/serve/actions/workflows/ci.yaml/badge.svg">
+  </a>
 </div>
 
 ---
 
-Assuming you would like to serve a static site, single page application or just a static file (no matter if on your device or on the local network), this package is just the right choice for you.
+`serve` helps you serve a static site, single page application or just a static file (no matter if on your device or on the local network). It also provides a neat interface for listing the directory's contents:
 
-Once it's time to push your site to production, we recommend using [Vercel](https://vercel.com).
+![Listing UI](media/listing-ui.png)
 
-In general, `serve` also provides a neat interface for listing the directory's contents:
-
-![Screenshot](https://user-images.githubusercontent.com/6170607/140353065-414bb2a7-33fb-4319-b359-f5e22edb860b.png)
+> Once it's time to push your site to production, we recommend using [Vercel](https://vercel.com).
 
 ## Usage
 
 The quickest way to get started is to just run `npx serve` in your project's directory.
 
-If you prefer, you can also install the package globally using [Yarn](https://yarnpkg.com/en/) (you'll need at least [Node.js LTS](https://nodejs.org/en/)):
+If you prefer, you can also install the package globally using [Yarn](https://yarnpkg.com/en/) or [PNPM](https://pnpm.io/) (you'll need at least [Node LTS](https://github.com/nodejs/Release#release-schedule)):
 
 ```bash
-yarn global add serve
+> yarn global add serve
+> pnpm add --global serve
 ```
 
 Once that's done, you can run this command inside your project's directory...
 
 ```bash
-serve
+> serve
 ```
 
 ...or specify which folder you want to serve:
 
 ```bash
-serve folder_name
+> serve folder_name
 ```
 
 Finally, run this command to see a list of all available options:
 
 ```bash
-serve --help
+> serve --help
 ```
 
 Now you understand how the package works! :tada:
@@ -79,15 +78,9 @@ server.listen(3000, () => {
 });
 ```
 
-**NOTE:** You can also replace `http.createServer` with [micro](https://github.com/vercel/micro), if you want.
-
-## Contributing
-
-1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
-2. Uninstall `serve` if it's already installed: `npm uninstall -g serve`
-3. Link it to the global module directory: `npm link`
-
-After that, you can use the `serve` command everywhere. [Here](https://github.com/vercel/serve/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+for+beginners%22)'s a list of issues that are great for beginners.
+> **Note**
+>
+> You can also replace `http.createServer` with [micro](https://github.com/vercel/micro).
 
 ## Credits
 
