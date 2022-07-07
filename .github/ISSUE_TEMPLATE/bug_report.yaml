@@ -1,0 +1,31 @@
+name: Report a bug
+description: ———
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Thanks for reporting this bug!
+
+        Help us replicate and find a fix for the issue by filling in this form.
+  - type: textarea
+    attributes:
+      label: Description
+      description: |
+        Describe the issue and how to replicate it. If possible, please include
+        a minimal example to reproduce the issue.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Library version
+      description: |
+        Output of the `serve --version` command
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Node version
+      description: Output of the `node --version` command
+    validations:
+      required: true
