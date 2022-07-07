@@ -1,11 +1,22 @@
 ![](https://assets.vercel.com/image/upload/v1527770721/repositories/serve/serve-repo-banner.png)
 
-<a aria-label="Vercel logo" href="https://vercel.com">
-  <img src="https://img.shields.io/badge/MADE%20BY%20Vercel-000000.svg?style=for-the-badge&logo=ZEIT&labelColor=000000&logoWidth=20">
-</a>
+<div align="center">
+  <a aria-label="Vercel logo" href="https://vercel.com">
+    <img src="https://img.shields.io/badge/MADE%20BY%20Vercel-000000.svg?style=for-the-badge&logo=ZEIT&labelColor=000000&logoWidth=20">
+  </a>
+  <br>
+  <a aria-label="Build Status" href="https://github.com/vercel/serve/actions/workflows/ci.yaml">
+    <img src="https://github.com/gamemaker1/serve/actions/workflows/ci.yaml/badge.svg">
+  </a>
+  <a aria-label="Install Size" href="https://packagephobia.now.sh/result?p=serve">
+    <img src="https://packagephobia.now.sh/badge?p=serve">
+  </a>
+  <a aria-label="Stars" href="https://github.com/vercel/serve/stargazers">
+    <img src="https://img.shields.io/github/stars/vercel/serve">
+  </a>
+</div>
 
-[![Build Status](https://circleci.com/gh/vercel/serve.svg?&style=shield)](https://circleci.com/gh/vercel/serve)
-[![Install Size](https://packagephobia.now.sh/badge?p=serve)](https://packagephobia.now.sh/result?p=serve)
+---
 
 Assuming you would like to serve a static site, single page application or just a static file (no matter if on your device or on the local network), this package is just the right choice for you.
 
