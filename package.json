@@ -22,7 +22,7 @@
     ".npmrc"
   ],
   "scripts": {
-    "dev": "tsx watch ./source/main.ts",
+    "develop": "tsx watch ./source/main.ts",
     "start": "node ./build/main.js",
     "compile": "tsup ./source/main.ts",
     "test:tsc": "tsc --project tsconfig.json",

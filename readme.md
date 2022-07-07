@@ -82,6 +82,12 @@ server.listen(3000, () => {
 >
 > You can also replace `http.createServer` with [micro](https://github.com/vercel/micro).
 
+## Issues and Contributing
+
+If you want a feature to be added, or wish to report a bug, please open an issue [here](https://github.com/vercel/serve/issues/new).
+
+If you wish to contribute to the project, please read the [contributing guide](contributing.md) first.
+
 ## Credits
 
 This project used to be called "list" and "micro-list". But thanks to [TJ Holowaychuk](https://github.com/tj) handing us the new name, it's now called "serve" (which is much more definite).
