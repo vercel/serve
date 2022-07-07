@@ -1,0 +1,12 @@
+{
+  "extends": "@vercel/style-guide/typescript",
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  },
+  "include": ["source/"]
+}

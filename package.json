@@ -2,23 +2,37 @@
   "name": "serve",
   "version": "13.0.4",
   "description": "Static file serving and directory listing",
-  "scripts": {
-    "test": ""
-  },
-  "files": [
-    "bin"
-  ],
-  "repository": "vercel/serve",
-  "bin": {
-    "serve": "./bin/serve.js"
-  },
   "keywords": [
     "vercel",
     "serve",
     "micro",
     "http-server"
   ],
+  "repository": "vercel/serve",
   "license": "MIT",
+  "type": "module",
+  "bin": {
+    "serve": "./build/main.js"
+  },
+  "files": [
+    "build/",
+    "package.json",
+    "readme.md",
+    "license.md",
+    ".npmrc"
+  ],
+  "scripts": {
+    "dev": "tsx watch ./source/main.ts",
+    "start": "node ./build/main.js",
+    "compile": "tsup ./source/main.ts",
+    "test:tsc": "tsc --project tsconfig.json",
+    "test": "pnpm test:tsc",
+    "lint:code": "eslint --max-warnings 0 source/**/*.ts",
+    "lint:rest": "prettier --check --ignore-path .gitignore .",
+    "lint": "pnpm lint:code && pnpm lint:rest",
+    "format": "prettier --write --ignore-path .gitignore .",
+    "prepare": "husky install config/husky"
+  },
   "dependencies": {
     "@zeit/schemas": "2.6.0",
     "ajv": "6.12.6",
@@ -27,7 +41,50 @@
     "chalk": "2.4.1",
     "clipboardy": "2.3.0",
     "compression": "1.7.3",
+    "is-port-reachable": "4.0.0",
     "serve-handler": "6.1.3",
     "update-check": "1.5.2"
+  },
+  "devDependencies": {
+    "@types/compression": "1.7.2",
+    "@types/serve-handler": "6.1.1",
+    "@vercel/style-guide": "3.0.0",
+    "eslint": "8.19.0",
+    "husky": "8.0.1",
+    "lint-staged": "13.0.3",
+    "prettier": "2.7.1",
+    "tsup": "6.1.3",
+    "tsx": "3.7.1",
+    "typescript": "4.7.4"
+  },
+  "tsup": {
+    "target": "esnext",
+    "format": [
+      "esm"
+    ],
+    "outDir": "./build/"
+  },
+  "prettier": "@vercel/style-guide/prettier",
+  "eslintConfig": {
+    "extends": [
+      "./node_modules/@vercel/style-guide/eslint/node.js",
+      "./node_modules/@vercel/style-guide/eslint/typescript.js"
+    ],
+    "parserOptions": {
+      "project": "tsconfig.json",
+      "warnOnUnsupportedTypeScriptVersion": false
+    },
+    "rules": {
+      "@typescript-eslint/restrict-template-expressions": 0,
+      "@typescript-eslint/no-explicit-any": 0
+    }
+  },
+  "lint-staged": {
+    "*": [
+      "prettier --ignore-unknown --write"
+    ],
+    "source/**/*.ts": [
+      "eslint --max-warnings 0 --fix"
+    ]
   }
 }
