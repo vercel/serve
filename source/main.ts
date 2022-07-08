@@ -6,7 +6,7 @@
 import path from 'node:path';
 import chalk from 'chalk';
 import boxen from 'boxen';
-import { write as copy } from 'clipboardy';
+import clipboard from 'clipboardy';
 // @ts-expect-error No type definitions.
 import checkForUpdate from 'update-check';
 import manifest from '../package.json';
@@ -27,7 +27,7 @@ import type { Arguments } from './types.js';
  */
 const printUpdateNotification = async (debugMode: boolean) => {
   const [error, update] = await resolve<{ latest: string }>(
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-argument
+     
     checkForUpdate(manifest),
   );
 
@@ -147,7 +147,7 @@ for (const endpoint of args['--listen']) {
   if (copyAddress && local) {
     try {
       // eslint-disable-next-line no-await-in-loop
-      await copy(local);
+      await clipboard.write(local);
       message += `\n\n${chalk.grey('Copied local address to clipboard!')}`;
     } catch (error: any) {
       logger.error(`Cannot copy to clipboard: ${(error as Error).message}`);

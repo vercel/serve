@@ -105,7 +105,7 @@ export const loadConfiguration = async (
 
   // If the configuration isn't empty, validate it against the AJV schema.
   if (Object.keys(config).length !== 0) {
-    const ajv = new Ajv();
+    const ajv = new Ajv({ allowUnionTypes: true });
     const validate = ajv.compile(schema as object);
 
     if (!validate(config) && validate.errors) {
