@@ -13,7 +13,7 @@
 	- Fixes #15
 -->
 
-## What Does This PR Do?
+## Description
 
 <!--
 	Explain what has been added/changed/removed, in

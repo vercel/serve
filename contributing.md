@@ -52,9 +52,8 @@ While naming your branch, try to follow the below guidelines:
 
 Once you have created a branch, you can start coding!
 
-The server is written in
-[Typescript](https://github.com/microsoft/TypeScript#readme) using the
-[Fastify framework](https://github.com/fastify/fastify#readme) and uses the
+The CLI is written in
+[Typescript](https://github.com/microsoft/TypeScript#readme) and uses the
 [`current` version](https://github.com/nodejs/Release#release-schedule) of Node.
 The code is structured as follows:
 
