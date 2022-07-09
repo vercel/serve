@@ -7,7 +7,6 @@ import path from 'node:path';
 import chalk from 'chalk';
 import boxen from 'boxen';
 import clipboard from 'clipboardy';
-// @ts-expect-error No type definitions.
 import checkForUpdate from 'update-check';
 import manifest from '../package.json';
 import { resolve } from './utilities/promise.js';
@@ -26,10 +25,7 @@ import type { Arguments } from './types.js';
  * @returns
  */
 const printUpdateNotification = async (debugMode: boolean) => {
-  const [error, update] = await resolve<{ latest: string }>(
-     
-    checkForUpdate(manifest),
-  );
+  const [error, update] = await resolve(checkForUpdate(manifest));
 
   if (error) {
     const suffix = debugMode ? ':' : ' (use `--debug` to see full error)';

@@ -2,7 +2,6 @@
 // CLI-related utility functions.
 
 import chalk from 'chalk';
-// @ts-expect-error No type definitions.
 import parseArgv from 'arg';
 import { parseEndpoint } from './http.js';
 import type { Arguments } from '../types.js';
@@ -118,7 +117,10 @@ const helpText = chalk`
  *
  * @returns The parsed options and arguments.
  */
-export const parseArguments = (): Arguments => parseArgv(options);
+export const parseArguments = (): Arguments =>
+  // @ts-expect-error The handler array for the `--listen` option does have only
+  // one element, I'm not sure why Typescript is throwing an error here.
+  parseArgv(options) as unknown as Arguments;
 
 /**
  * Returns the help text.
