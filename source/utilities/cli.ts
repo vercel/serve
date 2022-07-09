@@ -83,8 +83,10 @@ const helpText = chalk`
     -S, --symlinks                      Resolve symlinks instead of showing 404 errors
     
     --ssl-cert                          Optional path to an SSL/TLS certificate to serve with HTTPS
+                                        {grey Supported formats: PEM (default) and PKCS12 (PFX)}
     
     --ssl-key                           Optional path to the SSL/TLS certificate\'s private key
+                                        {grey Applicable only for PEM certificates}
 
     --ssl-pass                          Optional path to the SSL/TLS certificate\'s passphrase
 

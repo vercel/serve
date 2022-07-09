@@ -62,21 +62,31 @@ export const startServer = async (
   };
 
   // Create the server.
-  const useSsl = args['--ssl-cert'] && args['--ssl-key'];
-  const httpMode = useSsl ? 'https' : 'http';
+
+  const sslCert = args['--ssl-cert'];
+  const sslKey = args['--ssl-key'];
   const sslPass = args['--ssl-pass'];
-  const serverConfig =
-    httpMode === 'https' && args['--ssl-cert'] && args['--ssl-key']
-      ? {
-          key: await readFile(args['--ssl-key']),
-          cert: await readFile(args['--ssl-cert']),
-          passphrase: sslPass ? await readFile(sslPass, 'utf8') : '',
-        }
-      : {};
-  const server =
-    httpMode === 'https'
-      ? https.createServer(serverConfig, serverHandler)
-      : http.createServer(serverHandler);
+  const isPFXFormat = sslCert && /[.](?<extension>pfx|p12)$/.exec(sslCert);
+  const useSsl = sslCert && (sslKey || sslPass || isPFXFormat);
+
+  let serverConfig: http.ServerOptions | https.ServerOptions = {};
+  if (useSsl && sslCert && sslKey) {
+    // Format is PEM due to usagae of SSL Key and Optional Passphrase
+    serverConfig = {
+      key: await readFile(sslKey),
+      cert: await readFile(sslCert),
+      passphrase: sslPass ? await readFile(sslPass, 'utf8') : '',
+    };
+  } else if (useSsl && sslCert && isPFXFormat) {
+    serverConfig = {
+      pfx: await readFile(sslCert),
+      passphrase: sslPass ? await readFile(sslPass, 'utf8') : '',
+    };
+  }
+
+  const server = useSsl
+    ? https.createServer(serverConfig, serverHandler)
+    : http.createServer(serverHandler);
 
   // Once the server starts, return the address it is running on so the CLI
   // can tell the user.
@@ -101,6 +111,7 @@ export const startServer = async (
       else address = details.address;
       const ip = getNetworkAddress();
 
+      const httpMode = useSsl ? 'https' : 'http';
       local = `${httpMode}://${address}:${details.port}`;
       network = ip ? `${httpMode}://${ip}:${details.port}` : undefined;
     }
