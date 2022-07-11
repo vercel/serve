@@ -30,7 +30,7 @@
     "lint:style": "prettier --check --ignore-path .gitignore .",
     "lint": "pnpm lint:code && pnpm lint:style",
     "format": "prettier --write --ignore-path .gitignore .",
-    "prepare": "husky install config/husky"
+    "prepare": "husky install config/husky && pnpm compile"
   },
   "dependencies": {
     "@zeit/schemas": "2.21.0",
