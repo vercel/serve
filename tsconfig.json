@@ -1,7 +1,7 @@
 {
   "extends": "@vercel/style-guide/typescript",
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2020",
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
