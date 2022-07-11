@@ -15,11 +15,7 @@
     "serve": "./build/main.js"
   },
   "files": [
-    "build/",
-    "package.json",
-    "readme.md",
-    "license.md",
-    ".npmrc"
+    "build/"
   ],
   "scripts": {
     "develop": "tsx watch ./source/main.ts",
