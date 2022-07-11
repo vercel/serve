@@ -53,12 +53,16 @@ export const loadConfiguration = async (
 
     // Parse the JSON in the file. If the parsed JSON is not an object, or the
     // file does not contain valid JSON, throw an error.
-    let parsedJson: unknown;
+    type ParseableConfiguration = Partial<Configuration>
+      | { static: Partial<Configuration> }
+      | { now: { static: Partial<Configuration> } }
+      | unknown;
+    let parsedJson: ParseableConfiguration
     try {
-      parsedJson = JSON.parse(rawContents);
+      parsedJson = JSON.parse(rawContents) as ParseableConfiguration;
       if (typeof parsedJson !== 'object')
         throw new Error('configuration is not an object');
-    } catch (parserError: any) {
+    } catch (parserError: unknown) {
       throw new Error(
         `Could not parse ${location} as JSON: ${
           (parserError as Error).message
@@ -66,26 +70,19 @@ export const loadConfiguration = async (
       );
     }
 
-    // The lint rules have been disabled here because we don't know for sure
-    // what the contents of these files are. In case anything is undefined and
-    // an error is thrown, we simply move on - so there's no need to be careful
-    // of unsafe property access.
-    try {
-      switch (file) {
-        case 'now.json':
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          parsedJson = (parsedJson as any).static;
-          break;
-        case 'package.json':
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          parsedJson = (parsedJson as any).now.static;
-          break;
-      }
-    } catch {
-      // If these files don't have a serve-specific section, find it in another
-      // config file.
-      continue;
+    // Check if any of these files have a serve specific section.
+    switch (file) {
+      case 'now.json':
+        parsedJson = parsedJson.static;
+        break;
+      case 'package.json':
+        parsedJson = parsedJson.now.static;
+        break;
     }
+    // If these files don't have a serve-specific section, find it in another
+    // config file.
+    if (!parsedJson)
+      continue;
 
     // Once we have found a valid configuration, assign it and stop looking
     // through more configuration files.
@@ -113,7 +110,7 @@ export const loadConfiguration = async (
       const error = validate.errors[0] as ErrorObject;
 
       throw new Error(
-        `${defaultMessage}\n${error.message}\n${JSON.stringify(error.params)}`,
+        `${defaultMessage}\n${error.message ?? ''}\n${JSON.stringify(error.params)}`,
       );
     }
   }

@@ -45,7 +45,9 @@ export const parseEndpoint = (uriOrPort: ListenEndpoint): ParsedEndpoint => {
       return [parseInt(url.port, 10), url.hostname];
     default:
       throw new Error(
-        `Unknown --listen endpoint scheme (protocol): ${url.protocol}`,
+        `Unknown --listen endpoint scheme (protocol): ${
+          url.protocol ?? 'undefined'
+        }`,
       );
   }
 };

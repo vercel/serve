@@ -24,8 +24,8 @@
     "test:tsc": "tsc --project tsconfig.json",
     "test": "pnpm test:tsc",
     "lint:code": "eslint --max-warnings 0 source/**/*.ts",
-    "lint:rest": "prettier --check --ignore-path .gitignore .",
-    "lint": "pnpm lint:code && pnpm lint:rest",
+    "lint:style": "prettier --check --ignore-path .gitignore .",
+    "lint": "pnpm lint:code && pnpm lint:style",
     "format": "prettier --write --ignore-path .gitignore .",
     "prepare": "husky install config/husky"
   },
@@ -69,10 +69,6 @@
     "parserOptions": {
       "project": "tsconfig.json",
       "warnOnUnsupportedTypeScriptVersion": false
-    },
-    "rules": {
-      "@typescript-eslint/restrict-template-expressions": 0,
-      "@typescript-eslint/no-explicit-any": 0
     }
   },
   "lint-staged": {

@@ -100,7 +100,7 @@ export const startServer = async (
   // Listen for any error that occurs while serving, and throw an error
   // if any errors are received.
   server.on('error', (error) => {
-    throw new Error(`Failed to serve: ${error.stack}`);
+    throw new Error(`Failed to serve: ${error.stack?.toString()}`);
   });
 
   // If the endpoint is a non-zero port, make sure it is not occupied.
