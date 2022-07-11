@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/vercel/serve/main/media/banner.png)
+![Serve Logo](https://raw.githubusercontent.com/vercel/serve/main/media/banner.png)
 
 <div align="center">
   <a aria-label="Vercel logo" href="https://vercel.com">
