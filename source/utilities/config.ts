@@ -51,13 +51,26 @@ export const loadConfiguration = async (
         );
     }
 
+    // The configuration can come from three files in different forms:
+    // - now.json: `/now/static`
+    // - package.json: `/static`
+    // - serve.json: `/`
+    type ServeConfigurationFile = Partial<Configuration>;
+    interface ManifestConfigurationFile {
+      static?: Partial<Configuration>;
+    }
+    interface NowConfigurationFile {
+      now: { static?: Partial<Configuration> };
+    }
+    type ParseableConfiguration =
+      | ServeConfigurationFile
+      | ManifestConfigurationFile
+      | NowConfigurationFile
+      | undefined;
+
     // Parse the JSON in the file. If the parsed JSON is not an object, or the
     // file does not contain valid JSON, throw an error.
-    type ParseableConfiguration = Partial<Configuration>
-      | { static: Partial<Configuration> }
-      | { now: { static: Partial<Configuration> } }
-      | unknown;
-    let parsedJson: ParseableConfiguration
+    let parsedJson: ParseableConfiguration;
     try {
       parsedJson = JSON.parse(rawContents) as ParseableConfiguration;
       if (typeof parsedJson !== 'object')
@@ -71,18 +84,14 @@ export const loadConfiguration = async (
     }
 
     // Check if any of these files have a serve specific section.
-    switch (file) {
-      case 'now.json':
-        parsedJson = parsedJson.static;
-        break;
-      case 'package.json':
-        parsedJson = parsedJson.now.static;
-        break;
+    if (file === 'now.json') {
+      parsedJson = parsedJson as NowConfigurationFile;
+      parsedJson = parsedJson.now.static;
+    } else if (file === 'package.json') {
+      parsedJson = parsedJson as ManifestConfigurationFile;
+      parsedJson = parsedJson.static;
     }
-    // If these files don't have a serve-specific section, find it in another
-    // config file.
-    if (!parsedJson)
-      continue;
+    if (!parsedJson) continue;
 
     // Once we have found a valid configuration, assign it and stop looking
     // through more configuration files.
@@ -110,7 +119,9 @@ export const loadConfiguration = async (
       const error = validate.errors[0] as ErrorObject;
 
       throw new Error(
-        `${defaultMessage}\n${error.message ?? ''}\n${JSON.stringify(error.params)}`,
+        `${defaultMessage}\n${error.message ?? ''}\n${JSON.stringify(
+          error.params,
+        )}`,
       );
     }
   }
