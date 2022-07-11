@@ -12,7 +12,7 @@
     <img src="https://img.shields.io/github/stars/vercel/serve">
   </a>
   <a aria-label="Build Status" href="https://github.com/vercel/serve/actions/workflows/ci.yaml">
-    <img src="https://github.com/gamemaker1/serve/actions/workflows/ci.yaml/badge.svg">
+    <img src="https://github.com/vercel/serve/actions/workflows/ci.yaml/badge.svg">
   </a>
 </div>
 
