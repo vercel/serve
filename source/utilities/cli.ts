@@ -10,7 +10,7 @@ import type { Arguments } from '../types.js';
 const options = {
   '--help': Boolean,
   '--version': Boolean,
-  '--listen': [parseEndpoint],
+  '--listen': [parseEndpoint] as [typeof parseEndpoint],
   '--single': Boolean,
   '--debug': Boolean,
   '--config': String,
@@ -117,10 +117,7 @@ const helpText = chalk`
  *
  * @returns The parsed options and arguments.
  */
-export const parseArguments = (): Arguments =>
-  // @ts-expect-error The handler array for the `--listen` option does have only
-  // one element, I'm not sure why Typescript is throwing an error here.
-  parseArgv(options) as unknown as Arguments;
+export const parseArguments = (): Arguments => parseArgv(options);
 
 /**
  * Returns the help text.

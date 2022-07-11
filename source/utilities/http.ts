@@ -3,7 +3,7 @@
 
 import { parse } from 'node:url';
 import { networkInterfaces as getNetworkInterfaces } from 'node:os';
-import type { ListenEndpoint, ParsedEndpoint } from '../types.js';
+import type { ParsedEndpoint } from '../types.js';
 
 const networkInterfaces = getNetworkInterfaces();
 
@@ -13,12 +13,12 @@ const networkInterfaces = getNetworkInterfaces();
  * @param uriOrPort - The endpoint to listen on.
  * @returns A list of parsed endpoints.
  */
-export const parseEndpoint = (uriOrPort: ListenEndpoint): ParsedEndpoint => {
+export const parseEndpoint = (uriOrPort: string): ParsedEndpoint => {
   // If the endpoint is a port number, return it as is.
-  if (typeof uriOrPort === 'number' && !isNaN(uriOrPort)) return [uriOrPort];
+  if (!isNaN(Number(uriOrPort))) return [uriOrPort];
 
   // Cast it as a string, since we know for sure it is not a number.
-  const endpoint = uriOrPort as string;
+  const endpoint = uriOrPort;
 
   // We cannot use `new URL` here, otherwise it will not
   // parse the host properly and it would drop support for IPv6.
