@@ -84,6 +84,6 @@ export declare interface Options {
 }
 
 // The arguments passed to the CLI (the options + the positional arguments)
-export declare type Arguments = Options & {
+export declare type Arguments = Partial<Options> & {
   _: string[];
 };

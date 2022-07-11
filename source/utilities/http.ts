@@ -15,8 +15,7 @@ const networkInterfaces = getNetworkInterfaces();
  */
 export const parseEndpoint = (uriOrPort: ListenEndpoint): ParsedEndpoint => {
   // If the endpoint is a port number, return it as is.
-  // @ts-expect-error `isNaN` accepts strings too.
-  if (!isNaN(uriOrPort)) return [uriOrPort];
+  if (typeof uriOrPort === 'number' && !isNaN(uriOrPort)) return [uriOrPort];
 
   // Cast it as a string, since we know for sure it is not a number.
   const endpoint = uriOrPort as string;

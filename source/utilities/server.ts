@@ -32,7 +32,7 @@ const compress = promisify(compression());
 export const startServer = async (
   endpoint: ParsedEndpoint,
   config: Partial<Configuration>,
-  args: Options,
+  args: Partial<Options>,
   previous?: Port,
 ): Promise<ServerAddress> => {
   // Define the request handler for the server.
@@ -62,10 +62,11 @@ export const startServer = async (
   };
 
   // Create the server.
-  const httpMode = args['--ssl-cert'] && args['--ssl-key'] ? 'https' : 'http';
+  const useSsl = args['--ssl-cert'] && args['--ssl-key'];
+  const httpMode = useSsl ? 'https' : 'http';
   const sslPass = args['--ssl-pass'];
   const serverConfig =
-    httpMode === 'https'
+    httpMode === 'https' && args['--ssl-cert'] && args['--ssl-key']
       ? {
           key: await readFile(args['--ssl-key']),
           cert: await readFile(args['--ssl-cert']),
@@ -120,9 +121,12 @@ export const startServer = async (
   });
 
   // If the endpoint is a non-zero port, make sure it is not occupied.
-  // @ts-expect-error `isNaN` accepts strings too.
-  if (!isNaN(endpoint[0]) && endpoint[0] !== 0) {
-    const port = endpoint[0] as number;
+  if (
+    typeof endpoint[0] === 'number' &&
+    !isNaN(endpoint[0]) &&
+    endpoint[0] !== 0
+  ) {
+    const port = endpoint[0];
     const isClosed = await isPortReachable(port, {
       host: endpoint[1] ?? 'localhost',
     });

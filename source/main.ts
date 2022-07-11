@@ -24,7 +24,7 @@ import type { Arguments } from './types.js';
  * @param debugMode - Whether or not we should print additional debug information.
  * @returns
  */
-const printUpdateNotification = async (debugMode: boolean) => {
+const printUpdateNotification = async (debugMode?: boolean) => {
   const [error, update] = await resolve(checkForUpdate(manifest));
 
   if (error) {
@@ -44,7 +44,7 @@ const printUpdateNotification = async (debugMode: boolean) => {
 let args: Arguments;
 try {
   args = parseArguments();
-} catch (error: any) {
+} catch (error: unknown) {
   logger.error((error as Error).message);
   process.exit(1);
 }
@@ -65,8 +65,6 @@ if (args['--help']) {
 }
 
 // Default to listening on port 3000.
-// Disabling as this is not an unnecessary check.
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (!args['--listen'])
   args['--listen'] = [
     [process.env.PORT ? parseInt(process.env.PORT, 10) : 3000],
@@ -145,7 +143,7 @@ for (const endpoint of args['--listen']) {
       // eslint-disable-next-line no-await-in-loop
       await clipboard.write(local);
       message += `\n\n${chalk.grey('Copied local address to clipboard!')}`;
-    } catch (error: any) {
+    } catch (error: unknown) {
       logger.error(`Cannot copy to clipboard: ${(error as Error).message}`);
     }
   }

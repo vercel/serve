@@ -25,7 +25,7 @@ import type { Configuration, Options, NodeError } from '../types.js';
 export const loadConfiguration = async (
   cwd: string,
   entry: string,
-  args: Options,
+  args: Partial<Options>,
 ): Promise<Configuration> => {
   const files = ['serve.json', 'now.json', 'package.json'];
   if (args['--config']) files.unshift(args['--config']);
