@@ -1,4 +1,4 @@
-![](media/banner.png)
+![](https://raw.githubusercontent.com/vercel/serve/main/media/banner.png)
 
 <div align="center">
   <a aria-label="Vercel logo" href="https://vercel.com">
@@ -6,7 +6,7 @@
   </a>
   <br>
   <a aria-label="Install Size" href="https://packagephobia.com/result?p=serve">
-    <img src="https://packagephobia.now.sh/badge?p=serve">
+    <img src="https://packagephobia.com/badge?p=serve">
   </a>
   <a aria-label="Stars" href="https://github.com/vercel/serve/stargazers">
     <img src="https://img.shields.io/github/stars/vercel/serve">
@@ -20,7 +20,7 @@
 
 `serve` helps you serve a static site, single page application or just a static file (no matter if on your device or on the local network). It also provides a neat interface for listing the directory's contents:
 
-![Listing UI](media/listing-ui.png)
+![Listing UI](https://raw.githubusercontent.com/vercel/serve/main/media/listing-ui.png)
 
 > Once it's time to push your site to production, we recommend using [Vercel](https://vercel.com).
 
