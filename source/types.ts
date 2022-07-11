@@ -69,18 +69,18 @@ export declare interface Options {
   '--help': boolean;
   '--version': boolean;
   '--listen': ParsedEndpoint[];
-  '--debug': boolean;
   '--single': boolean;
+  '--debug': boolean;
   '--config': Path;
-  '--cors': boolean;
   '--no-clipboard': boolean;
   '--no-compression': boolean;
   '--no-etag': boolean;
   '--symlinks': boolean;
+  '--cors': boolean;
+  '--no-port-switching': boolean;
   '--ssl-cert': Path;
   '--ssl-key': Path;
-  '--ssl-pass': Path;
-  '--no-port-switching': boolean;
+  '--ssl-pass': string;
 }
 
 // The arguments passed to the CLI (the options + the positional arguments)
