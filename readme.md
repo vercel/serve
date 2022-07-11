@@ -5,7 +5,7 @@
     <img src="https://img.shields.io/badge/made%20by-vercel-%23000000">
   </a>
   <br>
-  <a aria-label="Install Size" href="https://packagephobia.now.sh/result?p=serve">
+  <a aria-label="Install Size" href="https://packagephobia.com/result?p=serve">
     <img src="https://packagephobia.now.sh/badge?p=serve">
   </a>
   <a aria-label="Stars" href="https://github.com/vercel/serve/stargazers">
