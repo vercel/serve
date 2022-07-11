@@ -17,6 +17,9 @@
   "files": [
     "build/"
   ],
+  "engines": {
+    "node": ">= 14"
+  },
   "scripts": {
     "develop": "tsx watch ./source/main.ts",
     "start": "node ./build/main.js",
