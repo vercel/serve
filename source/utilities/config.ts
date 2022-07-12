@@ -115,7 +115,7 @@ export const loadConfiguration = async (
     const validate = ajv.compile(schema as object);
 
     if (!validate(config) && validate.errors) {
-      const defaultMessage = 'The configuration you provided is wrong:';
+      const defaultMessage = 'The configuration you provided is invalid:';
       const error = validate.errors[0] as ErrorObject;
 
       throw new Error(
