@@ -62,7 +62,6 @@ export const startServer = async (
   };
 
   // Create the server.
-
   const sslCert = args['--ssl-cert'];
   const sslKey = args['--ssl-key'];
   const sslPass = args['--ssl-pass'];
@@ -71,13 +70,14 @@ export const startServer = async (
 
   let serverConfig: http.ServerOptions | https.ServerOptions = {};
   if (useSsl && sslCert && sslKey) {
-    // Format is PEM due to usagae of SSL Key and Optional Passphrase
+    // Format detected is PEM due to usage of SSL Key and Optional Passphrase.
     serverConfig = {
       key: await readFile(sslKey),
       cert: await readFile(sslCert),
       passphrase: sslPass ? await readFile(sslPass, 'utf8') : '',
     };
   } else if (useSsl && sslCert && isPFXFormat) {
+    // Format detected is PFX.
     serverConfig = {
       pfx: await readFile(sslCert),
       passphrase: sslPass ? await readFile(sslPass, 'utf8') : '',
