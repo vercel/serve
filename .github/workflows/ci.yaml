@@ -1,20 +1,47 @@
+# .github/workflows/ci.yaml
+# Lints and tests the server every time a commit is pushed to the remote
+# repository.
+
 name: CI
-on:
-  - push
-  - pull_request
+on: [push, pull_request]
 jobs:
-  test:
-    name: Node.js ${{ matrix.node-version }}
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version:
-          - 16
-          - 14
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      - name: Setup PNPM 7
+        uses: pnpm/action-setup@v2.0.1
         with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm install
-      - run: npm test
+          version: latest
+      - name: Setup Node 18
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org/'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Check for errors in code/formatting
+        run: pnpm lint
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      - name: Setup PNPM 7
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: latest
+      - name: Setup Node 18
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org/'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Run all tests
+        run: pnpm test

@@ -1,3 +1,14 @@
-node_modules
+# .gitignore
+# A list of files and folders that should not be tracked by Git.
+
+node_modules/
+coverage/
+build/
+.cache/
+.idea/
+.vscode/
+
 *.log
-.nyc_output
+*.tgz
+*.bak
+*.tmp

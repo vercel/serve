@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# config/husky/pre-commit
+# Run `lint-staged` before every commit.
+
+. "$(dirname "$0")/_/husky.sh"
+
+FORCE_COLOR=2 pnpm lint-staged

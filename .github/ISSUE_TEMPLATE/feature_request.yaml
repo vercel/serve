@@ -1,0 +1,28 @@
+name: Suggest an improvement or new feature
+description: ———
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Thanks for filing this feature request!
+
+        Help us understanding this feature and the need for it better by filling in this form.
+  - type: textarea
+    attributes:
+      label: Description
+      description: Describe the feature in detail
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Why
+      description: Why should we add this feature? What are potential use cases for it?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Alternatives
+      description: Describe the alternatives you have considered, or existing workarounds
+    validations:
+      required: true
