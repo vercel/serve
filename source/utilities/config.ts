@@ -10,6 +10,7 @@ import Ajv from 'ajv';
 // @ts-expect-error No type definitions.
 import schema from '@zeit/schemas/deployment/config-static.js';
 import { resolve } from './promise.js';
+import { logger } from './logger.js';
 import type { ErrorObject } from 'ajv';
 import type { Configuration, Options, NodeError } from '../types.js';
 
@@ -96,6 +97,13 @@ export const loadConfiguration = async (
     // Once we have found a valid configuration, assign it and stop looking
     // through more configuration files.
     Object.assign(config, parsedJson);
+
+    // Warn the user about using deprecated configuration files.
+    if (file === 'now.json' || file === 'package.json')
+      logger.warn(
+        'The config files `now.json` and `package.json` are deprecated. Please use `serve.json`.',
+      );
+
     break;
   }
 

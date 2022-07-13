@@ -3,87 +3,76 @@
 // source/main.ts
 // The CLI for the `serve-handler` module.
 
+import { cwd as getPwd, exit, env, stdout } from 'node:process';
 import path from 'node:path';
 import chalk from 'chalk';
 import boxen from 'boxen';
 import clipboard from 'clipboardy';
-import checkForUpdate from 'update-check';
 import manifest from '../package.json';
 import { resolve } from './utilities/promise.js';
 import { startServer } from './utilities/server.js';
 import { registerCloseListener } from './utilities/http.js';
-import { parseArguments, getHelpText } from './utilities/cli.js';
+import {
+  parseArguments,
+  getHelpText,
+  checkForUpdates,
+} from './utilities/cli.js';
 import { loadConfiguration } from './utilities/config.js';
 import { logger } from './utilities/logger.js';
-import type { Arguments } from './types.js';
-
-/**
- * Checks for updates to this package. If an update is available, it brings it
- * to the user's notice by printing a message to the console.
- *
- * @param debugMode - Whether or not we should print additional debug information.
- * @returns
- */
-const printUpdateNotification = async (debugMode?: boolean) => {
-  const [error, update] = await resolve(checkForUpdate(manifest));
-
-  if (error) {
-    const suffix = debugMode ? ':' : ' (use `--debug` to see full error)';
-    logger.warn(`Checking for updates failed${suffix}`);
-
-    if (debugMode) logger.error(error.message);
-  }
-  if (!update) return;
-
-  logger.log(
-    chalk` {bgRed.white  UPDATE } The latest version of \`serve\` is ${update.latest}`,
-  );
-};
 
 // Parse the options passed by the user.
-let args: Arguments;
-try {
-  args = parseArguments();
-} catch (error: unknown) {
-  logger.error((error as Error).message);
-  process.exit(1);
+const [parseError, args] = await resolve(parseArguments());
+// Either TSC complains that `args` is undefined (which it shouldn't), or ESLint
+// rightfully complains of an unnecessary condition.
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (parseError || !args) {
+  logger.error(parseError.message);
+  exit(1);
 }
 
 // Check for updates to the package unless the user sets the `NO_UPDATE_CHECK`
 // variable.
-if (process.env.NO_UPDATE_CHECK !== '1')
-  await printUpdateNotification(args['--debug']);
+const [updateError] = await resolve(checkForUpdates());
+if (updateError) {
+  const suffix = args['--debug'] ? ':' : ' (use `--debug` to see full error)';
+  logger.warn(`Checking for updates failed${suffix}`);
+
+  if (args['--debug']) logger.error(updateError.message);
+}
+
 // If the `version` or `help` arguments are passed, print the version or the
 // help text and exit.
 if (args['--version']) {
   logger.log(manifest.version);
-  process.exit(0);
+  exit(0);
 }
 if (args['--help']) {
   logger.log(getHelpText());
-  process.exit(0);
+  exit(0);
 }
 
 // Default to listening on port 3000.
 if (!args['--listen'])
-  args['--listen'] = [
-    [process.env.PORT ? parseInt(process.env.PORT, 10) : 3000],
-  ];
+  args['--listen'] = [[env.PORT ? parseInt(env.PORT, 10) : 3000]];
 // Ensure that the user has passed only one directory to serve.
 if (args._.length > 1) {
   logger.error('Please provide one path argument at maximum');
-  process.exit(1);
+  exit(1);
 }
 
-// Warn the user about using deprecated configuration files.
-if (args['--config'] === 'now.json' || args['--config'] === 'package.json')
-  logger.warn(
-    'The config files `now.json` and `package.json` are deprecated. Please use `serve.json`.',
-  );
 // Parse the configuration.
-const cwd = process.cwd();
+const cwd = getPwd();
 const entry = args._[0] ? path.resolve(args._[0]) : cwd;
-const config = await loadConfiguration(cwd, entry, args);
+const [configError, config] = await resolve(
+  loadConfiguration(cwd, entry, args),
+);
+// Either TSC complains that `args` is undefined (which it shouldn't), or ESLint
+// rightfully complains of an unnecessary condition.
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (configError || !config) {
+  logger.error(configError.message);
+  exit(1);
+}
 
 // If the user wants all the URLs rewritten to `/index.html`, make it happen.
 if (args['--single']) {
@@ -114,7 +103,7 @@ for (const endpoint of args['--listen']) {
 
   // If we are not in a TTY or Node is running in production mode, print
   // a single line of text with the server address.
-  if (!process.stdout.isTTY || process.env.NODE_ENV === 'production') {
+  if (!stdout.isTTY || env.NODE_ENV === 'production') {
     const suffix = local ? ` at ${local}` : '';
     logger.info(`Accepting connections${suffix}`);
 
@@ -167,6 +156,6 @@ registerCloseListener(() => {
     logger.log();
     logger.warn('Force-closing all open sockets...');
 
-    process.exit(0);
+    exit(0);
   });
 });
