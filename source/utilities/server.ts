@@ -111,9 +111,9 @@ export const startServer = async (
       else address = details.address;
       const ip = getNetworkAddress();
 
-      const httpMode = useSsl ? 'https' : 'http';
-      local = `${httpMode}://${address}:${details.port}`;
-      network = ip ? `${httpMode}://${ip}:${details.port}` : undefined;
+      const protocol = useSsl ? 'https' : 'http';
+      local = `${protocol}://${address}:${details.port}`;
+      network = ip ? `${protocol}://${ip}:${details.port}` : undefined;
     }
 
     return {
