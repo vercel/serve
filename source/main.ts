@@ -28,7 +28,7 @@ const printUpdateNotification = async (debugMode?: boolean) => {
   const [error, update] = await resolve(checkForUpdate(manifest));
 
   if (error) {
-    const suffix = debugMode ? ':' : ' (use `--debug` to see full error)';
+    const suffix = debugMode ? ':' : ' (use `--debug` to see full error).';
     logger.warn(`Checking for updates failed${suffix}`);
 
     if (debugMode) logger.error(error.message);
@@ -36,7 +36,8 @@ const printUpdateNotification = async (debugMode?: boolean) => {
   if (!update) return;
 
   logger.log(
-    chalk` {bgRed.white  UPDATE } The latest version of \`serve\` is ${update.latest}`,
+    chalk.bgRed.white(' UPDATE '),
+    `The latest version of \`serve\` is ${update.latest}.`,
   );
 };
 
@@ -115,7 +116,7 @@ for (const endpoint of args['--listen']) {
   // If we are not in a TTY or Node is running in production mode, print
   // a single line of text with the server address.
   if (!process.stdout.isTTY || process.env.NODE_ENV === 'production') {
-    const suffix = local ? ` at ${local}` : '';
+    const suffix = local ? ` at ${local}.` : '.';
     logger.info(`Accepting connections${suffix}`);
 
     continue;
@@ -144,7 +145,9 @@ for (const endpoint of args['--listen']) {
       await clipboard.write(local);
       message += `\n\n${chalk.grey('Copied local address to clipboard!')}`;
     } catch (error: unknown) {
-      logger.error(`Cannot copy to clipboard: ${(error as Error).message}`);
+      logger.error(
+        `Cannot copy server address to clipboard: ${(error as Error).message}.`,
+      );
     }
   }
 
