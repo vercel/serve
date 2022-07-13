@@ -9,6 +9,7 @@ import compression from 'compression';
 import isPortReachable from 'is-port-reachable';
 import { getNetworkAddress, registerCloseListener } from './http.js';
 import { promisify } from './promise.js';
+import { logger } from './logger.js';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import type {
@@ -18,6 +19,7 @@ import type {
   Port,
   ServerAddress,
 } from '../types.js';
+import chalk from 'chalk';
 
 const compress = promisify(compression());
 
@@ -46,6 +48,18 @@ export const startServer = async (
       type ExpressRequest = Parameters<typeof compress>[0];
       type ExpressResponse = Parameters<typeof compress>[1];
 
+      // Log the request.
+      const requestTime = new Date();
+      const formattedTime = `${requestTime.toLocaleDateString()} ${requestTime.toLocaleTimeString()}`;
+      const ipAddress = request.socket.remoteAddress;
+      const requestUrl = `${request.method?.toLowerCase()} ${request.url}`;
+      if (args['--log-requests'])
+        logger.http(
+          chalk.dim(formattedTime),
+          chalk.yellow(ipAddress),
+          chalk.cyan(requestUrl),
+        );
+
       if (args['--cors'])
         response.setHeader('Access-Control-Allow-Origin', '*');
       if (!args['--no-compression'])
@@ -53,6 +67,17 @@ export const startServer = async (
 
       // Let the `serve-handler` module do the rest.
       await handler(request, response, config);
+
+      // Before returning the response, log the status code and time taken.
+      const responseTime = Date.now() - requestTime.getTime();
+      if (args['--log-requests'])
+        logger.http(
+          chalk.dim(formattedTime),
+          chalk.yellow(ipAddress),
+          chalk[response.statusCode < 400 ? 'green' : 'red'](
+            `returned ${response.statusCode} in ${responseTime} ms`,
+          ),
+        );
     };
 
     // Then we run the async function, and re-throw any errors.
