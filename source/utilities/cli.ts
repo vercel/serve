@@ -1,7 +1,7 @@
 // source/utilities/cli.ts
 // CLI-related utility functions.
 
-import chalk from 'chalk';
+import chalk from 'chalk-template';
 import parseArgv from 'arg';
 import { parseEndpoint } from './http.js';
 import type { Arguments } from '../types.js';
