@@ -1,7 +1,7 @@
 // source/utilities/cli.ts
 // CLI-related utility functions.
 
-import chalk from 'chalk';
+import chalkTemplate from 'chalk-template';
 import parseArgv from 'arg';
 import { parseEndpoint } from './http.js';
 import type { Arguments } from '../types.js';
@@ -40,7 +40,7 @@ const options = {
 };
 
 // The help text for the CLI.
-const helpText = chalk`
+const helpText = chalkTemplate`
   {bold.cyan serve} - Static file serving and directory listing
 
   {bold USAGE}

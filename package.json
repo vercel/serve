@@ -25,7 +25,8 @@
     "start": "node ./build/main.js",
     "compile": "tsup ./source/main.ts",
     "test:tsc": "tsc --project tsconfig.json",
-    "test": "pnpm test:tsc",
+    "test:unit": "vitest",
+    "test": "pnpm test:tsc && pnpm test:unit",
     "lint:code": "eslint --max-warnings 0 source/**/*.ts",
     "lint:style": "prettier --check --ignore-path .gitignore .",
     "lint": "pnpm lint:code && pnpm lint:style",
@@ -38,6 +39,7 @@
     "arg": "5.0.2",
     "boxen": "7.0.0",
     "chalk": "5.0.1",
+    "chalk-template": "0.4.0",
     "clipboardy": "3.0.0",
     "compression": "1.7.4",
     "is-port-reachable": "4.0.0",
@@ -54,7 +56,8 @@
     "prettier": "2.7.1",
     "tsup": "6.1.3",
     "tsx": "3.7.1",
-    "typescript": "4.6.4"
+    "typescript": "4.6.4",
+    "vitest": "0.18.0"
   },
   "tsup": {
     "target": "esnext",

@@ -5,6 +5,7 @@
 
 import path from 'node:path';
 import chalk from 'chalk';
+import chalkTemplate from 'chalk-template';
 import boxen from 'boxen';
 import clipboard from 'clipboardy';
 import checkForUpdate from 'update-check';
@@ -36,7 +37,7 @@ const printUpdateNotification = async (debugMode?: boolean) => {
   if (!update) return;
 
   logger.log(
-    chalk` {bgRed.white  UPDATE } The latest version of \`serve\` is ${update.latest}`,
+    chalkTemplate` {bgRed.white  UPDATE } The latest version of \`serve\` is ${update.latest}`,
   );
 };
 
