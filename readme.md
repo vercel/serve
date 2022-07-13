@@ -26,6 +26,8 @@
 
 ## Usage
 
+> `serve` v14 onwards requires Node v14 to run. Please use `serve` v13 if you cannot upgrade to Node v14.
+
 The quickest way to get started is to just run `npx serve` in your project's directory.
 
 If you prefer, you can also install the package globally (you'll need at least [Node LTS](https://github.com/nodejs/Release#release-schedule)):
@@ -60,7 +62,7 @@ To customize `serve`'s behavior, create a `serve.json` file in the public folder
 
 ## API
 
-The core of `serve` is [serve-handler](https://github.com/vercel/serve-handler), which can be used as middleware in existing HTTP servers:
+The core of `serve` is [`serve-handler`](https://github.com/vercel/serve-handler), which can be used as middleware in existing HTTP servers:
 
 ```js
 const handler = require('serve-handler');
@@ -77,9 +79,7 @@ server.listen(3000, () => {
 });
 ```
 
-> **Note**
->
-> You can also replace `http.createServer` with [micro](https://github.com/vercel/micro).
+> You can also replace `http.createServer` with [`micro`](https://github.com/vercel/micro).
 
 ## Issues and Contributing
 
@@ -89,7 +89,7 @@ If you wish to contribute to the project, please read the [contributing guide](c
 
 ## Credits
 
-This project used to be called "list" and "micro-list". But thanks to [TJ Holowaychuk](https://github.com/tj) handing us the new name, it's now called "serve" (which is much more definite).
+This project used to be called `list` and `micro-list`. But thanks to [TJ Holowaychuk](https://github.com/tj) handing us the new name, it's now called `serve` (which is much more definite).
 
 ## Author
 
