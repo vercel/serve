@@ -7,6 +7,7 @@ import { readFile } from 'node:fs/promises';
 import handler from 'serve-handler';
 import compression from 'compression';
 import isPortReachable from 'is-port-reachable';
+import chalk from 'chalk';
 import { getNetworkAddress, registerCloseListener } from './http.js';
 import { promisify } from './promise.js';
 import { logger } from './logger.js';
@@ -19,7 +20,6 @@ import type {
   Port,
   ServerAddress,
 } from '../types.js';
-import chalk from 'chalk';
 
 const compress = promisify(compression());
 
@@ -51,8 +51,8 @@ export const startServer = async (
       // Log the request.
       const requestTime = new Date();
       const formattedTime = `${requestTime.toLocaleDateString()} ${requestTime.toLocaleTimeString()}`;
-      const ipAddress = request.socket.remoteAddress;
-      const requestUrl = `${request.method?.toLowerCase()} ${request.url}`;
+      const ipAddress = request.socket.remoteAddress.replace('::ffff:', '');
+      const requestUrl = `${request.method ?? 'GET'} ${request.url ?? '/'}`;
       if (args['--log-requests'])
         logger.http(
           chalk.dim(formattedTime),
@@ -75,7 +75,7 @@ export const startServer = async (
           chalk.dim(formattedTime),
           chalk.yellow(ipAddress),
           chalk[response.statusCode < 400 ? 'green' : 'red'](
-            `returned ${response.statusCode} in ${responseTime} ms`,
+            `Returned ${response.statusCode} in ${responseTime} ms`,
           ),
         );
     };

@@ -6,13 +6,13 @@
 import chalk from 'chalk';
 
 const http = (...message: string[]) =>
-  console.info(chalk.blue('HTTP:', ...message));
+  console.info(chalk.bgBlue.bold(' HTTP '), ...message);
 const info = (...message: string[]) =>
-  console.info(chalk.magenta('INFO:', ...message));
+  console.info(chalk.bgMagenta.bold(' INFO '), ...message);
 const warn = (...message: string[]) =>
-  console.error(chalk.yellow('WARNING:', ...message));
+  console.error(chalk.bgYellow.bold(' WARN '), ...message);
 const error = (...message: string[]) =>
-  console.error(chalk.red('ERROR:', ...message));
+  console.error(chalk.bgRed.bold(' ERROR '), ...message);
 const log = console.log;
 
 export const logger = { http, info, warn, error, log };

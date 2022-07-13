@@ -70,6 +70,8 @@ if (!args['--listen'])
   args['--listen'] = [
     [process.env.PORT ? parseInt(process.env.PORT, 10) : 3000],
   ];
+// Default to logging requests.
+if (!args['--log-requests']) args['--log-requests'] = true;
 // Ensure that the user has passed only one directory to serve.
 if (args._.length > 1) {
   logger.error('Please provide one path argument at maximum');
