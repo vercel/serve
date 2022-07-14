@@ -10,6 +10,7 @@ specifiers:
   boxen: 7.0.0
   c8: 7.11.3
   chalk: 5.0.1
+  chalk-template: 0.4.0
   clipboardy: 3.0.0
   compression: 1.7.4
   eslint: 8.19.0
@@ -31,6 +32,7 @@ dependencies:
   boxen: 7.0.0
   c8: 7.11.3
   chalk: 5.0.1
+  chalk-template: 0.4.0
   clipboardy: 3.0.0
   compression: 1.7.4
   is-port-reachable: 4.0.0
@@ -1112,6 +1114,16 @@ packages:
       type-detect: 4.0.8
     dev: true
 
+  /chalk-template/0.4.0:
+    resolution:
+      {
+        integrity: sha512-/ghrgmhfY8RaSdeo43hNXxpoHAtxdbskUHjPpfqUWGttFgycUhYPGx3YZBCnUCvOa7Doivn1IZec3DEGFoMgLg==,
+      }
+    engines: { node: '>=12' }
+    dependencies:
+      chalk: 4.1.2
+    dev: false
+
   /chalk/2.4.1:
     resolution:
       {
@@ -1133,7 +1145,6 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
-    dev: true
 
   /chalk/5.0.1:
     resolution:

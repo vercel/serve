@@ -4,6 +4,7 @@
 import { parse as parseUrl } from 'node:url';
 import { env } from 'node:process';
 import chalk from 'chalk';
+import chalkTemplate from 'chalk-template';
 import parseArgv from 'arg';
 import checkForUpdate from 'update-check';
 import { resolve } from './promise.js';
@@ -11,7 +12,7 @@ import { logger } from './logger.js';
 import type { Arguments, ParsedEndpoint } from '../types.js';
 
 // The help text for the CLI.
-const helpText = chalk`
+const helpText = chalkTemplate`
   {bold.cyan serve} - Static file serving and directory listing
 
   {bold USAGE}

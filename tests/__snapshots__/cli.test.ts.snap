@@ -2,27 +2,27 @@
 
 exports[`utilities/cli > render help text 1`] = `
 "
-  {bold.cyan serve} - Static file serving and directory listing
+  [1m[36mserve[39m[22m - Static file serving and directory listing
 
-  {bold USAGE}
+  [1mUSAGE[22m
 
-    {bold $} {cyan serve} --help
-    {bold $} {cyan serve} --version
-    {bold $} {cyan serve} folder_name
-    {bold $} {cyan serve} [-l {underline listen_uri} [-l ...]] [{underline directory}]
+    [1m$[22m [36mserve[39m --help
+    [1m$[22m [36mserve[39m --version
+    [1m$[22m [36mserve[39m folder_name
+    [1m$[22m [36mserve[39m [-l [4mlisten_uri[24m [-l ...]] [[4mdirectory[24m]
 
-    By default, {cyan serve} will listen on {bold 0.0.0.0:3000} and serve the
+    By default, [36mserve[39m will listen on [1m0.0.0.0:3000[22m and serve the
     current working directory on that address.
 
-    Specifying a single {bold --listen} argument will overwrite the default, not supplement it.
+    Specifying a single [1m--listen[22m argument will overwrite the default, not supplement it.
 
-  {bold OPTIONS}
+  [1mOPTIONS[22m
 
     --help                              Shows this help message
 
     -v, --version                       Displays the current version of serve
 
-    -l, --listen {underline listen_uri}             Specify a URI endpoint on which to listen (see below) -
+    -l, --listen [4mlisten_uri[24m             Specify a URI endpoint on which to listen (see below) -
                                         more than one may be specified to listen in multiple places
 
     -p                                  Specify custom port
@@ -51,25 +51,25 @@ exports[`utilities/cli > render help text 1`] = `
 
     --no-port-switching                 Do not open a port other than the one specified when it's taken.
 
-  {bold ENDPOINTS}
+  [1mENDPOINTS[22m
 
-    Listen endpoints (specified by the {bold --listen} or {bold -l} options above) instruct {cyan serve}
+    Listen endpoints (specified by the [1m--listen[22m or [1m-l[22m options above) instruct [36mserve[39m
     to listen on one or more interfaces/ports, UNIX domain sockets, or Windows named pipes.
 
     For TCP ports on hostname \\"localhost\\":
 
-      {bold $} {cyan serve} -l {underline 1234}
+      [1m$[22m [36mserve[39m -l [4m1234[24m
 
     For TCP (traditional host/port) endpoints:
 
-      {bold $} {cyan serve} -l tcp://{underline hostname}:{underline 1234}
+      [1m$[22m [36mserve[39m -l tcp://[4mhostname[24m:[4m1234[24m
 
     For UNIX domain socket endpoints:
 
-      {bold $} {cyan serve} -l unix:{underline /path/to/socket.sock}
+      [1m$[22m [36mserve[39m -l unix:[4m/path/to/socket.sock[24m
 
     For Windows named pipe endpoints:
 
-      {bold $} {cyan serve} -l pipe:\\\\\\\\.\\\\pipe\\\\{underline PipeName}
+      [1m$[22m [36mserve[39m -l pipe:\\\\\\\\.\\\\pipe\\\\[4mPipeName[24m
 "
 `;

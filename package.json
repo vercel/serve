@@ -1,6 +1,6 @@
 {
   "name": "serve",
-  "version": "14.0.0",
+  "version": "14.0.1",
   "description": "Static file serving and directory listing",
   "keywords": [
     "vercel",
@@ -41,6 +41,7 @@
     "boxen": "7.0.0",
     "c8": "7.11.3",
     "chalk": "5.0.1",
+    "chalk-template": "0.4.0",
     "clipboardy": "3.0.0",
     "compression": "1.7.4",
     "is-port-reachable": "4.0.0",
