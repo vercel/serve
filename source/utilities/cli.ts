@@ -14,7 +14,7 @@ const options = {
   '--single': Boolean,
   '--debug': Boolean,
   '--config': String,
-  '--log-requests': Boolean,
+  '--no-request-logging': Boolean,
   '--no-clipboard': Boolean,
   '--no-compression': Boolean,
   '--no-etag': Boolean,
@@ -31,7 +31,7 @@ const options = {
   '-s': '--single',
   '-d': '--debug',
   '-c': '--config',
-  '-L': '--log-requests',
+  '-L': '--no-request-logging',
   '-n': '--no-clipboard',
   '-u': '--no-compression',
   '-S': '--symlinks',
@@ -74,7 +74,7 @@ const helpText = chalk`
 
     -c, --config                        Specify custom path to \`serve.json\`
 
-    -L, --log-requests                  Log all requests being made to the server
+    -L, --no-request-logging            Do not log any request information to the console.
 
     -C, --cors                          Enable CORS, sets \`Access-Control-Allow-Origin\` to \`*\`
 

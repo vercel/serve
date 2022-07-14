@@ -53,7 +53,7 @@ export const startServer = async (
       const formattedTime = `${requestTime.toLocaleDateString()} ${requestTime.toLocaleTimeString()}`;
       const ipAddress = request.socket.remoteAddress.replace('::ffff:', '');
       const requestUrl = `${request.method ?? 'GET'} ${request.url ?? '/'}`;
-      if (args['--log-requests'])
+      if (!args['--no-request-logging'])
         logger.http(
           chalk.dim(formattedTime),
           chalk.yellow(ipAddress),
@@ -70,7 +70,7 @@ export const startServer = async (
 
       // Before returning the response, log the status code and time taken.
       const responseTime = Date.now() - requestTime.getTime();
-      if (args['--log-requests'])
+      if (!args['--no-request-logging'])
         logger.http(
           chalk.dim(formattedTime),
           chalk.yellow(ipAddress),

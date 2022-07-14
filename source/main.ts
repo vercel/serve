@@ -70,8 +70,6 @@ if (!args['--listen'])
   args['--listen'] = [
     [process.env.PORT ? parseInt(process.env.PORT, 10) : 3000],
   ];
-// Default to logging requests.
-if (!args['--log-requests']) args['--log-requests'] = true;
 // Ensure that the user has passed only one directory to serve.
 if (args._.length > 1) {
   logger.error('Please provide one path argument at maximum');
@@ -128,11 +126,11 @@ for (const endpoint of args['--listen']) {
   let message = chalk.green('Serving!');
   if (local) {
     const prefix = network ? '- ' : '';
-    const space = network ? '            ' : '  ';
+    const space = network ? '    ' : '  ';
 
     message += `\n\n${chalk.bold(`${prefix}Local:`)}${space}${local}`;
   }
-  if (network) message += `\n${chalk.bold('- On Your Network:')}  ${network}`;
+  if (network) message += `\n${chalk.bold('- Network:')}  ${network}`;
   if (previous)
     message += chalk.red(
       `\n\nThis port was picked because ${chalk.underline(
