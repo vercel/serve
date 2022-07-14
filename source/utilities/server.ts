@@ -122,17 +122,17 @@ export const startServer = async (
 
   // If the endpoint is a non-zero port, make sure it is not occupied.
   if (
-    typeof endpoint[0] === 'number' &&
-    !isNaN(endpoint[0]) &&
-    endpoint[0] !== 0
+    typeof endpoint.port === 'number' &&
+    !isNaN(endpoint.port) &&
+    endpoint.port !== 0
   ) {
-    const port = endpoint[0];
+    const port = endpoint.port;
     const isClosed = await isPortReachable(port, {
-      host: endpoint[1] ?? 'localhost',
+      host: endpoint.host ?? 'localhost',
     });
     // If the port is already taken, then start the server on a random port
     // instead.
-    if (isClosed) return startServer([0], config, args, port);
+    if (isClosed) return startServer({ port: 0 }, config, args, port);
 
     // Otherwise continue on to starting the server.
   }
@@ -140,18 +140,14 @@ export const startServer = async (
   // Finally, start the server.
   return new Promise((resolve, _reject) => {
     // If only a port is specified, listen on the given port on localhost.
-    if (endpoint.length === 1 && typeof endpoint[0] === 'number')
-      server.listen(endpoint[0], () => resolve(getServerDetails()));
+    if (endpoint.port && !endpoint.host)
+      server.listen(endpoint.port, () => resolve(getServerDetails()));
     // If the path to a socket or a pipe is given, listen on it.
-    else if (endpoint.length === 1 && typeof endpoint[0] === 'string')
-      server.listen(endpoint[0], () => resolve(getServerDetails()));
+    else if (endpoint.host && !endpoint.port)
+      server.listen(endpoint.port, () => resolve(getServerDetails()));
     // If a port number and hostname are given, listen on `host:port`.
-    else if (
-      endpoint.length === 2 &&
-      typeof endpoint[0] === 'number' &&
-      typeof endpoint[1] === 'string'
-    )
-      server.listen(endpoint[0], endpoint[1], () =>
+    else if (endpoint.port && endpoint.host)
+      server.listen(endpoint.port, endpoint.host, () =>
         resolve(getServerDetails()),
       );
   });

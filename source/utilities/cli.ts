@@ -99,7 +99,7 @@ export const getHelpText = (): string => helpText;
  */
 export const parseEndpoint = (uriOrPort: string): ParsedEndpoint => {
   // If the endpoint is a port number, return it as is.
-  if (!isNaN(Number(uriOrPort))) return [Number(uriOrPort)];
+  if (!isNaN(Number(uriOrPort))) return { port: Number(uriOrPort) };
 
   // Cast it as a string, since we know for sure it is not a number.
   const endpoint = uriOrPort;
@@ -114,18 +114,21 @@ export const parseEndpoint = (uriOrPort: string): ParsedEndpoint => {
       if (!pipe.startsWith('\\\\.\\'))
         throw new Error(`Invalid Windows named pipe endpoint: ${endpoint}`);
 
-      return [pipe];
+      return { host: pipe };
     }
     case 'unix:':
       if (!url.pathname)
         throw new Error(`Invalid UNIX domain socket endpoint: ${endpoint}`);
 
-      return [url.pathname];
+      return { host: url.pathname };
     case 'tcp:':
       url.port = url.port ?? '3000';
       url.hostname = url.hostname ?? 'localhost';
 
-      return [Number(url.port), url.hostname];
+      return {
+        port: Number(url.port),
+        host: url.hostname,
+      };
     default:
       throw new Error(
         `Unknown --listen endpoint scheme (protocol): ${

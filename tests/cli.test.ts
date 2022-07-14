@@ -22,10 +22,10 @@ afterEach(() => {
 // followed by the expected output.
 type EndpointTestCase = [string, string, ParsedEndpoint];
 const validEndpoints = [
-  ['http port', '4242', [4242]],
-  ['tcp url', 'tcp://localhost:4242', [4242, 'localhost']],
-  ['unix socket', 'unix:///dev/sock1', ['/dev/sock1']],
-  ['pipe', 'pipe:\\\\.\\pipe\\localhost', ['\\\\.\\pipe\\localhost']],
+  ['http port', '4242', { port: 4242 }],
+  ['tcp url', 'tcp://localhost:4242', { port: 4242, host: 'localhost' }],
+  ['unix socket', 'unix:///dev/sock1', { host: '/dev/sock1' }],
+  ['pipe', 'pipe:\\\\.\\pipe\\localhost', { host: '\\\\.\\pipe\\localhost' }],
 ] as EndpointTestCase[];
 // Another list of cases used to test the `parseEndpoint` function. The function
 // should throw an error when parsing any of these cases, as they are invalid
@@ -91,7 +91,7 @@ describe('utilities/cli', () => {
   test('do not check for updates when NO_UPDATE_CHECK is set', async () => {
     const consoleSpy = vi.spyOn(logger, 'log');
 
-    env.NO_UPDATE_CHECK = true;
+    env.NO_UPDATE_CHECK = 'true';
     await checkForUpdates({
       ...manifest,
       version: '0.0.0',

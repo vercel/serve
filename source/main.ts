@@ -53,7 +53,7 @@ if (args['--help']) {
 
 // Default to listening on port 3000.
 if (!args['--listen'])
-  args['--listen'] = [[env.PORT ? parseInt(env.PORT, 10) : 3000]];
+  args['--listen'] = [{ port: parseInt(env.PORT ?? '3000', 10) }];
 // Ensure that the user has passed only one directory to serve.
 if (args._.length > 1) {
   logger.error('Please provide one path argument at maximum');
@@ -61,10 +61,10 @@ if (args._.length > 1) {
 }
 
 // Parse the configuration.
-const cwd = getPwd();
-const entry = args._[0] ? path.resolve(args._[0]) : cwd;
+const presentDirectory = getPwd();
+const directoryToServe = args._[0] ? path.resolve(args._[0]) : presentDirectory;
 const [configError, config] = await resolve(
-  loadConfiguration(cwd, entry, args),
+  loadConfiguration(presentDirectory, directoryToServe, args),
 );
 // Either TSC complains that `args` is undefined (which it shouldn't), or ESLint
 // rightfully complains of an unnecessary condition.
