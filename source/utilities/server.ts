@@ -51,7 +51,8 @@ export const startServer = async (
       // Log the request.
       const requestTime = new Date();
       const formattedTime = `${requestTime.toLocaleDateString()} ${requestTime.toLocaleTimeString()}`;
-      const ipAddress = request.socket.remoteAddress.replace('::ffff:', '');
+      const ipAddress =
+        request.socket.remoteAddress?.replace('::ffff:', '') ?? 'unknown';
       const requestUrl = `${request.method ?? 'GET'} ${request.url ?? '/'}`;
       if (!args['--no-request-logging'])
         logger.http(
