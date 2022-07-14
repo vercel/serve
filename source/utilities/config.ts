@@ -27,7 +27,7 @@ export const loadConfiguration = async (
   cwd: string,
   entry: string,
   args: Partial<Options>,
-): Promise<Configuration> => {
+): Promise<Partial<Configuration>> => {
   const files = ['serve.json', 'now.json', 'package.json'];
   if (args['--config']) files.unshift(args['--config']);
 
@@ -138,5 +138,5 @@ export const loadConfiguration = async (
   config.etag = !args['--no-etag'];
   config.symlinks = args['--symlinks'] || config.symlinks;
 
-  return config as Configuration;
+  return config;
 };

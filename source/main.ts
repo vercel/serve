@@ -32,7 +32,7 @@ if (parseError || !args) {
 
 // Check for updates to the package unless the user sets the `NO_UPDATE_CHECK`
 // variable.
-const [updateError] = await resolve(checkForUpdates());
+const [updateError] = await resolve(checkForUpdates(manifest));
 if (updateError) {
   const suffix = args['--debug'] ? ':' : ' (use `--debug` to see full error)';
   logger.warn(`Checking for updates failed${suffix}`);

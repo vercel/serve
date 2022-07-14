@@ -6,7 +6,6 @@ import { env } from 'node:process';
 import chalk from 'chalk';
 import parseArgv from 'arg';
 import checkForUpdate from 'update-check';
-import manifest from '../../package.json';
 import { resolve } from './promise.js';
 import { logger } from './logger.js';
 import type { Arguments, ParsedEndpoint } from '../types.js';
@@ -179,7 +178,7 @@ export const parseArguments = (): Arguments => parseArgv(options);
  * Checks for updates to this package. If an update is available, it brings it
  * to the user's notice by printing a message to the console.
  */
-export const checkForUpdates = async () => {
+export const checkForUpdates = async (manifest: object): Promise<void> => {
   // Do not check for updates if the `NO_UPDATE_CHECK` variable is set.
   if (env.NO_UPDATE_CHECK) return;
 

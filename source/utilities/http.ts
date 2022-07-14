@@ -10,7 +10,7 @@ const networkInterfaces = getNetworkInterfaces();
  *
  * @param fn - The function to run on server shutdown
  */
-export const registerCloseListener = (fn: () => void) => {
+export const registerCloseListener = (fn: () => void): void => {
   let run = false;
 
   const wrapper = () => {
@@ -30,7 +30,7 @@ export const registerCloseListener = (fn: () => void) => {
  *
  * @returns The address of the host.
  */
-export const getNetworkAddress = () => {
+export const getNetworkAddress = (): string | undefined => {
   for (const interfaceDetails of Object.values(networkInterfaces)) {
     if (!interfaceDetails) continue;
 

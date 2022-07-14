@@ -5,13 +5,15 @@ import { afterEach, describe, test, expect, vi } from 'vitest';
 
 import { loadConfiguration } from '../source/utilities/config.js';
 import { logger } from '../source/utilities/logger.js';
+import { Options } from '../source/types.js';
 
 // The path to the fixtures for this test file.
 const fixtures = 'tests/__fixtures__/config/';
 // A helper function to load the configuration for a certain fixture.
 const loadConfig = (
   name: 'valid' | 'invalid' | 'non-existent' | 'deprecated',
-) => loadConfiguration(process.cwd(), `${fixtures}/${name}`, {});
+  args?: Partial<Options> = {},
+) => loadConfiguration(process.cwd(), `${fixtures}/${name}`, args);
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -25,9 +27,18 @@ describe('utilities/config', () => {
     expect(configuration).toMatchSnapshot();
   });
 
+  // Make sure the configuration is parsed correctly when it is a location
+  // specified by the `--config` option.
+  test('parse valid config at custom location', async () => {
+    const configuration = await loadConfig('custom', {
+      '--config': 'config.json',
+    });
+    expect(configuration).toMatchSnapshot();
+  });
+
   // When the configuration in the file is invalid, the function will throw an
   // error.
-  test('parse invalid config', async () => {
+  test('throw error if config is invalid', async () => {
     loadConfig('invalid').catch((error: Error) => {
       expect(error.message).toMatch(/invalid/);
     });
