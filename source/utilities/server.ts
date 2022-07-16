@@ -140,13 +140,22 @@ export const startServer = async (
   // Finally, start the server.
   return new Promise((resolve, _reject) => {
     // If only a port is specified, listen on the given port on localhost.
-    if (endpoint.port && !endpoint.host)
+    if (
+      typeof endpoint.port !== 'undefined' &&
+      typeof endpoint.host === 'undefined'
+    )
       server.listen(endpoint.port, () => resolve(getServerDetails()));
     // If the path to a socket or a pipe is given, listen on it.
-    else if (endpoint.host && !endpoint.port)
-      server.listen(endpoint.port, () => resolve(getServerDetails()));
+    else if (
+      typeof endpoint.port === 'undefined' &&
+      typeof endpoint.host !== 'undefined'
+    )
+      server.listen(endpoint.host, () => resolve(getServerDetails()));
     // If a port number and hostname are given, listen on `host:port`.
-    else if (endpoint.port && endpoint.host)
+    else if (
+      typeof endpoint.port !== 'undefined' &&
+      typeof endpoint.host !== 'undefined'
+    )
       server.listen(endpoint.port, endpoint.host, () =>
         resolve(getServerDetails()),
       );
