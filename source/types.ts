@@ -27,7 +27,10 @@ export declare type ListenEndpoint =
   | `pipe:\\\\.\\pipe\\${Host}`;
 
 // The parsed endpoints.
-export declare type ParsedEndpoint = [Port] | [Host] | [Port, Host];
+export declare interface ParsedEndpoint {
+  port?: Port;
+  host?: Host;
+}
 
 // An entry for URL rewrites.
 export declare interface Rewrite {

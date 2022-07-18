@@ -1,0 +1,35 @@
+// Vitest Snapshot v1
+
+exports[`utilities/config > parse valid config 1`] = `
+{
+  "etag": true,
+  "public": "tests/__fixtures__/config/valid/app",
+  "renderSingle": true,
+  "symlinks": undefined,
+}
+`;
+
+exports[`utilities/config > parse valid config at custom location 1`] = `
+{
+  "etag": true,
+  "public": "tests/__fixtures__/config/custom/app",
+  "renderSingle": true,
+  "symlinks": undefined,
+}
+`;
+
+exports[`utilities/config > return default configuration when no source is found 1`] = `
+{
+  "etag": true,
+  "public": "tests/__fixtures__/config/non-existent",
+  "symlinks": undefined,
+}
+`;
+
+exports[`utilities/config > warn when configuration comes from a deprecated source 1`] = `
+{
+  "etag": true,
+  "public": "tests/__fixtures__/config/deprecated/app",
+  "symlinks": undefined,
+}
+`;
