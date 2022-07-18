@@ -44,8 +44,10 @@ exports[`utilities/cli > render help text 1`] = `
     -S, --symlinks                      Resolve symlinks instead of showing 404 errors
     
     --ssl-cert                          Optional path to an SSL/TLS certificate to serve with HTTPS
+                                        [90mSupported formats: PEM (default) and PKCS12 (PFX)[39m
     
     --ssl-key                           Optional path to the SSL/TLS certificate's private key
+                                        [90mApplicable only for PEM certificates[39m
 
     --ssl-pass                          Optional path to the SSL/TLS certificate's passphrase
 
