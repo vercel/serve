@@ -10,23 +10,24 @@ import Ajv from 'ajv';
 // @ts-expect-error No type definitions.
 import schema from '@zeit/schemas/deployment/config-static.js';
 import { resolve } from './promise.js';
+import { logger } from './logger.js';
 import type { ErrorObject } from 'ajv';
 import type { Configuration, Options, NodeError } from '../types.js';
 
 /**
  * Parses and returns a configuration object from the designated locations.
  *
- * @param cwd - The current working directory.
- * @param entry - The directory to serve.
+ * @param presentDirectory - The current working directory.
+ * @param directoryToServe - The directory to serve.
  * @param args - The arguments passed to the CLI.
  *
  * @returns The parsed configuration.
  */
 export const loadConfiguration = async (
-  cwd: string,
-  entry: string,
+  presentDirectory: string,
+  directoryToServe: string,
   args: Partial<Options>,
-): Promise<Configuration> => {
+): Promise<Partial<Configuration>> => {
   const files = ['serve.json', 'now.json', 'package.json'];
   if (args['--config']) files.unshift(args['--config']);
 
@@ -34,7 +35,7 @@ export const loadConfiguration = async (
   for (const file of files) {
     // Resolve the path to the configuration file relative to the directory
     // with the content in it.
-    const location = resolvePath(entry, file);
+    const location = resolvePath(directoryToServe, file);
 
     // Disabling the lint rule as we don't want to read all the files at once;
     // if we can retrieve the configuration from the first file itself, we
@@ -96,16 +97,25 @@ export const loadConfiguration = async (
     // Once we have found a valid configuration, assign it and stop looking
     // through more configuration files.
     Object.assign(config, parsedJson);
+
+    // Warn the user about using deprecated configuration files.
+    if (file === 'now.json' || file === 'package.json')
+      logger.warn(
+        'The config files `now.json` and `package.json` are deprecated. Please use `serve.json`.',
+      );
+
     break;
   }
 
-  // Make sure the directory with the content is relative to the entry path
+  // Make sure the directory with the content is relative to the directoryToServe path
   // provided by the user.
-  if (entry) {
+  if (directoryToServe) {
     const staticDirectory = config.public;
     config.public = resolveRelativePath(
-      cwd,
-      staticDirectory ? resolvePath(entry, staticDirectory) : entry,
+      presentDirectory,
+      staticDirectory
+        ? resolvePath(directoryToServe, staticDirectory)
+        : directoryToServe,
     );
   }
 
@@ -130,5 +140,5 @@ export const loadConfiguration = async (
   config.etag = !args['--no-etag'];
   config.symlinks = args['--symlinks'] || config.symlinks;
 
-  return config as Configuration;
+  return config;
 };
