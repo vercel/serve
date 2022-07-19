@@ -1,5 +1,5 @@
-// tests/server.https.test.ts
-// Tests for the serve with HTTPS.
+// tests/server.ssl.test.ts
+// Tests for the serve with SSL/HTTPS.
 
 import { afterEach, describe, test, expect, vi } from 'vitest';
 import { extend as createFetch } from 'got';
@@ -8,9 +8,9 @@ import { loadConfiguration } from '../source/utilities/config.js';
 import { startServer } from '../source/utilities/server.js';
 
 // The path to the fixtures for this test file.
-const fixture = 'tests/__fixtures__/server/';
+const fixtures = 'tests/__fixtures__/server/ssl';
 // The configuration from the fixture.
-const config = await loadConfiguration(process.cwd(), fixture, {});
+const config = await loadConfiguration(process.cwd(), fixtures, {});
 // A `fetch` instance to make requests to the server.
 const fetch = createFetch({
   https: { rejectUnauthorized: false },
@@ -23,7 +23,7 @@ afterEach(() => {
 describe('utilities/server', () => {
   test('start server with SSL when PFX certificate is supplied', async () => {
     const address = await startServer({ port: 5001 }, config, {
-      ['--ssl-cert']: 'tests/__fixtures__/server/cert.pfx',
+      ['--ssl-cert']: `${fixtures}/cert.pfx`,
     });
 
     expect(address.local).toBe('https://localhost:5001');
@@ -37,8 +37,8 @@ describe('utilities/server', () => {
 
   test('start server with SSL when PFX certificate and password is supplied', async () => {
     const address = await startServer({ port: 5002 }, config, {
-      ['--ssl-cert']: 'tests/__fixtures__/server/certWithPass.pfx',
-      ['--ssl-pass']: 'tests/__fixtures__/server/certPass',
+      ['--ssl-cert']: `${fixtures}/cert-with-pass.pfx`,
+      ['--ssl-pass']: `${fixtures}/cert-password`,
     });
 
     expect(address.local).toBe('https://localhost:5002');
@@ -53,7 +53,7 @@ describe('utilities/server', () => {
   test('start server with SSL when PFX certificate is supplied and password is missing', async () => {
     await expect(() =>
       startServer({ port: 5003 }, config, {
-        ['--ssl-cert']: 'tests/__fixtures__/server/certWithPass.pfx',
+        ['--ssl-cert']: `${fixtures}/cert-with-pass.pfx`,
       }),
     ).rejects.toThrowError('failure');
   });
@@ -61,17 +61,17 @@ describe('utilities/server', () => {
   test('start server with SSL when PFX certificate is supplied and password is invalid', async () => {
     await expect(() =>
       startServer({ port: 5003 }, config, {
-        ['--ssl-cert']: 'tests/__fixtures__/server/certWithPass.pfx',
-        ['--ssl-pass']: 'tests/__fixtures__/server/certWithPass.pfx',
+        ['--ssl-cert']: `${fixtures}/cert-with-pass.pfx`,
+        ['--ssl-pass']: `${fixtures}/cert-with-pass.pfx`,
       }),
     ).rejects.toThrowError('failure');
   });
 
   test('start server with SSL when PEM certificate, key and password is supplied', async () => {
     const address = await startServer({ port: 5004 }, config, {
-      ['--ssl-cert']: 'tests/__fixtures__/server/certWithPass.pem',
-      ['--ssl-key']: 'tests/__fixtures__/server/certWithPass.key',
-      ['--ssl-pass']: 'tests/__fixtures__/server/certPass',
+      ['--ssl-cert']: `${fixtures}/cert-with-pass.pem`,
+      ['--ssl-key']: `${fixtures}/cert-with-pass.key`,
+      ['--ssl-pass']: `${fixtures}/cert-password`,
     });
 
     expect(address.local).toBe('https://localhost:5004');
@@ -85,8 +85,8 @@ describe('utilities/server', () => {
 
   test('start server with SSL when PEM certificate, key is supplied and no password is supplied', async () => {
     const address = await startServer({ port: 5005 }, config, {
-      ['--ssl-cert']: 'tests/__fixtures__/server/cert.pem',
-      ['--ssl-key']: 'tests/__fixtures__/server/cert.key',
+      ['--ssl-cert']: `${fixtures}/cert.pem`,
+      ['--ssl-key']: `${fixtures}/cert.key`,
     });
 
     expect(address.local).toBe('https://localhost:5005');
@@ -100,7 +100,7 @@ describe('utilities/server', () => {
 
   test('start server without SSL when PEM certificate is supplied and key is missing', async () => {
     const address = await startServer({ port: 5006 }, config, {
-      ['--ssl-cert']: 'tests/__fixtures__/server/cert.pem',
+      ['--ssl-cert']: `${fixtures}/cert.pem`,
     });
 
     expect(address.local).toBe('http://localhost:5006');
