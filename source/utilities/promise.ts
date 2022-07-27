@@ -13,16 +13,20 @@
  * else console.log(data)
  * ```
  *
- * @param promise - The promise to resolve.
+ * @param promiseLike - The promise to resolve.
  * @returns An array containing the error as the first element, and the resolved
  *          data as the second element.
  */
-export const resolve = <T = unknown, E = Error>(
-  promise: Promise<T>,
-): Promise<[E, undefined] | [undefined, T]> =>
-  promise
-    .then<[undefined, T]>((data) => [undefined, data])
-    .catch<[E, undefined]>((error) => [error, undefined]);
+export const resolve = async <T = unknown, E = Error>(
+  promiseLike: Promise<T> | T,
+): Promise<[E, undefined] | [undefined, T]> => {
+  try {
+    const data = await promiseLike;
+    return [undefined, data];
+  } catch (error: unknown) {
+    return [error as E, undefined];
+  }
+};
 
 /**
  * Promisifies the passed function.

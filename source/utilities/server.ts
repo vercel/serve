@@ -88,21 +88,32 @@ export const startServer = async (
   };
 
   // Create the server.
-  const useSsl = args['--ssl-cert'] && args['--ssl-key'];
-  const httpMode = useSsl ? 'https' : 'http';
+  const sslCert = args['--ssl-cert'];
+  const sslKey = args['--ssl-key'];
   const sslPass = args['--ssl-pass'];
-  const serverConfig =
-    httpMode === 'https' && args['--ssl-cert'] && args['--ssl-key']
-      ? {
-          key: await readFile(args['--ssl-key']),
-          cert: await readFile(args['--ssl-cert']),
-          passphrase: sslPass ? await readFile(sslPass, 'utf8') : '',
-        }
-      : {};
-  const server =
-    httpMode === 'https'
-      ? https.createServer(serverConfig, serverHandler)
-      : http.createServer(serverHandler);
+  const isPFXFormat =
+    sslCert && /[.](?<extension>pfx|p12)$/.exec(sslCert) !== null;
+  const useSsl = sslCert && (sslKey || sslPass || isPFXFormat);
+
+  let serverConfig: http.ServerOptions | https.ServerOptions = {};
+  if (useSsl && sslCert && sslKey) {
+    // Format detected is PEM due to usage of SSL Key and Optional Passphrase.
+    serverConfig = {
+      key: await readFile(sslKey),
+      cert: await readFile(sslCert),
+      passphrase: sslPass ? await readFile(sslPass, 'utf8') : '',
+    };
+  } else if (useSsl && sslCert && isPFXFormat) {
+    // Format detected is PFX.
+    serverConfig = {
+      pfx: await readFile(sslCert),
+      passphrase: sslPass ? await readFile(sslPass, 'utf8') : '',
+    };
+  }
+
+  const server = useSsl
+    ? https.createServer(serverConfig, serverHandler)
+    : http.createServer(serverHandler);
 
   // Once the server starts, return the address it is running on so the CLI
   // can tell the user.
@@ -127,8 +138,9 @@ export const startServer = async (
       else address = details.address;
       const ip = getNetworkAddress();
 
-      local = `${httpMode}://${address}:${details.port}`;
-      network = ip ? `${httpMode}://${ip}:${details.port}` : undefined;
+      const protocol = useSsl ? 'https' : 'http';
+      local = `${protocol}://${address}:${details.port}`;
+      network = ip ? `${protocol}://${ip}:${details.port}` : undefined;
     }
 
     return {
@@ -148,17 +160,17 @@ export const startServer = async (
 
   // If the endpoint is a non-zero port, make sure it is not occupied.
   if (
-    typeof endpoint[0] === 'number' &&
-    !isNaN(endpoint[0]) &&
-    endpoint[0] !== 0
+    typeof endpoint.port === 'number' &&
+    !isNaN(endpoint.port) &&
+    endpoint.port !== 0
   ) {
-    const port = endpoint[0];
+    const port = endpoint.port;
     const isClosed = await isPortReachable(port, {
-      host: endpoint[1] ?? 'localhost',
+      host: endpoint.host ?? 'localhost',
     });
     // If the port is already taken, then start the server on a random port
     // instead.
-    if (isClosed) return startServer([0], config, args, port);
+    if (isClosed) return startServer({ port: 0 }, config, args, port);
 
     // Otherwise continue on to starting the server.
   }
@@ -166,18 +178,23 @@ export const startServer = async (
   // Finally, start the server.
   return new Promise((resolve, _reject) => {
     // If only a port is specified, listen on the given port on localhost.
-    if (endpoint.length === 1 && typeof endpoint[0] === 'number')
-      server.listen(endpoint[0], () => resolve(getServerDetails()));
+    if (
+      typeof endpoint.port !== 'undefined' &&
+      typeof endpoint.host === 'undefined'
+    )
+      server.listen(endpoint.port, () => resolve(getServerDetails()));
     // If the path to a socket or a pipe is given, listen on it.
-    else if (endpoint.length === 1 && typeof endpoint[0] === 'string')
-      server.listen(endpoint[0], () => resolve(getServerDetails()));
+    else if (
+      typeof endpoint.port === 'undefined' &&
+      typeof endpoint.host !== 'undefined'
+    )
+      server.listen(endpoint.host, () => resolve(getServerDetails()));
     // If a port number and hostname are given, listen on `host:port`.
     else if (
-      endpoint.length === 2 &&
-      typeof endpoint[0] === 'number' &&
-      typeof endpoint[1] === 'string'
+      typeof endpoint.port !== 'undefined' &&
+      typeof endpoint.host !== 'undefined'
     )
-      server.listen(endpoint[0], endpoint[1], () =>
+      server.listen(endpoint.port, endpoint.host, () =>
         resolve(getServerDetails()),
       );
   });
