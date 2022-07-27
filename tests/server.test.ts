@@ -1,11 +1,12 @@
-// tests/config.test.ts
-// Tests for the configuration loader.
+// tests/server.test.ts
+// Tests for the server creating function.
 
 import { afterEach, describe, test, expect, vi } from 'vitest';
 import { extend as createFetch } from 'got';
 
 import { loadConfiguration } from '../source/utilities/config.js';
 import { startServer } from '../source/utilities/server.js';
+import { logger } from '../source/utilities/logger.js';
 
 // The path to the fixtures for this test file.
 const fixture = 'tests/__fixtures__/server/';
@@ -53,5 +54,47 @@ describe('utilities/server', () => {
 
     const response = await fetch(address.local!);
     expect(response.ok);
+  });
+
+  // Make sure the server logs requests by default.
+  test('log requests to the server by default', async () => {
+    const consoleSpy = vi.spyOn(logger, 'http');
+    const address = await startServer({ port: 3003 }, config, {});
+
+    const response = await fetch(address.local!);
+    expect(response.ok);
+
+    expect(consoleSpy).toBeCalledTimes(2);
+
+    const requestLog = consoleSpy.mock.calls[0].join(' ');
+    const responseLog = consoleSpy.mock.calls[1].join(' ');
+
+    const time = new Date();
+    const formattedTime = `${time.toLocaleDateString()} ${time.toLocaleTimeString()}`;
+    const ip = '127.0.0.1';
+    const requestString = 'GET /';
+    const status = 200;
+
+    expect(requestLog).toMatch(
+      new RegExp(`${formattedTime}.*${ip}.*${requestString}`),
+    );
+    expect(responseLog).toMatch(
+      new RegExp(
+        `${formattedTime}.*${ip}.*Returned ${status} in [0-9][0-9]? ms`,
+      ),
+    );
+  });
+
+  // Make sure the server logs requests by default.
+  test('log requests to the server by default', async () => {
+    const consoleSpy = vi.spyOn(logger, 'http');
+    const address = await startServer({ port: 3004 }, config, {
+      '--no-request-logging': true,
+    });
+
+    const response = await fetch(address.local!);
+    expect(response.ok);
+
+    expect(consoleSpy).not.toHaveBeenCalled();
   });
 });
