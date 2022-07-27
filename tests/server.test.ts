@@ -59,7 +59,7 @@ describe('utilities/server', () => {
   // Make sure the server logs requests by default.
   test('log requests to the server by default', async () => {
     const consoleSpy = vi.spyOn(logger, 'http');
-    const address = await startServer({ port: 3003 }, config, {});
+    const address = await startServer({ port: 3003, host: '::1' }, config, {});
 
     const response = await fetch(address.local!);
     expect(response.ok);
@@ -71,7 +71,7 @@ describe('utilities/server', () => {
 
     const time = new Date();
     const formattedTime = `${time.toLocaleDateString()} ${time.toLocaleTimeString()}`;
-    const ip = '127.0.0.1';
+    const ip = '::1';
     const requestString = 'GET /';
     const status = 200;
 
