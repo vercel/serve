@@ -86,6 +86,9 @@
     "source/**/*.ts": [
       "eslint --max-warnings 0 --fix",
       "vitest related --run"
+    ],
+    "tests": [
+      "vitest --run"
     ]
   }
 }
