@@ -65,7 +65,8 @@ export const startServer = async (
   const sslCert = args['--ssl-cert'];
   const sslKey = args['--ssl-key'];
   const sslPass = args['--ssl-pass'];
-  const isPFXFormat = sslCert && /[.](?<extension>pfx|p12)$/.exec(sslCert);
+  const isPFXFormat =
+    sslCert && /[.](?<extension>pfx|p12)$/.exec(sslCert) !== null;
   const useSsl = sslCert && (sslKey || sslPass || isPFXFormat);
 
   let serverConfig: http.ServerOptions | https.ServerOptions = {};
