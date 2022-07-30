@@ -38,11 +38,13 @@ const helpText = chalkTemplate`
 
     -p                                  Specify custom port
 
-    -d, --debug                         Show debugging information
-
     -s, --single                        Rewrite all not-found requests to \`index.html\`
 
+    -d, --debug                         Show debugging information
+
     -c, --config                        Specify custom path to \`serve.json\`
+
+    -L, --no-request-logging            Do not log any request information to the console.
 
     -C, --cors                          Enable CORS, sets \`Access-Control-Allow-Origin\` to \`*\`
 

@@ -75,6 +75,7 @@ export declare interface Options {
   '--single': boolean;
   '--debug': boolean;
   '--config': Path;
+  '--no-request-logging': boolean;
   '--no-clipboard': boolean;
   '--no-compression': boolean;
   '--no-etag': boolean;
