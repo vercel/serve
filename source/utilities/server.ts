@@ -63,6 +63,8 @@ export const startServer = async (
 
       if (args['--cors'])
         response.setHeader('Access-Control-Allow-Origin', '*');
+      if (args['--no-cache'])
+        response.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
       if (!args['--no-compression'])
         await compress(request as ExpressRequest, response as ExpressResponse);
 
