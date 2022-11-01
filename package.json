@@ -45,7 +45,7 @@
     "clipboardy": "3.0.0",
     "compression": "1.7.4",
     "is-port-reachable": "4.0.0",
-    "serve-handler": "6.1.4",
+    "serve-handler": "6.1.5",
     "update-check": "1.5.4"
   },
   "devDependencies": {
