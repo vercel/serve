@@ -159,6 +159,7 @@ const options = {
   '--ssl-cert': String,
   '--ssl-key': String,
   '--ssl-pass': String,
+  '--no-request-logging': Boolean,
   // A list of aliases for the above options.
   '-h': '--help',
   '-v': '--version',
@@ -170,6 +171,7 @@ const options = {
   '-u': '--no-compression',
   '-S': '--symlinks',
   '-C': '--cors',
+  '-L': '--no-request-logging',
 
   // The `-p` option is deprecated and is kept only for backwards-compatibility.
   '-p': '--listen',
