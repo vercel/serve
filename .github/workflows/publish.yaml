@@ -29,6 +29,7 @@ jobs:
       - name: Run all tests
         run: pnpm test
       - name: Publish
-        run: pnpm publish
+        # Use `--no-git-checks` due to how GitHub Actions checks out
+        run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_ELEVATED }}
