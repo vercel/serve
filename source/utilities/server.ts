@@ -61,8 +61,11 @@ export const startServer = async (
           chalk.cyan(requestUrl),
         );
 
-      if (args['--cors'])
+      if (args['--cors']) {
         response.setHeader('Access-Control-Allow-Origin', '*');
+        response.setHeader('Access-Control-Allow-Credentials', 'true');
+        response.setHeader('Access-Control-Allow-Private-Network', 'true');
+      }
       if (!args['--no-compression'])
         await compress(request as ExpressRequest, response as ExpressResponse);
 
