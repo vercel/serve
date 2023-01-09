@@ -66,6 +66,8 @@ const helpText = chalkTemplate`
 
     --no-port-switching                 Do not open a port other than the one specified when it\'s taken.
 
+    --no-cache                          Sets \`Cache-Control\` to \`no-cache, no-store, must-revalidate\`
+
   {bold ENDPOINTS}
 
     Listen endpoints (specified by the {bold --listen} or {bold -l} options above) instruct {cyan serve}
