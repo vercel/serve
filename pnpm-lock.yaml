@@ -4,7 +4,7 @@ specifiers:
   '@types/compression': 1.7.2
   '@types/serve-handler': 6.1.1
   '@vercel/style-guide': 3.0.0
-  '@zeit/schemas': 2.21.0
+  '@zeit/schemas': 2.29.0
   ajv: 8.11.0
   arg: 5.0.2
   boxen: 7.0.0
@@ -27,7 +27,7 @@ specifiers:
   vitest: 0.18.0
 
 dependencies:
-  '@zeit/schemas': 2.21.0
+  '@zeit/schemas': 2.29.0
   ajv: 8.11.0
   arg: 5.0.2
   boxen: 7.0.0
@@ -763,10 +763,10 @@ packages:
       - typescript
     dev: true
 
-  /@zeit/schemas/2.21.0:
+  /@zeit/schemas/2.29.0:
     resolution:
       {
-        integrity: sha512-/J4WBTpWtQ4itN1rb3ao8LfClmVcmz2pO6oYb7Qd4h7VSqUhIbJIvrykz9Ew1WMg6eFWsKdsMHc5uPbFxqlCpg==,
+        integrity: sha512-g5QiLIfbg3pLuYUJPlisNKY+epQJTcMDsOnVNkscrDP1oi7vmJnzOANYJI/1pZcVJ6umUkBv3aFtlg1UvUHGzA==,
       }
     dev: false
 
