@@ -48,6 +48,11 @@ Once that's done, you can run this command inside your project's directory...
 > serve folder-name/
 ```
 
+You can make all unknown paths fall back on `index.html` (which should often be the case in single-page applications):
+```bash
+> serve --single
+```
+
 Finally, run this command to see a list of all available options:
 
 ```bash
