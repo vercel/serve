@@ -31,13 +31,16 @@ export const registerCloseListener = (fn: () => void): void => {
  * @returns The address of the host.
  */
 export const getNetworkAddress = (): string | undefined => {
-  for (const interfaceDetails of Object.values(networkInterfaces)) {
+  for (const name of Object.keys(networkInterfaces)) {
+    const interfaceDetails = networkInterfaces[name];
+
     if (!interfaceDetails) continue;
 
     for (const details of interfaceDetails) {
       const { address, family, internal } = details;
 
-      if (family === 'IPv4' && !internal) return address;
+      if (family === 'IPv4' && !internal && !name.startsWith('vEthernet'))
+        return address;
     }
   }
 };
