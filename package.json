@@ -18,7 +18,7 @@
     "build/"
   ],
   "engines": {
-    "node": ">= 14"
+    "node": ">= 18"
   },
   "scripts": {
     "develop": "tsx watch ./source/main.ts",
