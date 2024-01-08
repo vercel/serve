@@ -26,7 +26,7 @@
 
 ## Usage
 
-> `serve` v14 onwards requires Node v14 to run. Please use `serve` v13 if you cannot upgrade to Node v14.
+> `serve` v15 onwards requires Node v18 to run. Please use `serve` v14 if you cannot upgrade to Node v18.
 
 The quickest way to get started is to just run `npx serve` in your project's directory.
 

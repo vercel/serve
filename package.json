@@ -1,6 +1,6 @@
 {
   "name": "serve",
-  "version": "14.2.1",
+  "version": "15.0.0",
   "description": "Static file serving and directory listing",
   "keywords": [
     "vercel",
@@ -18,7 +18,7 @@
     "build/"
   ],
   "engines": {
-    "node": ">= 14"
+    "node": ">= 18"
   },
   "scripts": {
     "develop": "tsx watch ./source/main.ts",
@@ -41,7 +41,7 @@
     "boxen": "7.0.0",
     "chalk": "5.0.1",
     "chalk-template": "0.4.0",
-    "clipboardy": "3.0.0",
+    "clipboardy": "4.0.0",
     "compression": "1.7.4",
     "is-port-reachable": "4.0.0",
     "serve-handler": "6.1.5",
