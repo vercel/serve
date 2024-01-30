@@ -43,10 +43,6 @@ const BASE_PREVIEW_SHORTCUTS: CLIShortcut[] = [
 type Servers = ServerAddress[];
 
 export function bindCLIShortcuts(servers: Servers): void {
-  // if (!server.httpServer || !process.stdin.isTTY || process.env.CI) {
-  //   return;
-  // }
-
   // Write some help info to the console.
   logger.info(
     chalk.dim(chalk.green('  ➜')) +
@@ -90,7 +86,7 @@ export function bindCLIShortcuts(servers: Servers): void {
 
     actionRunning = true;
     if (shortcut.perServerInstance) {
-      // We want to execute action for each server instance.
+      // We want to execute action for every server instance.
       for (const server of servers) {
         // eslint-disable-next-line no-await-in-loop
         await shortcut.action(server);
@@ -109,8 +105,10 @@ export function bindCLIShortcuts(servers: Servers): void {
     });
   });
 
-  // TODO: Important! Close the readline interface when the server closes.
-  // TODO: server.httpServer.on('close', () => rl.close());
+  // Important! Close the readline interface when the server closes.
+  // server.httpServer.on('close', () => rl.close());
+
+  // In future; do above for all the servers if needed.
   // let closedServers = 0;
   // for (const server of servers) {
   //   server.httpServer.on('close', () => {

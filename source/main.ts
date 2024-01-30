@@ -149,7 +149,7 @@ for (const endpoint of args['--listen']) {
     }),
   );
 
-  // Check if --open flag is sent to open browser
+  // Check if --open flag is set.
   if (args['--open']) {
     const url = serverInstance.local ?? serverInstance.network;
     if (typeof url === 'string') {

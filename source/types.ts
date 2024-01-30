@@ -93,7 +93,7 @@ export declare type Arguments = Partial<Options> & {
   _: string[];
 };
 
-//
+// Define logger interface
 export declare interface Logger {
   http: (...message: string[]) => void;
   info: (...message: string[]) => void;
