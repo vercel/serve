@@ -73,6 +73,9 @@ devDependencies:
   lint-staged:
     specifier: 13.0.3
     version: 13.0.3
+  ncp:
+    specifier: 2.0.0
+    version: 2.0.0
   prettier:
     specifier: 2.7.1
     version: 2.7.1
@@ -4277,6 +4280,14 @@ packages:
       {
         integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==,
       }
+    dev: true
+
+  /ncp@2.0.0:
+    resolution:
+      {
+        integrity: sha512-zIdGUrPRFTUELUvr3Gmc7KZ2Sw/h1PiVM0Af/oHB6zgnV1ikqSfRk+TOufi79aHYCW3NiOXmr1BP5nWbzojLaA==,
+      }
+    hasBin: true
     dev: true
 
   /negotiator@0.6.3:
