@@ -92,3 +92,12 @@ export declare interface Options {
 export declare type Arguments = Partial<Options> & {
   _: string[];
 };
+
+//
+export declare interface Logger {
+  http: (...message: string[]) => void;
+  info: (...message: string[]) => void;
+  warn: (...message: string[]) => void;
+  error: (...message: string[]) => void;
+  log: (...message: string[]) => void;
+}

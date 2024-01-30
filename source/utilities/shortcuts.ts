@@ -1,18 +1,16 @@
 import readline from 'node:readline';
 import chalk from 'chalk';
+import { getHelpText } from '../utilities/cli.js';
 import { logger } from './logger';
-import { openBrowser } from './openBrowser';
-
+import { openBrowser } from './open-browser';
 import type { ServerAddress } from '../types.js';
 
-import { getHelpText } from '../utilities/cli.js';
-
-export type CLIShortcut = {
+export interface CLIShortcut {
   key: string;
   description: string;
   action: (server?: ServerAddress) => void | Promise<void>;
   perServerInstance: boolean;
-};
+}
 
 const BASE_PREVIEW_SHORTCUTS: CLIShortcut[] = [
   {

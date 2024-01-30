@@ -1,4 +1,4 @@
-import path, { resolve } from 'node:path';
+import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export const SERVE_PACKAGE_DIR = resolve(

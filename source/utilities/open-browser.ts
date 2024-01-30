@@ -10,49 +10,57 @@
 
 import { join } from 'node:path';
 import { exec } from 'node:child_process';
-import type { ExecOptions } from 'node:child_process';
 import open from 'open';
 import spawn from 'cross-spawn';
 import chalk from 'chalk';
-import logger from './logger.js';
-
-import { SERVE_PACKAGE_DIR } from './packageDirectory.js';
-
+import { SERVE_PACKAGE_DIR } from './package-directory.js';
+import type { Logger } from '../types.js';
+import type { ExecOptions, ChildProcess } from 'node:child_process';
+import type { Options } from 'open';
 /**
  * Reads the BROWSER environment variable and decides what to do with it.
  */
 export function openBrowser(
   url: string,
   opt: string | true,
-  logger: logger, // Logger,
+  logger: Logger, // Logger,
 ): void {
   // The browser executable to open.
   // See https://github.com/sindresorhus/open#app for documentation.
-  const browser = typeof opt === 'string' ? opt : process.env.BROWSER || '';
+  const browser: string | undefined =
+    typeof opt === 'string' ? opt : process.env.BROWSER || '';
   if (browser.toLowerCase().endsWith('.js')) {
     executeNodeScript(browser, url, logger);
   } else if (browser.toLowerCase() !== 'none') {
     const browserArgs = process.env.BROWSER_ARGS
       ? process.env.BROWSER_ARGS.split(' ')
       : [];
-    startBrowserProcess(browser, browserArgs, url);
+    startBrowserProcess(browser, browserArgs, url, logger).catch((error) => {
+      logger.log(`Error: ${JSON.stringify(error)}`);
+    });
   }
 }
 
 function executeNodeScript(scriptPath: string, url: string, logger: Logger) {
-  const extraArgs = process.argv.slice(2);
-  const child = spawn(process.execPath, [scriptPath, ...extraArgs, url], {
-    stdio: 'inherit',
-  });
+  const extraArgs: string[] = process.argv.slice(2);
+
+  const child: ChildProcess = spawn(
+    `${process.execPath}`,
+    [scriptPath, ...extraArgs, url],
+    {
+      stdio: 'inherit',
+    },
+  );
+
   child.on('close', (code) => {
     if (code !== 0) {
       logger.error(
         chalk.red(
           `\nThe script specified as BROWSER environment variable failed.\n\n${chalk.cyan(
             scriptPath,
-          )} exited with code ${code}.`,
+          )} exited with code ${code ?? ''}.`,
         ),
-        { error: null },
+        JSON.stringify({ error: null }),
       );
     }
   });
@@ -70,10 +78,12 @@ const supportedChromiumBrowsers = [
 ];
 
 async function startBrowserProcess(
-  browser: string | undefined,
+  browserName: string | undefined,
   browserArgs: string[],
   url: string,
+  logger: Logger,
 ) {
+  let browser = browserName;
   // If we're on OS X, the user hasn't specifically
   // requested a different browser, we can try opening
   // a Chromium browser with AppleScript. This lets us reuse an
@@ -121,10 +131,12 @@ async function startBrowserProcess(
   // Fallback to open
   // (It will always open new tab)
   try {
-    const options: open.Options = browser
+    const options: Options | undefined = browser
       ? { app: { name: browser, arguments: browserArgs } }
       : {};
-    open(url, options).catch(() => {}); // Prevent `unhandledRejection` error.
+    open(url, options).catch((error) => {
+      logger.error(`Error: ${JSON.stringify(error, null, 2)}`);
+    }); // Prevent `unhandledRejection` error.
     return true;
   } catch (err) {
     return false;

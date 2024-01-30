@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "@types/compression": "1.7.2",
+    "@types/cross-spawn": "6.0.6",
     "@types/serve-handler": "6.1.1",
     "@vercel/style-guide": "3.0.0",
     "c8": "7.12.0",

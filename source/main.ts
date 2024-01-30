@@ -20,7 +20,7 @@ import {
 import { loadConfiguration } from './utilities/config.js';
 import { logger } from './utilities/logger.js';
 import { bindCLIShortcuts } from './utilities/shortcuts';
-import { openBrowser } from './utilities/openBrowser';
+import { openBrowser } from './utilities/open-browser';
 
 // Parse the options passed by the user.
 const [parseError, args] = await resolve(parseArguments());
