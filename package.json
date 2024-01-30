@@ -38,7 +38,7 @@
     "@zeit/schemas": "2.35.0",
     "ajv": "8.12.0",
     "arg": "5.0.2",
-    "boxen": "7.0.0",
+    "boxen": "7.1.1",
     "chalk": "5.0.1",
     "chalk-template": "0.4.0",
     "clipboardy": "3.0.0",

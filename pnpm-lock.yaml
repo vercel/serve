@@ -7,7 +7,7 @@ specifiers:
   '@zeit/schemas': 2.35.0
   ajv: 8.12.0
   arg: 5.0.2
-  boxen: 7.0.0
+  boxen: 7.1.1
   c8: 7.12.0
   chalk: 5.0.1
   chalk-template: 0.4.0
@@ -30,7 +30,7 @@ dependencies:
   '@zeit/schemas': 2.35.0
   ajv: 8.12.0
   arg: 5.0.2
-  boxen: 7.0.0
+  boxen: 7.1.1
   chalk: 5.0.1
   chalk-template: 0.4.0
   clipboardy: 3.0.0
@@ -1044,21 +1044,21 @@ packages:
     engines: { node: '>=8' }
     dev: true
 
-  /boxen/7.0.0:
+  /boxen/7.1.1:
     resolution:
       {
-        integrity: sha512-j//dBVuyacJbvW+tvZ9HuH03fZ46QcaKvvhZickZqtB271DxJ7SNRSNxrV/dZX0085m7hISRZWbzWlJvx/rHSg==,
+        integrity: sha512-2hCgjEmP8YLWQ130n2FerGv7rYpfBmnmp9Uy2Le1vge6X3gZIfSmEzP5QTDElFxcvVcXlEn8Aq6MU/PZygIOog==,
       }
     engines: { node: '>=14.16' }
     dependencies:
       ansi-align: 3.0.1
-      camelcase: 7.0.0
-      chalk: 5.0.1
+      camelcase: 7.0.1
+      chalk: 5.3.0
       cli-boxes: 3.0.0
       string-width: 5.1.2
       type-fest: 2.16.0
       widest-line: 4.0.1
-      wrap-ansi: 8.0.1
+      wrap-ansi: 8.1.0
     dev: false
 
   /brace-expansion/1.1.11:
@@ -1188,10 +1188,10 @@ packages:
     engines: { node: '>=6' }
     dev: true
 
-  /camelcase/7.0.0:
+  /camelcase/7.0.1:
     resolution:
       {
-        integrity: sha512-JToIvOmz6nhGsUhAYScbo2d6Py5wojjNfoxoc2mEVLUdJ70gJK2gnd+ABY1Tc3sVMyK7QDPtN0T/XdlCQWITyQ==,
+        integrity: sha512-xlx1yCK2Oc1APsPXDL2LdlNP6+uu8OCDdhOBSVT279M/S+y75O30C2VuD8T2ogdePBBl7PfPF4504tnLgX3zfw==,
       }
     engines: { node: '>=14.16' }
     dev: false
@@ -1248,6 +1248,14 @@ packages:
     resolution:
       {
         integrity: sha512-Fo07WOYGqMfCWHOzSXOt2CxDbC6skS/jO9ynEcmpANMoPrD+W1r1K6Vx7iNm+AQmETU1Xr2t+n8nzkV9t6xh3w==,
+      }
+    engines: { node: ^12.17.0 || ^14.13 || >=16.0.0 }
+    dev: false
+
+  /chalk/5.3.0:
+    resolution:
+      {
+        integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==,
       }
     engines: { node: ^12.17.0 || ^14.13 || >=16.0.0 }
     dev: false
@@ -5427,10 +5435,10 @@ packages:
       strip-ansi: 6.0.1
     dev: true
 
-  /wrap-ansi/8.0.1:
+  /wrap-ansi/8.1.0:
     resolution:
       {
-        integrity: sha512-QFF+ufAqhoYHvoHdajT/Po7KoXVBPXS2bgjIam5isfWJPfIOnQZ50JtUiVvCv/sjgacf3yRrt2ZKUZ/V4itN4g==,
+        integrity: sha512-si7QWI6zUMq56bESFvagtmzMdGOtoxfR+Sez11Mobfc7tm+VkUckk9bW2UeffTGVUbOksxmSw0AA2gs8g71NCQ==,
       }
     engines: { node: '>=12' }
     dependencies:
