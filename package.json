@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@zeit/schemas": "2.29.0",
-    "ajv": "8.11.0",
+    "ajv": "8.12.0",
     "arg": "5.0.2",
     "boxen": "7.0.0",
     "chalk": "5.0.1",
