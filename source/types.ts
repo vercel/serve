@@ -74,6 +74,7 @@ export declare interface Options {
   '--listen': ParsedEndpoint[];
   '--single': boolean;
   '--debug': boolean;
+  '--open': boolean;
   '--config': Path;
   '--no-request-logging': boolean;
   '--no-clipboard': boolean;

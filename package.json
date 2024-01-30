@@ -43,7 +43,9 @@
     "chalk-template": "0.4.0",
     "clipboardy": "3.0.0",
     "compression": "1.7.4",
+    "cross-spawn": "7.0.3",
     "is-port-reachable": "4.0.0",
+    "open": "10.0.3",
     "serve-handler": "6.1.5",
     "update-check": "1.5.4"
   },
