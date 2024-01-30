@@ -74,6 +74,7 @@ export declare interface Options {
   '--listen': ParsedEndpoint[];
   '--single': boolean;
   '--debug': boolean;
+  '--open': boolean;
   '--config': Path;
   '--no-request-logging': boolean;
   '--no-clipboard': boolean;
@@ -91,3 +92,12 @@ export declare interface Options {
 export declare type Arguments = Partial<Options> & {
   _: string[];
 };
+
+// Define logger interface
+export declare interface Logger {
+  http: (...message: string[]) => void;
+  info: (...message: string[]) => void;
+  warn: (...message: string[]) => void;
+  error: (...message: string[]) => void;
+  log: (...message: string[]) => void;
+}

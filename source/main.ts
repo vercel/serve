@@ -19,6 +19,8 @@ import {
 } from './utilities/cli.js';
 import { loadConfiguration } from './utilities/config.js';
 import { logger } from './utilities/logger.js';
+import { bindCLIShortcuts } from './utilities/shortcuts';
+import { openBrowser } from './utilities/open-browser';
 
 // Parse the options passed by the user.
 const [parseError, args] = await resolve(parseArguments());
@@ -89,15 +91,15 @@ if (args['--single']) {
   ];
 }
 
+const serverInstances = [];
+
 // Start the server for each endpoint passed by the user.
 for (const endpoint of args['--listen']) {
   // Disabling this rule as we want to start each server one by one.
   // eslint-disable-next-line no-await-in-loop
-  const { local, network, previous } = await startServer(
-    endpoint,
-    config,
-    args,
-  );
+  const serverInstance = await startServer(endpoint, config, args);
+  const { local, network, previous } = serverInstance;
+  serverInstances.push(serverInstance);
 
   const copyAddress = !args['--no-clipboard'];
 
@@ -146,7 +148,19 @@ for (const endpoint of args['--listen']) {
       margin: 1,
     }),
   );
+
+  // Check if --open flag is set.
+  if (args['--open']) {
+    const url = serverInstance.local ?? serverInstance.network;
+    if (typeof url === 'string') {
+      openBrowser(url, true, logger);
+    } else {
+      logger.warn('No URL available to open in browser');
+    }
+  }
 }
+
+bindCLIShortcuts(serverInstances);
 
 // Print out a message to let the user know we are shutting down the server
 // when they press Ctrl+C or kill the process externally.

@@ -42,6 +42,8 @@ const helpText = chalkTemplate`
 
     -d, --debug                         Show debugging information
 
+    -o, --open                          Open browser window after starting the server
+
     -c, --config                        Specify custom path to \`serve.json\`
 
     -L, --no-request-logging            Do not log any request information to the console.
@@ -149,6 +151,7 @@ const options = {
   '--listen': [parseEndpoint] as [typeof parseEndpoint],
   '--single': Boolean,
   '--debug': Boolean,
+  '--open': Boolean,
   '--config': String,
   '--no-clipboard': Boolean,
   '--no-compression': Boolean,
@@ -166,6 +169,7 @@ const options = {
   '-l': '--listen',
   '-s': '--single',
   '-d': '--debug',
+  '-o': '--open',
   '-c': '--config',
   '-n': '--no-clipboard',
   '-u': '--no-compression',
