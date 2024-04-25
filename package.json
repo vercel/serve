@@ -35,7 +35,7 @@
     "prepare": "husky install config/husky && pnpm compile"
   },
   "dependencies": {
-    "@zeit/schemas": "2.29.0",
+    "@zeit/schemas": "2.36.0",
     "ajv": "8.12.0",
     "arg": "5.0.2",
     "boxen": "7.0.0",
