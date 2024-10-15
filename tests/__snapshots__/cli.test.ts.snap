@@ -1,4 +1,4 @@
-// Vitest Snapshot v1
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`utilities/cli > render help text 1`] = `
 "
@@ -60,7 +60,7 @@ exports[`utilities/cli > render help text 1`] = `
     Listen endpoints (specified by the [1m--listen[22m or [1m-l[22m options above) instruct [36mserve[39m
     to listen on one or more interfaces/ports, UNIX domain sockets, or Windows named pipes.
 
-    For TCP ports on hostname \\"localhost\\":
+    For TCP ports on hostname "localhost":
 
       [1m$[22m [36mserve[39m -l [4m1234[24m
 
@@ -74,6 +74,6 @@ exports[`utilities/cli > render help text 1`] = `
 
     For Windows named pipe endpoints:
 
-      [1m$[22m [36mserve[39m -l pipe:\\\\\\\\.\\\\pipe\\\\[4mPipeName[24m
+      [1m$[22m [36mserve[39m -l pipe:\\\\.\\pipe\\[4mPipeName[24m
 "
 `;

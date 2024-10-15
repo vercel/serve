@@ -21,6 +21,7 @@ import type {
   ServerAddress,
 } from '../types.js';
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 const compress = promisify(compression());
 
 /**
