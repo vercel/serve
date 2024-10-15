@@ -44,8 +44,11 @@
     "clipboardy": "3.0.0",
     "compression": "1.7.4",
     "is-port-reachable": "4.0.0",
-    "serve-handler": "6.1.5",
+    "serve-handler": "6.1.6",
     "update-check": "1.5.4"
+  },
+  "peerDependencies": {
+    "@babel/core": "^7.25.8"
   },
   "devDependencies": {
     "@types/compression": "1.7.2",

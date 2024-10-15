@@ -19,7 +19,7 @@ specifiers:
   is-port-reachable: 4.0.0
   lint-staged: 13.0.3
   prettier: 2.7.1
-  serve-handler: 6.1.5
+  serve-handler: 6.1.6
   tsup: 6.1.3
   tsx: 3.7.1
   typescript: 4.6.4
@@ -36,7 +36,7 @@ dependencies:
   clipboardy: 3.0.0
   compression: 1.7.4
   is-port-reachable: 4.0.0
-  serve-handler: 6.1.5
+  serve-handler: 6.1.6
   update-check: 1.5.4
 
 devDependencies:
@@ -2522,15 +2522,6 @@ packages:
       }
     dev: true
 
-  /fast-url-parser/1.1.3:
-    resolution:
-      {
-        integrity: sha512-5jOCVXADYNuRkKFzNJ0dCCewsZiYo0dz8QNYljkOpFC6r2U4OBmKtvm/Tsuh4w1YYdDqDb31a8TVhBJ2OJKdqQ==,
-      }
-    dependencies:
-      punycode: 1.4.1
-    dev: false
-
   /fastq/1.13.0:
     resolution:
       {
@@ -4140,10 +4131,10 @@ packages:
       }
     dev: true
 
-  /path-to-regexp/2.2.1:
+  /path-to-regexp/3.3.0:
     resolution:
       {
-        integrity: sha512-gu9bD6Ta5bwGrrU8muHzVOBFFREpp2iRkVfhBJahwJ6p6Xw20SjT0MxLnwkjOibQmGSYhiUnf2FLe7k+jcFmGQ==,
+        integrity: sha512-qyCH421YQPS2WFDxDjftfc1ZR5WKQzVzqsp4n9M2kQhVOo/ByahFoUNJfl58kOcEGfQ//7weFTDhm+ss8Ecxgw==,
       }
     dev: false
 
@@ -4270,13 +4261,6 @@ packages:
       end-of-stream: 1.4.4
       once: 1.4.0
     dev: true
-
-  /punycode/1.4.1:
-    resolution:
-      {
-        integrity: sha512-jmYNElW7yvO7TV33CjSmvSiE2yco3bV2czu/OzDKdMNVZQWfxCblURLhf+47syQRBntjfLdd/H0egrzIG+oaFQ==,
-      }
-    dev: false
 
   /punycode/2.1.1:
     resolution:
@@ -4614,19 +4598,18 @@ packages:
       lru-cache: 6.0.0
     dev: true
 
-  /serve-handler/6.1.5:
+  /serve-handler/6.1.6:
     resolution:
       {
-        integrity: sha512-ijPFle6Hwe8zfmBxJdE+5fta53fdIY0lHISJvuikXB3VYFafRjMRpOffSPvCYsbKyBA7pvy9oYr/BT1O3EArlg==,
+        integrity: sha512-x5RL9Y2p5+Sh3D38Fh9i/iQ5ZK+e4xuXRd/pGbM4D13tgo/MGwbttUk8emytcr1YYzBYs+apnUngBDFYfpjPuQ==,
       }
     dependencies:
       bytes: 3.0.0
       content-disposition: 0.5.2
-      fast-url-parser: 1.1.3
       mime-types: 2.1.18
       minimatch: 3.1.2
       path-is-inside: 1.0.2
-      path-to-regexp: 2.2.1
+      path-to-regexp: 3.3.0
       range-parser: 1.2.0
     dev: false
 
