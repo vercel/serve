@@ -67,6 +67,7 @@ export const startServer = async (
         response.setHeader('Access-Control-Allow-Headers', '*');
         response.setHeader('Access-Control-Allow-Credentials', 'true');
         response.setHeader('Access-Control-Allow-Private-Network', 'true');
+        response.setHeader('Access-Control-Expose-Headers', '*');
       }
       if (!args['--no-compression'])
         await compress(request as ExpressRequest, response as ExpressResponse);
