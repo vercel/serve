@@ -42,7 +42,7 @@
     "chalk": "5.0.1",
     "chalk-template": "0.4.0",
     "clipboardy": "3.0.0",
-    "compression": "1.7.4",
+    "compression": "1.8.1",
     "is-port-reachable": "4.0.0",
     "serve-handler": "6.1.6",
     "update-check": "1.5.4"
