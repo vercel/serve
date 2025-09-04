@@ -32,7 +32,10 @@
     "lint:style": "prettier --check --ignore-path .gitignore .",
     "lint": "pnpm lint:code && pnpm lint:style",
     "format": "prettier --write --ignore-path .gitignore .",
-    "prepare": "husky install config/husky && pnpm compile"
+    "prepare": "husky install config/husky && pnpm compile",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm compile && changeset publish"
   },
   "dependencies": {
     "@zeit/schemas": "2.36.0",
@@ -48,6 +51,7 @@
     "update-check": "1.5.4"
   },
   "devDependencies": {
+    "@changesets/cli": "2.29.6",
     "@types/compression": "1.7.2",
     "@types/serve-handler": "6.1.1",
     "@vercel/style-guide": "3.0.0",

@@ -1,13 +1,15 @@
-name: Publish Package
+name: Release
 
 on:
-  workflow_dispatch:
-  release:
-    types: [published]
+  push:
+    branches:
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  publish:
-    name: Publish
+  release:
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -26,8 +28,11 @@ jobs:
         run: pnpm compile
       - name: Run all tests
         run: pnpm test
-      - name: Publish
-        # Use `--no-git-checks` due to how GitHub Actions checks out
-        run: pnpm publish --no-git-checks
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: pnpm release
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_ELEVATED }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN_ELEVATED }}
