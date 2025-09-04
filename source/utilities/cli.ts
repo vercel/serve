@@ -54,6 +54,8 @@ const helpText = chalkTemplate`
 
     --no-etag                           Send \`Last-Modified\` header instead of \`ETag\`
 
+    --[no]-trailing-slash               Remove or add trailing slashes to all paths
+
     -S, --symlinks                      Resolve symlinks instead of showing 404 errors
     
     --ssl-cert                          Optional path to an SSL/TLS certificate to serve with HTTPS
@@ -153,6 +155,8 @@ const options = {
   '--no-clipboard': Boolean,
   '--no-compression': Boolean,
   '--no-etag': Boolean,
+  '--trailing-slash': Boolean,
+  '--no-trailing-slash': Boolean,
   '--symlinks': Boolean,
   '--cors': Boolean,
   '--no-port-switching': Boolean,
