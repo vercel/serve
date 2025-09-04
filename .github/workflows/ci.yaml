@@ -10,15 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Setup PNPM 9
-        uses: pnpm/action-setup@v2.0.1
+        uses: pnpm/action-setup@v4
         with:
           version: 9
-      - name: Setup Node 18
-        uses: actions/setup-node@v2
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           registry-url: 'https://registry.npmjs.org/'
           cache: 'pnpm'
       - name: Install dependencies
@@ -30,15 +30,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v2
-      - name: Setup PNPM 7
-        uses: pnpm/action-setup@v2.0.1
+        uses: actions/checkout@v4
+      - name: Setup PNPM 9
+        uses: pnpm/action-setup@v4
         with:
-          version: 7
-      - name: Setup Node 18
-        uses: actions/setup-node@v2
+          version: 9
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           registry-url: 'https://registry.npmjs.org/'
           cache: 'pnpm'
       - name: Install dependencies
