@@ -22,6 +22,10 @@ jobs:
           node-version: 22
           registry-url: 'https://registry.npmjs.org/'
           cache: 'pnpm'
+      - name: Add npm auth token to pnpm
+        run: pnpm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN_ELEVATED}"
+        env:
+          NPM_TOKEN_ELEVATED: ${{secrets.NPM_TOKEN_ELEVATED}}
       - name: Install dependencies
         run: pnpm install
       - name: Compile
