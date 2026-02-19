@@ -66,6 +66,8 @@ const helpText = chalkTemplate`
 
     --no-port-switching                 Do not open a port other than the one specified when it\'s taken.
 
+    --https                             Serve over HTTPS with an auto-generated self-signed certificate
+
   {bold ENDPOINTS}
 
     Listen endpoints (specified by the {bold --listen} or {bold -l} options above) instruct {cyan serve}
@@ -135,8 +137,7 @@ export const parseEndpoint = (uriOrPort: string): ParsedEndpoint => {
       };
     default:
       throw new Error(
-        `Unknown --listen endpoint scheme (protocol): ${
-          url.protocol ?? 'undefined'
+        `Unknown --listen endpoint scheme (protocol): ${url.protocol ?? 'undefined'
         }`,
       );
   }
@@ -159,6 +160,7 @@ const options = {
   '--ssl-cert': String,
   '--ssl-key': String,
   '--ssl-pass': String,
+  '--https': Boolean,
   '--no-request-logging': Boolean,
   // A list of aliases for the above options.
   '-h': '--help',
