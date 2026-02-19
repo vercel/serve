@@ -30,14 +30,16 @@ export const registerCloseListener = (fn: () => void): void => {
  *
  * @returns The address of the host.
  */
-export const getNetworkAddress = (): string | undefined => {
+export const getNetworkAddresses = (): string[] => {
+  const addresses: string[] = [];
   for (const interfaceDetails of Object.values(networkInterfaces)) {
     if (!interfaceDetails) continue;
 
     for (const details of interfaceDetails) {
       const { address, family, internal } = details;
 
-      if (family === 'IPv4' && !internal) return address;
+      if (family === 'IPv4' && !internal) addresses.push(address);
     }
   }
+  return addresses;
 };

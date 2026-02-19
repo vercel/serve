@@ -8,9 +8,10 @@ import handler from 'serve-handler';
 import compression from 'compression';
 import isPortReachable from 'is-port-reachable';
 import chalk from 'chalk';
-import { getNetworkAddress, registerCloseListener } from './http.js';
+import { registerCloseListener } from './http.js';
 import { promisify } from './promise.js';
 import { logger } from './logger.js';
+import { detectNetwork } from './ip.js';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import type {
@@ -122,7 +123,7 @@ export const startServer = async (
 
   // Once the server starts, return the address it is running on so the CLI
   // can tell the user.
-  const getServerDetails = () => {
+  const getServerDetails = async () => {
     // Make sure to close the server once the process ends.
     registerCloseListener(() => server.close());
 
@@ -141,10 +142,12 @@ export const startServer = async (
       if (details.address === '::') address = 'localhost';
       else if (details.family === 'IPv6') address = `[${details.address}]`;
       else address = details.address;
-      const ip = getNetworkAddress();
+      // const ip = getNetworkAddresses();
+      const ip = await detectNetwork();
 
       const protocol = useSsl ? 'https' : 'http';
       local = `${protocol}://${address}:${details.port}`;
+      // networks = ip.length ? ip.map((i) => `${protocol}://${i}:${details.port}`) : undefined;
       network = ip ? `${protocol}://${ip}:${details.port}` : undefined;
     }
 

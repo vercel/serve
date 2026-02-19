@@ -8,6 +8,7 @@ import path from 'node:path';
 import chalk from 'chalk';
 import boxen from 'boxen';
 import clipboard from 'clipboardy';
+import qrcode from 'qrcode-terminal';
 import manifest from '../package.json';
 import { resolve } from './utilities/promise.js';
 import { startServer } from './utilities/server.js';
@@ -119,6 +120,7 @@ for (const endpoint of args['--listen']) {
     message += `\n\n${chalk.bold(`${prefix}Local:`)}${space}${local}`;
   }
   if (network) message += `\n${chalk.bold('- Network:')}  ${network}`;
+
   if (previous)
     message += chalk.red(
       `\n\nThis port was picked because ${chalk.underline(
@@ -137,6 +139,18 @@ for (const endpoint of args['--listen']) {
         `Cannot copy server address to clipboard: ${(error as Error).message}.`,
       );
     }
+  }
+
+  // Generate QR code for network URL if available
+  if (network) {
+    message += '\n\n';
+    // Capture QR code output safely
+    const qrOutput: string[] = [];
+    qrcode.generate(network, { small: true }, (qr: string) =>
+      qrOutput.push(qr),
+    );
+
+    message += qrOutput.join('\n');
   }
 
   logger.log(

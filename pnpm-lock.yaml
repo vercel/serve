@@ -34,6 +34,9 @@ importers:
       is-port-reachable:
         specifier: 4.0.0
         version: 4.0.0
+      qrcode-terminal:
+        specifier: 0.12.0
+        version: 0.12.0
       serve-handler:
         specifier: 6.1.6
         version: 6.1.6
@@ -47,6 +50,9 @@ importers:
       '@types/compression':
         specifier: 1.7.2
         version: 1.7.2
+      '@types/qrcode-terminal':
+        specifier: 0.12.2
+        version: 0.12.2
       '@types/serve-handler':
         specifier: 6.1.1
         version: 6.1.1
@@ -1166,6 +1172,12 @@ packages:
     resolution:
       {
         integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==,
+      }
+
+  '@types/qrcode-terminal@0.12.2':
+    resolution:
+      {
+        integrity: sha512-v+RcIEJ+Uhd6ygSQ0u5YYY7ZM+la7GgPbs0V/7l/kFs2uO4S8BcIUEMoP7za4DNIqNnUD5npf0A/7kBhrCKG5Q==,
       }
 
   '@types/qs@6.9.16':
@@ -4035,6 +4047,13 @@ packages:
       }
     engines: { node: '>=6' }
 
+  qrcode-terminal@0.12.0:
+    resolution:
+      {
+        integrity: sha512-EXtzRZmC+YGmGlDFbXKxQiMZNwCLEO6BANKXG4iCtSIM0yqc/pappSx3RIKr4r0uh5JsBckOXeKrB3Iz7mdQpQ==,
+      }
+    hasBin: true
+
   quansync@0.2.11:
     resolution:
       {
@@ -5701,6 +5720,8 @@ snapshots:
       undici-types: 6.19.8
 
   '@types/normalize-package-data@2.4.4': {}
+
+  '@types/qrcode-terminal@0.12.2': {}
 
   '@types/qs@6.9.16': {}
 
@@ -7543,6 +7564,8 @@ snapshots:
       once: 1.4.0
 
   punycode@2.3.1: {}
+
+  qrcode-terminal@0.12.0: {}
 
   quansync@0.2.11: {}
 
