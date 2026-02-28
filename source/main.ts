@@ -150,7 +150,20 @@ for (const endpoint of args['--listen']) {
       qrOutput.push(qr),
     );
 
-    message += qrOutput.join('\n');
+    // Calculate the box width based on existing message lines
+    const messageLines = message.split('\n');
+    const boxWidth = Math.max(...messageLines.map((line) => line.length));
+
+    // Center the QR code horizontally based on box width
+    const qrLines = qrOutput.join('\n').split('\n');
+    const centeredQr = qrLines
+      .map((line) => {
+        const padding = Math.max(0, Math.floor((boxWidth - line.length) / 4));
+        return ' '.repeat(padding) + line;
+      })
+      .join('\n');
+
+    message += centeredQr;
   }
 
   logger.log(
