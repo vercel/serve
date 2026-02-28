@@ -1,24 +1,17 @@
-![Serve Logo](https://raw.githubusercontent.com/vercel/serve/main/media/banner.png)
+# Serve LAN
 
 <div align="center">
-  <a aria-label="Vercel logo" href="https://vercel.com">
-    <img src="https://img.shields.io/badge/made%20by-vercel-%23000000">
+  <a aria-label="Install Size" href="https://packagephobia.com/result?p=serve-lan">
+    <img src="https://packagephobia.com/badge?p=serve-lan">
   </a>
-  <br>
-  <a aria-label="Install Size" href="https://packagephobia.com/result?p=serve">
-    <img src="https://packagephobia.com/badge?p=serve">
-  </a>
-  <a aria-label="Stars" href="https://github.com/vercel/serve/stargazers">
-    <img src="https://img.shields.io/github/stars/vercel/serve">
-  </a>
-  <a aria-label="Build Status" href="https://github.com/vercel/serve/actions/workflows/ci.yaml">
-    <img src="https://github.com/vercel/serve/actions/workflows/ci.yaml/badge.svg">
+  <a aria-label="GitHub" href="https://github.com/sride/serve-lan">
+    <img src="https://img.shields.io/github/stars/sride/serve-lan">
   </a>
 </div>
 
 ---
 
-`serve` helps you serve a static site, single page application or just a static file (no matter if on your device or on the local network). It also provides a neat interface for listing the directory's contents:
+`serve-lan` helps you serve a static site, single page application or just a static file on your local network with QR code support. It also provides a neat interface for listing the directory's contents:
 
 ![Listing UI](https://raw.githubusercontent.com/vercel/serve/main/media/listing-ui.png)
 

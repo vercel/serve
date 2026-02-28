@@ -1,14 +1,15 @@
 {
-  "name": "serve",
-  "version": "14.2.5",
-  "description": "Static file serving and directory listing",
+  "name": "serve-lan",
+  "version": "1.0.0",
+  "description": "Static file serving and directory listing with QR code support for LAN access",
   "keywords": [
-    "vercel",
     "serve",
     "micro",
-    "http-server"
+    "http-server",
+    "lan",
+    "qrcode"
   ],
-  "repository": "vercel/serve",
+  "repository": "sride/serve-lan",
   "license": "MIT",
   "type": "module",
   "bin": {

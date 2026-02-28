@@ -1,6 +1,6 @@
 # Contributing Guide
 
-Thanks for your interest in contributing to `serve`! This guide will
+Thanks for your interest in contributing to `serve-lan`! This guide will
 show you how to set up your environment and contribute to this library.
 
 ## Set Up
@@ -21,10 +21,10 @@ Once you have installed the above, follow
 to
 [`fork`](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks)
 and [`clone`](https://github.com/git-guides/git-clone) the repository
-(`vercel/serve`).
+(`sride/serve-lan`).
 
 Once you have forked and cloned the repository, you can
-[pick out an issue](https://github.com/vercel/serve/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc)
+[pick out an issue](https://github.com/sride/serve-lan/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc)
 you want to fix/implement!
 
 ## Making Changes
