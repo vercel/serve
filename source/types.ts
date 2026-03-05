@@ -85,6 +85,7 @@ export declare interface Options {
   '--ssl-cert': Path;
   '--ssl-key': Path;
   '--ssl-pass': string;
+  '--https': boolean;
 }
 
 // The arguments passed to the CLI (the options + the positional arguments)
