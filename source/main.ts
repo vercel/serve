@@ -133,9 +133,10 @@ for (const endpoint of args['--listen']) {
       await clipboard.write(local);
       message += `\n\n${chalk.grey('Copied local address to clipboard!')}`;
     } catch (error: unknown) {
-      logger.error(
-        `Cannot copy server address to clipboard: ${(error as Error).message}.`,
-      );
+      if (args['--debug'])
+        logger.error(
+          `Cannot copy server address to clipboard: ${(error as Error).message}.`,
+        );
     }
   }
 
