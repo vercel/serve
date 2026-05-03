@@ -97,4 +97,26 @@ describe('utilities/server', () => {
 
     expect(consoleSpy).not.toHaveBeenCalled();
   });
+
+  // Make sure cache-related headers can be disabled for served files.
+  test('disable cache headers', async () => {
+    const noCacheConfig = await loadConfiguration(process.cwd(), fixture, {
+      '--no-cache': true,
+    });
+    const address = await startServer({ port: 3005 }, noCacheConfig, {
+      '--no-cache': true,
+    });
+
+    const response = await fetch(address.local!);
+
+    expect(response.ok).toBe(true);
+    expect(response.headers['cache-control']).toBe(
+      'no-store, no-cache, must-revalidate, proxy-revalidate',
+    );
+    expect(response.headers.pragma).toBe('no-cache');
+    expect(response.headers.expires).toBe('0');
+    expect(response.headers['surrogate-control']).toBe('no-store');
+    expect(response.headers.etag).toBeUndefined();
+    expect(response.headers['last-modified']).toBeUndefined();
+  });
 });
