@@ -1,0 +1,4 @@
+allowBuilds:
+  core-js-pure: true
+  esbuild: true
+minimumReleaseAge: 2880
