@@ -38,17 +38,17 @@
     "release": "pnpm compile && changeset publish"
   },
   "dependencies": {
-    "@zeit/schemas": "2.36.0",
-    "ajv": "8.18.0",
-    "arg": "5.0.2",
-    "boxen": "7.0.0",
-    "chalk": "5.0.1",
-    "chalk-template": "0.4.0",
-    "clipboardy": "3.0.0",
-    "compression": "1.8.1",
-    "is-port-reachable": "4.0.0",
-    "serve-handler": "6.1.7",
-    "update-check": "1.5.4"
+    "@zeit/schemas": "^2.36.0",
+    "ajv": "^8.18.0",
+    "arg": "^5.0.2",
+    "boxen": "^7.0.0",
+    "chalk": "^5.0.1",
+    "chalk-template": "^0.4.0",
+    "clipboardy": "^3.0.0",
+    "compression": "^1.8.1",
+    "is-port-reachable": "^4.0.0",
+    "serve-handler": "^6.1.7",
+    "update-check": "^1.5.4"
   },
   "devDependencies": {
     "@changesets/cli": "2.29.6",
