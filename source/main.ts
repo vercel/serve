@@ -7,7 +7,7 @@ import { cwd as getPwd, exit, env, stdout } from 'node:process';
 import path from 'node:path';
 import chalk from 'chalk';
 import boxen from 'boxen';
-import clipboard from 'clipboardy';
+import * as clipboard from 'tinyclip';
 import manifest from '../package.json';
 import { resolve } from './utilities/promise.js';
 import { startServer } from './utilities/server.js';
@@ -130,7 +130,7 @@ for (const endpoint of args['--listen']) {
   if (copyAddress && local) {
     try {
       // eslint-disable-next-line no-await-in-loop
-      await clipboard.write(local);
+      await clipboard.writeText(local);
       message += `\n\n${chalk.grey('Copied local address to clipboard!')}`;
     } catch (error: unknown) {
       logger.error(
