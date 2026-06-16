@@ -85,8 +85,16 @@ describe('utilities/server', () => {
     );
   });
 
+  // Verify server returns 404 for unknown routes
+  test('server responds with 404 for unknown routes',async()=>{
+    const serverInstance=await startServer({port:3005},config,{});
+    const response=await fetch(`${serverInstance.local}/unknown`);
+    expect(response.status).toBe(404);
+    })
+  })
+
   // Make sure the server logs requests by default.
-  test('log requests to the server by default', async () => {
+  test('do not log requests when request logging is disabled', async () => {
     const consoleSpy = vi.spyOn(logger, 'http');
     const address = await startServer({ port: 3004 }, config, {
       '--no-request-logging': true,
