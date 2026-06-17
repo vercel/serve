@@ -11,7 +11,7 @@ import { Options } from '../source/types.js';
 const fixtures = 'tests/__fixtures__/config/';
 // A helper function to load the configuration for a certain fixture.
 const loadConfig = (
-  name: 'valid' | 'invalid' | 'non-existent' | 'deprecated',
+  name: 'valid' | 'invalid' | 'non-existent' | 'deprecated' | 'header-removal',
   args?: Partial<Options> = {},
 ) => loadConfiguration(process.cwd(), `${fixtures}/${name}`, args);
 
@@ -64,5 +64,22 @@ describe('utilities/config', () => {
     expect(consoleSpy).toHaveBeenLastCalledWith(
       expect.stringContaining('deprecated'),
     );
+  });
+
+  // `serve-handler` supports `null` to remove previously defined headers.
+  // This should pass config validation as well.
+  test('accept null header values for header removal rules', async () => {
+    const configuration = await loadConfig('header-removal');
+
+    expect(configuration.headers).toEqual([
+      {
+        source: '**',
+        headers: [{ key: 'Cache-Control', value: 'max-age=86400' }],
+      },
+      {
+        source: 'service-worker.js',
+        headers: [{ key: 'Cache-Control', value: null }],
+      },
+    ]);
   });
 });
