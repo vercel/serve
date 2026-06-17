@@ -1,4 +1,5 @@
 {
   "public": "app/",
+  "trailingSlash": true,
   "renderSingle": true
 }
