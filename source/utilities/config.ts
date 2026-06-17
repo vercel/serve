@@ -12,7 +12,37 @@ import schema from '@zeit/schemas/deployment/config-static.js';
 import { resolve } from './promise.js';
 import { logger } from './logger.js';
 import type { ErrorObject } from 'ajv';
-import type { Configuration, Options, NodeError } from '../types.js';
+import type { Configuration, Header, Options, NodeError } from '../types.js';
+
+const noCacheHeader: Header = {
+  source: '**',
+  headers: [
+    {
+      key: 'Cache-Control',
+      value: 'no-store, no-cache, must-revalidate, proxy-revalidate',
+    },
+    {
+      key: 'Pragma',
+      value: 'no-cache',
+    },
+    {
+      key: 'Expires',
+      value: '0',
+    },
+    {
+      key: 'Surrogate-Control',
+      value: 'no-store',
+    },
+    {
+      key: 'ETag',
+      value: null,
+    },
+    {
+      key: 'Last-Modified',
+      value: null,
+    },
+  ],
+};
 
 /**
  * Parses and returns a configuration object from the designated locations.
@@ -137,8 +167,13 @@ export const loadConfiguration = async (
   }
 
   // Configure defaults based on the options the user has passed.
-  config.etag = !args['--no-etag'];
+  config.etag = !args['--no-etag'] && !args['--no-cache'];
   config.symlinks = args['--symlinks'] || config.symlinks;
+
+  if (args['--no-cache']) {
+    const headers = Array.isArray(config.headers) ? config.headers : [];
+    config.headers = [...headers, noCacheHeader];
+  }
 
   return config;
 };

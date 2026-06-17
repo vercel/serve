@@ -52,6 +52,8 @@ const helpText = chalkTemplate`
 
     -u, --no-compression                Do not compress files
 
+    --no-cache                          Disable browser caching
+
     --no-etag                           Send \`Last-Modified\` header instead of \`ETag\`
 
     -S, --symlinks                      Resolve symlinks instead of showing 404 errors
@@ -152,6 +154,7 @@ const options = {
   '--config': String,
   '--no-clipboard': Boolean,
   '--no-compression': Boolean,
+  '--no-cache': Boolean,
   '--no-etag': Boolean,
   '--symlinks': Boolean,
   '--cors': Boolean,
