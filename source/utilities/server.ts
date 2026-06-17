@@ -9,6 +9,7 @@ import compression from 'compression';
 import isPortReachable from 'is-port-reachable';
 import chalk from 'chalk';
 import { getNetworkAddress, registerCloseListener } from './http.js';
+import { generateCertificate } from './tls.js';
 import { promisify } from './promise.js';
 import { logger } from './logger.js';
 import type { IncomingMessage, ServerResponse } from 'node:http';
@@ -114,9 +115,15 @@ export const startServer = async (
       pfx: await readFile(sslCert),
       passphrase: sslPass ? await readFile(sslPass, 'utf8') : '',
     };
+  } else if (args['--https'] && !useSsl) {
+    // Auto-generate a self-signed certificate for local HTTPS.
+    const { key, cert } = generateCertificate();
+    serverConfig = { key, cert };
+    logger.info('Auto-generated self-signed certificate for HTTPS.');
   }
 
-  const server = useSsl
+  const useHttps = useSsl || (args['--https'] && !useSsl);
+  const server = useHttps
     ? https.createServer(serverConfig, serverHandler)
     : http.createServer(serverHandler);
 
@@ -143,7 +150,7 @@ export const startServer = async (
       else address = details.address;
       const ip = getNetworkAddress();
 
-      const protocol = useSsl ? 'https' : 'http';
+      const protocol = useHttps ? 'https' : 'http';
       local = `${protocol}://${address}:${details.port}`;
       network = ip ? `${protocol}://${ip}:${details.port}` : undefined;
     }
