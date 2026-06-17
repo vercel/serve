@@ -81,7 +81,6 @@ export declare interface Options {
   '--no-etag': boolean;
   '--symlinks': boolean;
   '--cors': boolean;
-  '--no-port-switching': boolean;
   '--ssl-cert': Path;
   '--ssl-key': Path;
   '--ssl-pass': string;
