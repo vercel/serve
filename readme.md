@@ -58,6 +58,9 @@ Now you understand how the package works! :tada:
 
 ## Configuration
 
+A `now.json` file without a legacy `now.static` section is ignored when
+looking for static-serving configuration.
+
 To customize `serve`'s behavior, create a `serve.json` file in the public folder and insert any of [these properties](https://github.com/vercel/serve-handler#options).
 
 ## API

@@ -61,7 +61,7 @@ export const loadConfiguration = async (
       static?: Partial<Configuration>;
     }
     interface NowConfigurationFile {
-      now: { static?: Partial<Configuration> };
+      now?: { static?: Partial<Configuration> };
     }
     type ParseableConfiguration =
       | ServeConfigurationFile
@@ -87,7 +87,7 @@ export const loadConfiguration = async (
     // Check if any of these files have a serve specific section.
     if (file === 'now.json') {
       parsedJson = parsedJson as NowConfigurationFile;
-      parsedJson = parsedJson.now.static;
+      parsedJson = parsedJson.now?.static;
     } else if (file === 'package.json') {
       parsedJson = parsedJson as ManifestConfigurationFile;
       parsedJson = parsedJson.static;
