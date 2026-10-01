@@ -54,6 +54,9 @@ Finally, run this command to see a list of all available options:
 > serve --help
 ```
 
+If your system does not allow network interface discovery, `serve` still starts
+and serves locally without advertising an extra network address.
+
 Now you understand how the package works! :tada:
 
 ## Configuration

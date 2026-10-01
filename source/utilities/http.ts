@@ -3,8 +3,6 @@
 
 import { networkInterfaces as getNetworkInterfaces } from 'node:os';
 
-const networkInterfaces = getNetworkInterfaces();
-
 /**
  * Registers a function that runs on server shutdown.
  *
@@ -31,6 +29,14 @@ export const registerCloseListener = (fn: () => void): void => {
  * @returns The address of the host.
  */
 export const getNetworkAddress = (): string | undefined => {
+  let networkInterfaces: ReturnType<typeof getNetworkInterfaces>;
+  try {
+    networkInterfaces = getNetworkInterfaces();
+  } catch {
+    // Network discovery is optional; restricted systems can still serve locally.
+    return undefined;
+  }
+
   for (const interfaceDetails of Object.values(networkInterfaces)) {
     if (!interfaceDetails) continue;
 
