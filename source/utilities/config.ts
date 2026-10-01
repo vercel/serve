@@ -94,9 +94,16 @@ export const loadConfiguration = async (
     }
     if (!parsedJson) continue;
 
+    // A `$schema` key is editor metadata for autocompletion, not a serve
+    // option; drop it so editor-generated configurations still validate.
+    const serveConfiguration = parsedJson as Partial<Configuration> & {
+      $schema?: string;
+    };
+    delete serveConfiguration.$schema;
+
     // Once we have found a valid configuration, assign it and stop looking
     // through more configuration files.
-    Object.assign(config, parsedJson);
+    Object.assign(config, serveConfiguration);
 
     // Warn the user about using deprecated configuration files.
     if (file === 'now.json' || file === 'package.json')
