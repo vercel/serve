@@ -102,8 +102,14 @@ export const getHelpText = (): string => helpText;
  * @returns A list of parsed endpoints.
  */
 export const parseEndpoint = (uriOrPort: string): ParsedEndpoint => {
-  // If the endpoint is a port number, return it as is.
-  if (!isNaN(Number(uriOrPort))) return { port: Number(uriOrPort) };
+  // If the endpoint is a port number, return it as is. Reject numbers the
+  // socket layer cannot bind to, instead of crashing later with a RangeError.
+  if (!isNaN(Number(uriOrPort))) {
+    const port = Number(uriOrPort);
+    if (!Number.isInteger(port) || port < 0 || port > 65535)
+      throw new Error(`Invalid port number: ${uriOrPort}`);
+    return { port };
+  }
 
   // Cast it as a string, since we know for sure it is not a number.
   const endpoint = uriOrPort;
@@ -125,14 +131,19 @@ export const parseEndpoint = (uriOrPort: string): ParsedEndpoint => {
         throw new Error(`Invalid UNIX domain socket endpoint: ${endpoint}`);
 
       return { host: url.pathname };
-    case 'tcp:':
+    case 'tcp:': {
       url.port = url.port ?? '3000';
       url.hostname = url.hostname ?? 'localhost';
 
+      const port = Number(url.port);
+      if (!Number.isInteger(port) || port < 0 || port > 65535)
+        throw new Error(`Invalid port number: ${url.port}`);
+
       return {
-        port: Number(url.port),
+        port,
         host: url.hostname,
       };
+    }
     default:
       throw new Error(
         `Unknown --listen endpoint scheme (protocol): ${

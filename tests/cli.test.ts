@@ -35,6 +35,11 @@ const invalidEndpoints = [
   ['protocol', 'ws://localhost', /unknown.*endpoint.*scheme.*/i],
   ['unix socket', 'unix://', /invalid.*unix.*socket.*/i],
   ['windows pipe', 'pipe:\\localhost', /invalid.*pipe.*/i],
+  ['negative port', '-1', /invalid.*port/i],
+  ['out of range port', '99999', /invalid.*port/i],
+  ['fractional port', '3000.5', /invalid.*port/i],
+  ['non-finite port', 'Infinity', /invalid.*port/i],
+  ['tcp out of range port', 'tcp://localhost:99999', /invalid.*port/i],
 ] as InvalidEndpointTestCase[];
 
 describe('utilities/cli', () => {
