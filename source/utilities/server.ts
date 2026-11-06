@@ -175,7 +175,8 @@ export const startServer = async (
     });
     // If the port is already taken, then start the server on a random port
     // instead.
-    if (isClosed) return startServer({ port: 0 }, config, args, port);
+    if (isClosed)
+      return startServer({ ...endpoint, port: 0 }, config, args, port);
 
     // Otherwise continue on to starting the server.
   }
