@@ -15,6 +15,7 @@ exports[`utilities/config > parse valid config at custom location 1`] = `
   "public": "tests/__fixtures__/config/custom/app",
   "renderSingle": true,
   "symlinks": undefined,
+  "trailingSlash": true,
 }
 `;
 

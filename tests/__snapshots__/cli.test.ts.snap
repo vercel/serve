@@ -43,6 +43,8 @@ exports[`utilities/cli > render help text 1`] = `
 
     --no-etag                           Send \`Last-Modified\` header instead of \`ETag\`
 
+    --[no]-trailing-slash               Remove or add trailing slashes to all paths
+
     -S, --symlinks                      Resolve symlinks instead of showing 404 errors
     
     --ssl-cert                          Optional path to an SSL/TLS certificate to serve with HTTPS

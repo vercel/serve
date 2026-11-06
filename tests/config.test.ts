@@ -52,6 +52,40 @@ describe('utilities/config', () => {
     expect(configuration).toMatchSnapshot();
   });
 
+  // The `--trailing-slash` flag should set `trailingSlash` to `true`.
+  test('sets `trailingSlash` to `true` when --trailing-slash flag is set', async () => {
+    const configuration = await loadConfiguration(
+      process.cwd(),
+      process.cwd(),
+      {
+        '--trailing-slash': true,
+      },
+    );
+    expect(configuration.trailingSlash).toBe(true);
+  });
+
+  // The `--no-trailing-slash` flag should set `trailingSlash` to `false`.
+  test('sets `trailingSlash` to `false` when --no-trailing-slash flag is set', async () => {
+    const configuration = await loadConfiguration(
+      process.cwd(),
+      process.cwd(),
+      {
+        '--no-trailing-slash': true,
+      },
+    );
+    expect(configuration.trailingSlash).toBe(false);
+  });
+
+  // When `--[no]-trailing-slash` is not specified, `trailingSlash` should be `undefined`.
+  test('sets `trailingSlash` to `undefined` when trailing slash flags are omitted', async () => {
+    const configuration = await loadConfiguration(
+      process.cwd(),
+      process.cwd(),
+      {},
+    );
+    expect(configuration.trailingSlash).toBeUndefined();
+  });
+
   // When the configuration source is deprecated, i.e., the configuration lives
   // in `now.json` or `package.json`, a warning should be printed.
   test('warn when configuration comes from a deprecated source', async () => {
