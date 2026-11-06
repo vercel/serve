@@ -141,7 +141,11 @@ export const startServer = async (
       if (details.address === '::') address = 'localhost';
       else if (details.family === 'IPv6') address = `[${details.address}]`;
       else address = details.address;
-      const ip = getNetworkAddress();
+      // Only wildcard listeners can accept connections on other interfaces.
+      const ip =
+        details.address === '::' || details.address === '0.0.0.0'
+          ? getNetworkAddress()
+          : undefined;
 
       const protocol = useSsl ? 'https' : 'http';
       local = `${protocol}://${address}:${details.port}`;
