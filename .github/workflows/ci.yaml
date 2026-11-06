@@ -24,8 +24,11 @@ jobs:
       - name: Check for errors in code/formatting
         run: pnpm lint
   test:
-    name: Test
-    runs-on: ubuntu-latest
+    name: Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
