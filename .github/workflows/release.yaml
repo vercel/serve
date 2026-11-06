@@ -4,30 +4,32 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   release:
+    if: github.event_name == 'push'
     name: Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
       - name: Setup PNPM
         uses: pnpm/action-setup@v4
-      - name: Setup Node 22
+      - name: Setup Node 24
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           registry-url: 'https://registry.npmjs.org/'
           cache: 'pnpm'
-      - name: Add npm auth token to pnpm
-        run: pnpm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN_ELEVATED}"
-        env:
-          NPM_TOKEN_ELEVATED: ${{secrets.NPM_TOKEN_ELEVATED}}
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: Compile
         run: pnpm compile
       - name: Run all tests
@@ -40,4 +42,37 @@ jobs:
           commitMode: github-api
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN_ELEVATED }}
+          NPM_CONFIG_PROVENANCE: 'true'
+
+  release-snapshot:
+    if: github.event_name == 'workflow_dispatch'
+    name: Release Snapshot
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+      - name: Setup Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: 'https://registry.npmjs.org/'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Add SHORT_SHA env property with commit short sha
+        run: echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-8)" >> $GITHUB_ENV
+      - name: Version Packages
+        run: pnpm changeset version --snapshot ${SHORT_SHA}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Compile
+        run: pnpm compile
+      - name: Publish Snapshot Release
+        run: pnpm changeset publish --no-git-tag --tag snapshot
+        env:
+          NPM_CONFIG_PROVENANCE: 'true'
