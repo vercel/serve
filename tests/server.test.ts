@@ -49,11 +49,31 @@ describe('utilities/server', () => {
     const address = await startServer({ port: 3002, host: '::1' }, config, {});
 
     expect(address.local).not.toBe('http://[::1]:3002');
+    expect(address.local).toMatch(/^http:\/\/\[::1\]:\d+$/);
     expect(address.network).not.toMatch(/^http:\/\/.*:3002$/);
     expect(address.previous).toBe(3002);
 
     const response = await fetch(address.local!);
     expect(response.ok);
+  });
+
+  test('keep the requested host when falling back to a different port', async () => {
+    const first = await startServer(
+      { port: 3005, host: '127.0.0.1' },
+      config,
+      {},
+    );
+    expect(first.local).toBe('http://127.0.0.1:3005');
+
+    const address = await startServer(
+      { port: 3005, host: '127.0.0.1' },
+      config,
+      {},
+    );
+
+    expect(address.previous).toBe(3005);
+    expect(address.local).toMatch(/^http:\/\/127\.0\.0\.1:\d+$/);
+    expect(address.local).not.toBe('http://127.0.0.1:3005');
   });
 
   // Make sure the server logs requests by default.
