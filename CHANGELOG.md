@@ -1,5 +1,12 @@
 # serve
 
+## 14.2.7
+
+### Patch Changes
+
+- 37b3a74: Replace clipboardy with tinyclip
+- 86e42e2: Keep the requested host when falling back to a different port
+
 ## 14.2.6
 
 ### Patch Changes

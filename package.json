@@ -1,6 +1,6 @@
 {
   "name": "serve",
-  "version": "14.2.6",
+  "version": "14.2.7",
   "description": "Static file serving and directory listing",
   "keywords": [
     "vercel",
