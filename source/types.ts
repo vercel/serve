@@ -48,7 +48,7 @@ export declare interface Header {
   source: string;
   headers: {
     key: string;
-    value: string;
+    value: string | null;
   }[];
 }
 
@@ -78,6 +78,7 @@ export declare interface Options {
   '--no-request-logging': boolean;
   '--no-clipboard': boolean;
   '--no-compression': boolean;
+  '--no-cache': boolean;
   '--no-etag': boolean;
   '--symlinks': boolean;
   '--cors': boolean;

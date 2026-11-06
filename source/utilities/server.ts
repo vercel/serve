@@ -72,7 +72,9 @@ export const startServer = async (
         await compress(request as ExpressRequest, response as ExpressResponse);
 
       // Let the `serve-handler` module do the rest.
-      await handler(request, response, config);
+      // `serve-handler` supports `null` header values to remove default
+      // headers, but its published types only allow strings.
+      await handler(request, response, config as Parameters<typeof handler>[2]);
 
       // Before returning the response, log the status code and time taken.
       const responseTime = Date.now() - requestTime.getTime();
