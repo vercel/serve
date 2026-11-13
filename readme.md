@@ -48,6 +48,14 @@ Once that's done, you can run this command inside your project's directory...
 > serve folder-name/
 ```
 
+To listen only on localhost, specify a loopback address:
+
+```bash
+> serve --listen tcp://localhost:3000
+```
+
+The startup banner shows a network URL only when listening on all interfaces.
+
 Finally, run this command to see a list of all available options:
 
 ```bash
