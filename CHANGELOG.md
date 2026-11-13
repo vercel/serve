@@ -1,5 +1,11 @@
 # serve
 
+## 14.2.8
+
+### Patch Changes
+
+- b789527: Bump compression to 1.8.2 (fixes CVE-2026-87776)
+
 ## 14.2.7
 
 ### Patch Changes
