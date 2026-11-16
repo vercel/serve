@@ -14,6 +14,8 @@
   },
   "license": "MIT",
   "type": "module",
+  "main": "./build/main.js",
+  "exports": "./build/main.js",
   "bin": {
     "serve": "./build/main.js"
   },
