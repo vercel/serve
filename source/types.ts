@@ -79,6 +79,8 @@ export declare interface Options {
   '--no-clipboard': boolean;
   '--no-compression': boolean;
   '--no-etag': boolean;
+  '--trailing-slash': boolean;
+  '--no-trailing-slash': boolean;
   '--symlinks': boolean;
   '--cors': boolean;
   '--no-port-switching': boolean;

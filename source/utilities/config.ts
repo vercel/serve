@@ -139,6 +139,13 @@ export const loadConfiguration = async (
   // Configure defaults based on the options the user has passed.
   config.etag = !args['--no-etag'];
   config.symlinks = args['--symlinks'] || config.symlinks;
+  const trailingSlash = args['--trailing-slash'];
+  const noTrailingSlash = args['--no-trailing-slash'];
+  if (trailingSlash !== undefined) {
+    config.trailingSlash = trailingSlash;
+  } else if (noTrailingSlash !== undefined) {
+    config.trailingSlash = !noTrailingSlash;
+  }
 
   return config;
 };
