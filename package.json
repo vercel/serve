@@ -21,7 +21,7 @@
     "build/"
   ],
   "engines": {
-    "node": "^16.14.0 || >= 17.3.0"
+    "node": ">= 14"
   },
   "scripts": {
     "develop": "tsx watch ./source/main.ts",
