@@ -41,6 +41,8 @@ exports[`utilities/cli > render help text 1`] = `
 
     -u, --no-compression                Do not compress files
 
+    --no-cache                          Disable browser caching
+
     --no-etag                           Send \`Last-Modified\` header instead of \`ETag\`
 
     -S, --symlinks                      Resolve symlinks instead of showing 404 errors

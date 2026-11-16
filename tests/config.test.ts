@@ -52,6 +52,48 @@ describe('utilities/config', () => {
     expect(configuration).toMatchSnapshot();
   });
 
+  // When `--no-cache` is passed, caching should be disabled for every path.
+  test('disable cache when requested', async () => {
+    const configuration = await loadConfig('non-existent', {
+      '--no-cache': true,
+    });
+
+    expect(configuration).toMatchObject({
+      etag: false,
+      headers: [
+        {
+          source: '**',
+          headers: [
+            {
+              key: 'Cache-Control',
+              value: 'no-store, no-cache, must-revalidate, proxy-revalidate',
+            },
+            {
+              key: 'Pragma',
+              value: 'no-cache',
+            },
+            {
+              key: 'Expires',
+              value: '0',
+            },
+            {
+              key: 'Surrogate-Control',
+              value: 'no-store',
+            },
+            {
+              key: 'ETag',
+              value: null,
+            },
+            {
+              key: 'Last-Modified',
+              value: null,
+            },
+          ],
+        },
+      ],
+    });
+  });
+
   // When the configuration source is deprecated, i.e., the configuration lives
   // in `now.json` or `package.json`, a warning should be printed.
   test('warn when configuration comes from a deprecated source', async () => {
