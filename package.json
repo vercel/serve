@@ -50,7 +50,7 @@
     "compression": "1.8.2",
     "is-port-reachable": "4.0.0",
     "serve-handler": "6.1.7",
-    "tinyclip": "^0.1.12",
+    "tinyclip": "^1.0.3",
     "update-check": "1.5.4"
   },
   "devDependencies": {
