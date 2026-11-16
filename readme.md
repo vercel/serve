@@ -33,25 +33,25 @@ The quickest way to get started is to just run `npx serve` in your project's dir
 If you prefer, you can also install the package globally (you'll need at least [Node LTS](https://github.com/nodejs/Release#release-schedule)):
 
 ```bash
-> npm install --global serve
+npm install --global serve
 ```
 
 Once that's done, you can run this command inside your project's directory...
 
 ```bash
-> serve
+serve
 ```
 
 ...or specify which folder you want to serve:
 
 ```bash
-> serve folder-name/
+serve folder-name/
 ```
 
 Finally, run this command to see a list of all available options:
 
 ```bash
-> serve --help
+serve --help
 ```
 
 Now you understand how the package works! :tada:
