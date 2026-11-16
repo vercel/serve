@@ -35,8 +35,8 @@ importers:
         specifier: 6.1.7
         version: 6.1.7
       tinyclip:
-        specifier: ^0.1.12
-        version: 0.1.12
+        specifier: ^1.0.3
+        version: 1.0.3
       update-check:
         specifier: 1.5.4
         version: 1.5.4
@@ -4631,10 +4631,10 @@ packages:
         integrity: sha512-0+DUvqWMValLmha6lr4kD8iAMK1HzV0/aKnCtWb9v9641TnP/MFb7Pc2bxoxQjTXAErryXVgUOfv2YqNllqGeg==,
       }
 
-  tinyclip@0.1.12:
+  tinyclip@1.0.3:
     resolution:
       {
-        integrity: sha512-Ae3OVUqifDw0wBriIBS7yVaW44Dp6eSHQcyq4Igc7eN2TJH/2YsicswaW+J/OuMvhpDPOKEgpAZCjkb4hpoyeA==,
+        integrity: sha512-nTv2raKFMzGG6JJp0lpNDsRPdfFE6UHlu2rVEjXo8vkx1ZS3LW2CVXqIaLu8xZlu+6tbFs9V58Qc/Jmk/Ii7wA==,
       }
     engines: { node: ^16.14.0 || >= 17.3.0 }
 
@@ -7917,7 +7917,7 @@ snapshots:
 
   tinybench@2.9.0: {}
 
-  tinyclip@0.1.12: {}
+  tinyclip@1.0.3: {}
 
   tinyexec@0.3.0: {}
 

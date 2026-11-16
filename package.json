@@ -21,7 +21,7 @@
     "build/"
   ],
   "engines": {
-    "node": ">= 14"
+    "node": "^16.14.0 || >= 17.3.0"
   },
   "scripts": {
     "develop": "tsx watch ./source/main.ts",
@@ -50,7 +50,7 @@
     "compression": "1.8.2",
     "is-port-reachable": "4.0.0",
     "serve-handler": "6.1.7",
-    "tinyclip": "^0.1.12",
+    "tinyclip": "^1.0.3",
     "update-check": "1.5.4"
   },
   "devDependencies": {
