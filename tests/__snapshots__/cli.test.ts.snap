@@ -53,8 +53,6 @@ exports[`utilities/cli > render help text 1`] = `
 
     --ssl-pass                          Optional path to the SSL/TLS certificate's passphrase
 
-    --no-port-switching                 Do not open a port other than the one specified when it's taken.
-
   [1mENDPOINTS[22m
 
     Listen endpoints (specified by the [1m--listen[22m or [1m-l[22m options above) instruct [36mserve[39m
