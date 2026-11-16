@@ -14,6 +14,42 @@ import { logger } from './logger.js';
 import type { ErrorObject } from 'ajv';
 import type { Configuration, Options, NodeError } from '../types.js';
 
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null;
+
+const schemaWithNullableHeaderValue = (() => {
+  const staticSchema = JSON.parse(JSON.stringify(schema)) as Record<
+    string,
+    unknown
+  >;
+  const properties = staticSchema.properties;
+  if (!isRecord(properties)) return staticSchema;
+
+  const headers = properties.headers;
+  if (!isRecord(headers)) return staticSchema;
+
+  const headerItems = headers.items;
+  if (!isRecord(headerItems)) return staticSchema;
+
+  const headerProperties = headerItems.properties;
+  if (!isRecord(headerProperties)) return staticSchema;
+
+  const headerEntries = headerProperties.headers;
+  if (!isRecord(headerEntries)) return staticSchema;
+
+  const headerEntryItems = headerEntries.items;
+  if (!isRecord(headerEntryItems)) return staticSchema;
+
+  const headerEntryProperties = headerEntryItems.properties;
+  if (!isRecord(headerEntryProperties)) return staticSchema;
+
+  const headerValue = headerEntryProperties.value;
+  if (!isRecord(headerValue)) return staticSchema;
+
+  headerValue.type = ['string', 'null'];
+  return staticSchema;
+})();
+
 /**
  * Parses and returns a configuration object from the designated locations.
  *
@@ -122,7 +158,7 @@ export const loadConfiguration = async (
   // If the configuration isn't empty, validate it against the AJV schema.
   if (Object.keys(config).length !== 0) {
     const ajv = new Ajv({ allowUnionTypes: true });
-    const validate = ajv.compile(schema as object);
+    const validate = ajv.compile(schemaWithNullableHeaderValue as object);
 
     if (!validate(config) && validate.errors) {
       const defaultMessage = 'The configuration you provided is invalid:';
