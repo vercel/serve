@@ -1,6 +1,7 @@
 // tests/config.test.ts
 // Tests for the configuration loader.
 
+import { sep } from 'node:path';
 import { afterEach, describe, test, expect, vi } from 'vitest';
 
 import { loadConfiguration } from '../source/utilities/config.js';
@@ -9,11 +10,21 @@ import { Options } from '../source/types.js';
 
 // The path to the fixtures for this test file.
 const fixtures = 'tests/__fixtures__/config/';
-// A helper function to load the configuration for a certain fixture.
-const loadConfig = (
+// A helper function to load the configuration for a certain fixture. The
+// `public` path uses the platform's separator, so normalize it for snapshots.
+const loadConfig = async (
   name: 'valid' | 'invalid' | 'non-existent' | 'deprecated',
   args?: Partial<Options> = {},
-) => loadConfiguration(process.cwd(), `${fixtures}/${name}`, args);
+) => {
+  const configuration = await loadConfiguration(
+    process.cwd(),
+    `${fixtures}/${name}`,
+    args,
+  );
+  if (configuration.public)
+    configuration.public = configuration.public.split(sep).join('/');
+  return configuration;
+};
 
 afterEach(() => {
   vi.restoreAllMocks();
