@@ -119,7 +119,7 @@ serve
 #### `source/`
 
 - `main.ts`: Entrypoint for the CLI.
-- `types.ts`: Typescript types used in the project.
+- `types.ts`: TypeScript types used in the project.
 
 When adding a new feature/fixing a bug, please add/update the readme. Also make
 sure your code has been linted and that existing tests pass. You can run the linter
