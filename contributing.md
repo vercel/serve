@@ -126,7 +126,7 @@ sure your code has been linted and that existing tests pass. You can run the lin
 using `pnpm lint`, the tests using `pnpm test` and try to automatically fix most lint
 issues using `pnpm lint --fix`.
 
-You can run the CLI tool using `pnpm develop`, which will re-run the CLI everytime you
+You can run the CLI tool using `pnpm develop`, which will re-run the CLI every time you
 save changes made to the code.
 
 Once you have made changes to the code, you will want to
