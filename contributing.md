@@ -5,7 +5,7 @@ show you how to set up your environment and contribute to this library.
 
 ## Set Up
 
-First, you need to install and be familiar the following:
+First, you need to install and be familiar with the following:
 
 - `git`: [Here](https://github.com/git-guides) is a great guide by GitHub on
   installing and getting started with Git.
@@ -53,7 +53,7 @@ While naming your branch, try to follow the below guidelines:
 Once you have created a branch, you can start coding!
 
 The CLI is written in
-[Typescript](https://github.com/microsoft/TypeScript#readme) and uses the
+[TypeScript](https://github.com/microsoft/TypeScript#readme) and uses the
 [`current` version](https://github.com/nodejs/Release#release-schedule) of Node.
 The code is structured as follows:
 
@@ -93,7 +93,7 @@ serve
 - `pnpm-lock.yaml`: PNPM lock file, please do not modify it manually. Run
   `pnpm install` to update it if you add/remove a dependency to/from
   `package.json` manually.
-- `tsconfig.json`: The Typescript configuration for this project.
+- `tsconfig.json`: The TypeScript configuration for this project.
 - `contributing.md`: The file you are reading. It helps contributors get
   started.
 - `license.md`: Tells people how they can use the code.
@@ -119,14 +119,14 @@ serve
 #### `source/`
 
 - `main.ts`: Entrypoint for the CLI.
-- `types.ts`: Typescript types used in the project.
+- `types.ts`: TypeScript types used in the project.
 
 When adding a new feature/fixing a bug, please add/update the readme. Also make
 sure your code has been linted and that existing tests pass. You can run the linter
 using `pnpm lint`, the tests using `pnpm test` and try to automatically fix most lint
 issues using `pnpm lint --fix`.
 
-You can run the CLI tool using `pnpm develop`, which will re-run the CLI everytime you
+You can run the CLI tool using `pnpm develop`, which will re-run the CLI every time you
 save changes made to the code.
 
 Once you have made changes to the code, you will want to
@@ -141,7 +141,7 @@ of save) the changes. To commit the changes you have made locally:
 While writing the `commit-message`, try to follow the below guidelines:
 
 1. Prefix the message with `type:`, where `type` is one of the following
-   dependending on what the commit does:
+   depending on what the commit does:
    - `fix`: Introduces a bug fix.
    - `feat`: Adds a new feature.
    - `test`: Any change related to tests.
