@@ -141,7 +141,7 @@ of save) the changes. To commit the changes you have made locally:
 While writing the `commit-message`, try to follow the below guidelines:
 
 1. Prefix the message with `type:`, where `type` is one of the following
-   dependending on what the commit does:
+   depending on what the commit does:
    - `fix`: Introduces a bug fix.
    - `feat`: Adds a new feature.
    - `test`: Any change related to tests.
