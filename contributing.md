@@ -5,7 +5,7 @@ show you how to set up your environment and contribute to this library.
 
 ## Set Up
 
-First, you need to install and be familiar the following:
+First, you need to install and be familiar with the following:
 
 - `git`: [Here](https://github.com/git-guides) is a great guide by GitHub on
   installing and getting started with Git.
