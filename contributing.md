@@ -93,7 +93,7 @@ serve
 - `pnpm-lock.yaml`: PNPM lock file, please do not modify it manually. Run
   `pnpm install` to update it if you add/remove a dependency to/from
   `package.json` manually.
-- `tsconfig.json`: The Typescript configuration for this project.
+- `tsconfig.json`: The TypeScript configuration for this project.
 - `contributing.md`: The file you are reading. It helps contributors get
   started.
 - `license.md`: Tells people how they can use the code.
